@@ -87,12 +87,12 @@ export interface Material {
   Others: string;
 }
 export const MATERIALS: Material = {
-  Metal: "",
-  Plastic: "",
-  Wood: "",
-  Glass: "",
-  Liquid: "",
-  Powders: "",
-  Stones: "",
-  Others: "",
+  Metal: "Métal",
+  Plastic: "Plastique",
+  Wood: "Bois",
+  Glass: "Verre",
+  Liquid: "Liquide",
+  Powders: "Poudre",
+  Stones: "Pierre",
+  Others: "Autres",
 };

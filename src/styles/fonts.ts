@@ -2,6 +2,13 @@ import { StyleSheet, Dimensions } from "react-native";
 import ChutesColors from "../styles/colors";
 const colors = ChutesColors();
 const fonts = StyleSheet.create({
+  //BUTTONS : "démarrer", "publier"
+  primary: {
+    color: colors.white,
+    fontWeight: "500",
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
+  },
   //card1
   scrapName: {
     color: colors.primary,
@@ -52,5 +59,7 @@ const fonts = StyleSheet.create({
     fontSize: 14,
     letterSpacing: 0.3,
   },
+  //CreateScreen
+  conditions: { marginVertical: 10, fontSize: 16, color: colors.secondary },
 });
 export default fonts;

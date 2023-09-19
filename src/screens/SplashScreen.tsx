@@ -14,10 +14,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 //images
 import logo from "../../assets/images/chutes_logo_v5-colors.png";
 //styles
-import ChutesColors from "../styles/colors";
-const colors = ChutesColors();
 import buttons from "../styles/buttons";
 import displays from "../styles/display";
+import fonts from "../styles/fonts";
+
 interface SplashScreenProps {
   title?: string;
   slogan?: string;
@@ -46,16 +46,7 @@ export default function SplashScreen({
           navigation.navigate("Tabs");
         }}
       >
-        <Text
-          style={{
-            color: colors.white,
-            fontWeight: "500",
-            letterSpacing: 0.4,
-            textTransform: "uppercase",
-          }}
-        >
-          Démarrer
-        </Text>
+        <Text style={fonts.primary}>Démarrer</Text>
       </TouchableOpacity>
     </View>
   );

@@ -4,6 +4,7 @@ const colors = ChutesColors();
 import displays from "./display";
 const widthScreen = Dimensions.get("window").width;
 const buttons = StyleSheet.create({
+  //Main BUTTONS "Démarrez", "Publier"
   primary: {
     width: widthScreen * 0.8,
     justifyContent: "center",
@@ -12,6 +13,7 @@ const buttons = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: colors.primary,
   },
+  //HomeScreen
   scrapAction: {
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -27,5 +29,6 @@ const buttons = StyleSheet.create({
     paddingRight: 10,
     paddingVertical: 10,
   },
+  //CreateScreen
 });
 export default buttons;
