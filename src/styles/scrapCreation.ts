@@ -20,6 +20,22 @@ const scrapCreation = StyleSheet.create({
     borderRadius: 2,
     flexDirection: "row",
   },
+  //Weight
+  weightTitle: { alignSelf: "flex-start" },
+  weightTitleFont: {
+    fontSize: 16,
+    color: colors.secondary,
+  },
+  modalWeights: {
+    alignItems: "center",
+    justifyContent: "space-between",
+    alignSelf: "stretch",
+    paddingHorizontal: 20,
+    borderColor: colors.secondary,
+    borderWidth: 1,
+    borderRadius: 2,
+    flexDirection: "row",
+  },
   //Materials
   materialContainer: {
     flexDirection: "column",

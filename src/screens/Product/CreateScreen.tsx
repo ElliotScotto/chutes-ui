@@ -1,5 +1,12 @@
 import React, { FC, useState } from "react";
-import { View, Text, StyleSheet, Pressable, Modal } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Modal,
+  ScrollView,
+} from "react-native";
 import { TextInput, Checkbox } from "react-native-paper";
 //packages
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
@@ -13,8 +20,9 @@ import fonts from "../../styles/fonts";
 //components
 import Spacer from "../../utils/Spacer";
 import ModalConditionPicker from "./components/ModalConditionPicker";
+import ModalWeightPicker from "./components/ModalWeightPicker";
 //types
-import { ScrapDataCreation, MATERIALS } from "../../types/dataTypes";
+import { MATERIALS } from "../../types/dataTypes";
 //icons
 import ChevronDown from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -22,9 +30,7 @@ const CreateScreen = () => {
   //product states
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [condition, setCondition] = useState(
-    "Dans quel état est votre chute ? "
-  );
+  const [condition, setCondition] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState(0);
   const [weight, setWeight] = useState("");
@@ -36,8 +42,11 @@ const CreateScreen = () => {
   const [productLocation, setProductLocation] = useState("");
   const [homePickup, setHomePickup] = useState(true);
   const [sending, setSending] = useState(false);
-
+  //Modal visibility
   const [isModalConditionsVisible, setIsModalConditionsVisible] =
+    useState(false);
+  const [isModalWeightsVisible, setIsModalWeightsVisible] = useState(false);
+  const [isModalCategoriesVisible, setIsModalCategoriesVisible] =
     useState(false);
   //errors
   const [errorName, setErrorName] = useState("");
@@ -62,9 +71,21 @@ const CreateScreen = () => {
     } else {
       setErrorName("");
     }
+    if (name && name.length > 35) {
+      setErrorName("35 caractères maximum");
+      isValid = false;
+    } else {
+      setErrorName("");
+    }
     //Description errors
     if (!description) {
       setErrorDescription("Champs requis");
+      isValid = false;
+    } else {
+      setErrorDescription("");
+    }
+    if (description && description.length > 300) {
+      setErrorDescription("300 caractères maximum");
       isValid = false;
     } else {
       setErrorDescription("");
@@ -174,119 +195,149 @@ const CreateScreen = () => {
         style={[displays.flex, displays.white, displays.w100, displays.aliC]}
       >
         <View style={[displays.aliC, displays.w95]}>
-          <TextInput
-            mode="outlined"
-            label="Titre*"
-            value={name}
-            style={{ width: "100%" }}
-            onChangeText={setName}
-          />
-          <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-            {errorName && (
-              <Text
-                style={{
-                  color: color.error,
-                }}
-              >
-                *{errorName}
-              </Text>
-            )}
-          </View>
-          <Spacer height={20} />
-          <TextInput
-            mode="outlined"
-            label="Description*"
-            placeholder="Décrivez votre chute : Dimensions, couleurs... (300 caractères maximum)"
-            dense={true}
-            multiline={true}
-            style={{
-              justifyContent: "flex-start",
-              textAlign: "left",
-              height: 150,
-              width: "100%",
-            }}
-            value={description}
-            onChangeText={setDescription}
-          />
-          <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-            {errorDescription && (
-              <Text style={{ color: color.error }}>*{errorDescription}</Text>
-            )}
-          </View>
-          <Spacer height={20} />
-          <View style={scrapCreation.conditionTitle}>
-            <Text style={scrapCreation.conditionTitleFont}>
-              Quel est l'état de votre chute ?...
-            </Text>
-          </View>
-          <Spacer height={5} />
-          <Pressable
-            style={scrapCreation.modalConditions}
-            onPress={() => {
-              setIsModalConditionsVisible(true);
-            }}
-          >
-            <Text style={fonts.conditions}>{condition}</Text>
-            <ChevronDown
-              name="chevron-down"
-              size={25}
-              color={color.secondary}
+          <ScrollView>
+            <Spacer height={20} />
+            <TextInput
+              mode="outlined"
+              label="Titre*"
+              value={name}
+              style={{ width: "100%" }}
+              onChangeText={setName}
             />
-          </Pressable>
-          <Modal
-            transparent={true}
-            animationType="fade"
-            visible={isModalConditionsVisible}
-            onRequestClose={() => {
-              setIsModalConditionsVisible(false);
-            }}
-          >
-            <ModalConditionPicker
-              changeModalVisibility={setIsModalConditionsVisible}
-              setData={setCondition}
+            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
+              {errorName && (
+                <Text
+                  style={{
+                    color: color.error,
+                  }}
+                >
+                  *{errorName}
+                </Text>
+              )}
+            </View>
+            <Spacer height={20} />
+            <TextInput
+              mode="outlined"
+              label="Description*"
+              placeholder="Décrivez votre chute : Dimensions, couleurs... (300 caractères maximum)"
+              dense={true}
+              multiline={true}
+              style={{
+                justifyContent: "flex-start",
+                textAlign: "left",
+                height: 150,
+                width: "100%",
+              }}
+              value={description}
+              onChangeText={setDescription}
             />
-          </Modal>
-          <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-            {errorCondition && (
-              <Text style={{ color: color.error }}>*{errorCondition}</Text>
-            )}
-          </View>
-          <Spacer height={20} />
-          <View style={scrapCreation.materialContainer}>
-            <View style={scrapCreation.materialTitle}>
-              <Text style={scrapCreation.materialTitleFont}>
-                Matière(s) principale(s)... (2 max.)
+            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
+              {errorDescription && (
+                <Text style={{ color: color.error }}>*{errorDescription}</Text>
+              )}
+            </View>
+            <Spacer height={20} />
+            <View style={scrapCreation.conditionTitle}>
+              <Text style={scrapCreation.conditionTitleFont}>
+                Quel est l'état de votre chute ?...
               </Text>
             </View>
             <Spacer height={5} />
-            <View style={scrapCreation.materialItemContainer}>
-              {Object.values(MATERIALS).map((key) => (
-                <Pressable
-                  key={key}
-                  style={scrapCreation.materialCheckButton}
-                  onPress={() => toggleMaterial(key)}
-                >
-                  <View style={scrapCreation.itemMaterial}>
-                    <Text style={scrapCreation.materialTitleFont}>{key}</Text>
-                    <Checkbox
-                      status={material.includes(key) ? "checked" : "unchecked"}
-                      onPress={() => toggleMaterial(key)}
-                    />
-                  </View>
-                </Pressable>
-              ))}
+            <Pressable
+              style={scrapCreation.modalConditions}
+              onPress={() => {
+                setIsModalConditionsVisible(true);
+              }}
+            >
+              <Text style={fonts.conditions}>{condition}</Text>
+              <ChevronDown
+                name="chevron-down"
+                size={25}
+                color={color.secondary}
+              />
+            </Pressable>
+            <ModalConditionPicker
+              isModalConditionsVisible={isModalConditionsVisible}
+              setIsModalConditionsVisible={setIsModalConditionsVisible}
+              setData={setCondition}
+            />
+            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
+              {errorCondition && (
+                <Text style={{ color: color.error }}>*{errorCondition}</Text>
+              )}
             </View>
-          </View>
-          <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-            {errorMaterial && (
-              <Text style={{ color: color.error }}>*{errorMaterial}</Text>
-            )}
-          </View>
-          <Spacer height={20} />
-          <Spacer height={100} />
-          <Pressable onPress={handleSubmit} style={buttons.primary}>
-            <Text style={fonts.primary}>Publier</Text>
-          </Pressable>
+            <Spacer height={20} />
+            <View style={scrapCreation.weightTitle}>
+              <Text style={scrapCreation.weightTitleFont}>
+                Quel est son poids ?
+              </Text>
+            </View>
+            <Spacer height={5} />
+            <Pressable
+              style={scrapCreation.modalWeights}
+              onPress={() => {
+                setIsModalWeightsVisible(true);
+              }}
+            >
+              <Text style={fonts.weights}>{weight}</Text>
+              <ChevronDown
+                name="chevron-down"
+                size={25}
+                color={color.secondary}
+              />
+            </Pressable>
+            <ModalWeightPicker
+              isModalWeightsVisible={isModalWeightsVisible}
+              setIsModalWeightsVisible={setIsModalWeightsVisible}
+              setData={setWeight}
+            />
+            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
+              {errorWeight && (
+                <Text style={{ color: color.error }}>*{errorWeight}</Text>
+              )}
+            </View>
+            <Spacer height={20} />
+            <View style={scrapCreation.materialContainer}>
+              <View style={scrapCreation.materialTitle}>
+                <Text style={scrapCreation.materialTitleFont}>
+                  Matière(s) principale(s)... (2 max.)
+                </Text>
+              </View>
+              <Spacer height={5} />
+              <View style={scrapCreation.materialItemContainer}>
+                {Object.values(MATERIALS).map((key) => (
+                  <Pressable
+                    key={key}
+                    style={scrapCreation.materialCheckButton}
+                    onPress={() => toggleMaterial(key)}
+                  >
+                    <View style={scrapCreation.itemMaterial}>
+                      <Text style={scrapCreation.materialTitleFont}>{key}</Text>
+                      <Checkbox
+                        status={
+                          material.includes(key) ? "checked" : "unchecked"
+                        }
+                        onPress={() => toggleMaterial(key)}
+                      />
+                    </View>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
+              {errorMaterial && (
+                <Text style={{ color: color.error }}>*{errorMaterial}</Text>
+              )}
+            </View>
+            <Spacer height={20} />
+            <Spacer height={100} />
+            <View style={displays.aliC}>
+              <Pressable onPress={handleSubmit} style={buttons.primary}>
+                <Text style={fonts.primary}>Publier</Text>
+              </Pressable>
+            </View>
+            <Spacer height={20} />
+          </ScrollView>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

@@ -10,24 +10,24 @@ import {
 //styles
 import modals from "../../../styles/modals";
 //types
-import { CONDITIONS } from "../../../types/dataTypes";
+import { WEIGHTS } from "../../../types/dataTypes";
 
-const OPTIONS = Object.values(CONDITIONS);
+const OPTIONS = Object.values(WEIGHTS);
 const WIDTH = Dimensions.get("window").width;
 
-interface ModalConditionPickerProps {
-  isModalConditionsVisible: boolean;
-  setIsModalConditionsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+interface ModalWeightPickerProps {
+  isModalWeightsVisible: boolean;
+  setIsModalWeightsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setData: (option: string) => void;
 }
 
-const ModalWeightPicker: FC<ModalConditionPickerProps> = ({
-  isModalConditionsVisible,
-  setIsModalConditionsVisible,
+const ModalWeightPicker: FC<ModalWeightPickerProps> = ({
+  isModalWeightsVisible,
+  setIsModalWeightsVisible,
   setData,
 }) => {
   const handlePick = (option: string) => {
-    setIsModalConditionsVisible(false);
+    setIsModalWeightsVisible(false);
     setData(option);
   };
 
@@ -48,13 +48,13 @@ const ModalWeightPicker: FC<ModalConditionPickerProps> = ({
     <Modal
       transparent={false}
       animationType="fade"
-      visible={isModalConditionsVisible}
+      visible={isModalWeightsVisible}
       onRequestClose={() => {
-        setIsModalConditionsVisible(false);
+        setIsModalWeightsVisible(false);
       }}
     >
       <TouchableOpacity
-        onPress={() => setIsModalConditionsVisible(false)}
+        onPress={() => setIsModalWeightsVisible(false)}
         style={modals.container}
       >
         <View style={[modals.modal, { width: WIDTH - 20, height: "auto" }]}>

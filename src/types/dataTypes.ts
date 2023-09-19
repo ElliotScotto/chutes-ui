@@ -96,3 +96,21 @@ export const MATERIALS: Material = {
   Stones: "Pierre",
   Others: "Autres",
 };
+export interface Weight {
+  lessOne: string;
+  oneToFive: string;
+  fiveToTen: string;
+  tenToTwenty: string;
+  twentyToFifty: string;
+  fiftyToHundred: string;
+  moreHundred: string;
+}
+export const WEIGHTS: Weight = {
+  lessOne: "Moins de 1kg",
+  oneToFive: "Entre 1kg et 5kg",
+  fiveToTen: "Entre 5kg et 10kg",
+  tenToTwenty: "Entre 10kg et 20kg",
+  twentyToFifty: "Entre 20kg et 50kg",
+  fiftyToHundred: "Entre 50kg et 100kg",
+  moreHundred: "Plus de 100kg",
+};

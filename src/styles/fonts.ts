@@ -61,5 +61,7 @@ const fonts = StyleSheet.create({
   },
   //CreateScreen
   conditions: { marginVertical: 10, fontSize: 16, color: colors.secondary },
+  weights: { marginVertical: 10, fontSize: 16, color: colors.secondary },
+  categories: { marginVertical: 10, fontSize: 16, color: colors.secondary },
 });
 export default fonts;
