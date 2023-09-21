@@ -43,7 +43,6 @@ const scrapCreation = StyleSheet.create({
   materialTitle: {},
   materialTitleFont: {
     fontSize: 16,
-    color: colors.secondary,
   },
   materialItemContainer: {
     justifyContent: "space-evenly",
@@ -57,9 +56,36 @@ const scrapCreation = StyleSheet.create({
   itemMaterial: {
     flexDirection: "row",
     alignItems: "center",
-    borderColor: colors.tertiary,
+    borderColor: colors.tertiary2,
     borderWidth: 1,
     borderRadius: 20,
+    margin: 6,
+    paddingVertical: "auto",
+    paddingHorizontal: 10,
+  },
+  //Categories
+  categoryContainer: {
+    flexDirection: "column",
+  },
+  categoryTitle: {},
+  categoryTitleFont: {
+    fontSize: 16,
+  },
+  categoryItemContainer: {
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  categoryCheckButton: {
+    flexDirection: "row",
+  },
+  itemCategory: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: colors.orange2,
+    borderWidth: 1,
+    borderRadius: 5,
     margin: 6,
     paddingVertical: "auto",
     paddingHorizontal: 10,

@@ -17,7 +17,7 @@ const ChutesColors = () => {
     //orange
     navajoWhite: "#FFDEAD",
     orange1: "#faa564",
-    orange2: "#c55907",
+    orange2: "#ac4e06",
     burlyWood: "#DEB887",
     peru: "#CD853F",
     darkWood: "#281b0b",

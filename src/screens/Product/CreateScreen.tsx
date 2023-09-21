@@ -1,47 +1,37 @@
 import React, { FC, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Modal,
-  ScrollView,
-} from "react-native";
-import { TextInput, Checkbox } from "react-native-paper";
+import { View, Text, Pressable, ScrollView } from "react-native";
+import { TextInput } from "react-native-paper";
 //packages
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 //styles
 import ChutesColors from "../../styles/colors";
 const color = ChutesColors();
 import displays from "../../styles/display";
-import scrapCreation from "../../styles/scrapCreation";
 import buttons from "../../styles/buttons";
 import fonts from "../../styles/fonts";
 //components
 import Spacer from "../../utils/Spacer";
-import ModalConditionPicker from "./components/ModalConditionPicker";
-import ModalWeightPicker from "./components/ModalWeightPicker";
-//types
-import { MATERIALS } from "../../types/dataTypes";
-//icons
-import ChevronDown from "react-native-vector-icons/MaterialCommunityIcons";
-
+import PriceSelected from "./components/PriceSelected";
+import QuantitySelected from "./components/QuantitySelected";
+import ConditionSelected from "./components/ConditionSelected";
+import WeightSelected from "./components/WeightSelected";
+import MaterialSelected from "./components/MaterialSelected";
+import CategorySelected from "./components/CategorySelected";
+//functions
+import { handleErrors } from "./functions/validateForm";
 const CreateScreen = () => {
   //product states
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [condition, setCondition] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(0);
-  const [weight, setWeight] = useState("");
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [condition, setCondition] = useState<string>("");
+  const [quantity, setQuantity] = useState<number | undefined>();
+  const [price, setPrice] = useState<number | undefined>();
+  const [weight, setWeight] = useState<string>("");
   const [material, setMaterial] = useState<string[]>([]);
   const [category, setCategory] = useState<string[]>([]);
-  // = useState([
-  //   "Choisissez une catégorie... (2 max.)",
-  // ]);
-  const [productLocation, setProductLocation] = useState("");
-  const [homePickup, setHomePickup] = useState(true);
-  const [sending, setSending] = useState(false);
+  const [productLocation, setProductLocation] = useState<string>("");
+  const [homePickup, setHomePickup] = useState<boolean>(true);
+  const [sending, setSending] = useState<boolean>(false);
   //Modal visibility
   const [isModalConditionsVisible, setIsModalConditionsVisible] =
     useState(false);
@@ -62,113 +52,38 @@ const CreateScreen = () => {
   const [errorSending, setErrorSending] = useState("");
 
   //Form validation
-  const handleErrors = () => {
-    let isValid = true;
-    //Name errors
-    if (!name) {
-      setErrorName("Champs requis");
-      isValid = false;
-    } else {
-      setErrorName("");
-    }
-    if (name && name.length > 35) {
-      setErrorName("35 caractères maximum");
-      isValid = false;
-    } else {
-      setErrorName("");
-    }
-    //Description errors
-    if (!description) {
-      setErrorDescription("Champs requis");
-      isValid = false;
-    } else {
-      setErrorDescription("");
-    }
-    if (description && description.length > 300) {
-      setErrorDescription("300 caractères maximum");
-      isValid = false;
-    } else {
-      setErrorDescription("");
-    }
-    //Condition errors
-    if (!condition) {
-      setErrorCondition("Champs requis");
-      isValid = false;
-    } else {
-      setErrorCondition("");
-    }
-    //Quantity errors
-    if (quantity < 1) {
-      setErrorQuantity("minimum 1");
-      isValid = false;
-    } else {
-      setErrorQuantity("");
-    }
-    //Price errors
-    if (price < 1) {
-      setErrorPrice("Le prix ne peut être inférieur à 1€");
-      isValid = false;
-    } else {
-      setErrorPrice("");
-    }
-    //Weight errors
-    if (!weight) {
-      setErrorWeight("Champs requis");
-      isValid = false;
-    } else {
-      setErrorWeight("");
-    }
-    //Material errors
-    if (!material || material.length < 1) {
-      setErrorMaterial("Sélectionnez au moins 1 matière");
-      isValid = false;
-    } else if (material.length > 2) {
-      setErrorMaterial("Un maximum de 2 matières est autorisé");
-      isValid = false;
-    } else {
-      setErrorMaterial("");
-    }
-    //Category errors
-    if (!category || category.length < 1) {
-      setErrorCategory("Sélectionnez au moins 1 catégorie");
-      isValid = false;
-    } else if (category.length > 2) {
-      setErrorCategory("2 catégories max. sont autorisées");
-      isValid = false;
-    } else {
-      setErrorCategory("");
-    }
-    //ProductLocation errors
-    if (!productLocation) {
-      setErrorProductLocation("Champs requis");
-      isValid = false;
-    } else {
-      setErrorProductLocation("");
-    }
-    //HomePickup errors
-    if (!homePickup) {
-      setErrorHomePickup("Champs requis");
-      isValid = false;
-    } else {
-      setErrorHomePickup("");
-    }
-    //Sending errors
-    if (!sending) {
-      setErrorSending("Champs requis");
-      isValid = false;
-    } else {
-      setErrorSending("");
-    }
-    return isValid;
-  };
   const handleSubmit = () => {
-    if (handleErrors()) {
+    const isValidForm = handleErrors(
+      name,
+      description,
+      condition,
+      price,
+      quantity,
+      weight,
+      material,
+      category,
+      productLocation,
+      homePickup,
+      sending,
+      setErrorName,
+      setErrorDescription,
+      setErrorCondition,
+      setErrorPrice,
+      setErrorQuantity,
+      setErrorWeight,
+      setErrorMaterial,
+      setErrorCategory,
+      setErrorProductLocation,
+      setErrorHomePickup,
+      setErrorSending
+    );
+    if (isValidForm) {
       console.log("Super! il n'y a pas d'erreurs.");
     } else {
       console.log("Il y a au moins une erreur de saisie dans le formulaire.");
     }
   };
-  // Fonction pour gérer le changement de sélection de matériaux
+  // Gestion changement de sélection de matériaux
   const toggleMaterial = (mat: string) => {
     if (material.includes(mat)) {
       setMaterial((prev) => prev.filter((item) => item !== mat));
@@ -176,12 +91,20 @@ const CreateScreen = () => {
       setMaterial((prev) => [...prev, mat]);
     }
   };
+  // Gestion changement de sélection de catégorie
+  const toggleCategory = (cat: string) => {
+    if (category.includes(cat)) {
+      setCategory((prev) => prev.filter((item) => item !== cat));
+    } else {
+      setCategory((prev) => [...prev, cat]);
+    }
+  };
   console.log("######################################");
   console.log("name : ", name);
   console.log("description : ", description);
   console.log("condition : ", condition);
   console.log("quantity : ", quantity);
-  console.log("price : ", price);
+  console.log(`price : ${price} (${typeof price})`);
   console.log("material : ", material);
   console.log("weight : ", weight);
   console.log("category : ", category);
@@ -199,9 +122,9 @@ const CreateScreen = () => {
             <Spacer height={20} />
             <TextInput
               mode="outlined"
-              label="Titre*"
+              label="Nom*"
               value={name}
-              style={{ width: "100%" }}
+              style={{ width: "100%", backgroundColor: color.white }}
               onChangeText={setName}
             />
             <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
@@ -227,6 +150,7 @@ const CreateScreen = () => {
                 textAlign: "left",
                 height: 150,
                 width: "100%",
+                backgroundColor: color.white,
               }}
               value={description}
               onChangeText={setDescription}
@@ -237,99 +161,41 @@ const CreateScreen = () => {
               )}
             </View>
             <Spacer height={20} />
-            <View style={scrapCreation.conditionTitle}>
-              <Text style={scrapCreation.conditionTitleFont}>
-                Quel est l'état de votre chute ?...
-              </Text>
-            </View>
-            <Spacer height={5} />
-            <Pressable
-              style={scrapCreation.modalConditions}
-              onPress={() => {
-                setIsModalConditionsVisible(true);
-              }}
-            >
-              <Text style={fonts.conditions}>{condition}</Text>
-              <ChevronDown
-                name="chevron-down"
-                size={25}
-                color={color.secondary}
-              />
-            </Pressable>
-            <ModalConditionPicker
+            <PriceSelected setPrice={setPrice} errorPrice={errorPrice} />
+            <Spacer height={20} />
+            <QuantitySelected
+              setQuantity={setQuantity}
+              errorQuantity={errorQuantity}
+            />
+            <Spacer height={20} />
+            <ConditionSelected
+              condition={condition}
+              setCondition={setCondition}
               isModalConditionsVisible={isModalConditionsVisible}
               setIsModalConditionsVisible={setIsModalConditionsVisible}
-              setData={setCondition}
+              errorCondition={errorCondition}
             />
-            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-              {errorCondition && (
-                <Text style={{ color: color.error }}>*{errorCondition}</Text>
-              )}
-            </View>
             <Spacer height={20} />
-            <View style={scrapCreation.weightTitle}>
-              <Text style={scrapCreation.weightTitleFont}>
-                Quel est son poids ?
-              </Text>
-            </View>
-            <Spacer height={5} />
-            <Pressable
-              style={scrapCreation.modalWeights}
-              onPress={() => {
-                setIsModalWeightsVisible(true);
-              }}
-            >
-              <Text style={fonts.weights}>{weight}</Text>
-              <ChevronDown
-                name="chevron-down"
-                size={25}
-                color={color.secondary}
-              />
-            </Pressable>
-            <ModalWeightPicker
+            <WeightSelected
+              weight={weight}
+              setWeight={setWeight}
               isModalWeightsVisible={isModalWeightsVisible}
               setIsModalWeightsVisible={setIsModalWeightsVisible}
-              setData={setWeight}
+              errorWeight={errorWeight}
             />
-            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-              {errorWeight && (
-                <Text style={{ color: color.error }}>*{errorWeight}</Text>
-              )}
-            </View>
+
             <Spacer height={20} />
-            <View style={scrapCreation.materialContainer}>
-              <View style={scrapCreation.materialTitle}>
-                <Text style={scrapCreation.materialTitleFont}>
-                  Matière(s) principale(s)... (2 max.)
-                </Text>
-              </View>
-              <Spacer height={5} />
-              <View style={scrapCreation.materialItemContainer}>
-                {Object.values(MATERIALS).map((key) => (
-                  <Pressable
-                    key={key}
-                    style={scrapCreation.materialCheckButton}
-                    onPress={() => toggleMaterial(key)}
-                  >
-                    <View style={scrapCreation.itemMaterial}>
-                      <Text style={scrapCreation.materialTitleFont}>{key}</Text>
-                      <Checkbox
-                        status={
-                          material.includes(key) ? "checked" : "unchecked"
-                        }
-                        onPress={() => toggleMaterial(key)}
-                      />
-                    </View>
-                  </Pressable>
-                ))}
-              </View>
-            </View>
-            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-              {errorMaterial && (
-                <Text style={{ color: color.error }}>*{errorMaterial}</Text>
-              )}
-            </View>
+            <MaterialSelected
+              material={material}
+              errorMaterial={errorMaterial}
+              toggleMaterial={toggleMaterial}
+            />
             <Spacer height={20} />
+            <CategorySelected
+              category={category}
+              errorCategory={errorCategory}
+              toggleCategory={toggleCategory}
+            />
             <Spacer height={100} />
             <View style={displays.aliC}>
               <Pressable onPress={handleSubmit} style={buttons.primary}>

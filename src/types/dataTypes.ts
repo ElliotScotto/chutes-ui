@@ -36,6 +36,7 @@ export type ScrapDataCreation = {
   homePickup: boolean;
   sending: boolean;
 };
+
 export interface Conditions {
   commeNeuf: string;
   TresBonEtat: string;
@@ -64,17 +65,17 @@ export interface Category {
   Divers: string;
 }
 export const CATEGORIES: Category = {
-  Quincaillerie: "",
-  Outils: "",
-  Peinture: "",
-  Sol: "",
-  Electricité: "",
-  Plomberie: "",
-  Toiture: "",
-  Menuiserie: "",
-  Grosoeuvre: "",
-  Jardin: "",
-  Divers: "",
+  Quincaillerie: "Quincaillerie",
+  Outils: "Outils",
+  Peinture: "Peinture",
+  Sol: "Sol",
+  Electricité: "Electricité",
+  Plomberie: "Plomberie",
+  Toiture: "Toiture",
+  Menuiserie: "Menuiserie",
+  Grosoeuvre: "Gros-œuvre",
+  Jardin: "Jardin",
+  Divers: "Divers",
 };
 export interface Material {
   Metal: string;

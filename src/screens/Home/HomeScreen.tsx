@@ -119,6 +119,7 @@ const HomeScreen: FC = () => {
     <SafeAreaProvider>
       <SafeAreaView style={displays.safeContainer}>
         <View style={displays.mainContainer}>
+          <Spacer height={10} />
           <SearchBar
             filtersVisible={filtersVisible}
             setFiltersVisible={setFiltersVisible}

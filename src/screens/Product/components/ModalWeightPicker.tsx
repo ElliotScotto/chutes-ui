@@ -47,7 +47,7 @@ const ModalWeightPicker: FC<ModalWeightPickerProps> = ({
   return (
     <Modal
       transparent={false}
-      animationType="fade"
+      animationType="none"
       visible={isModalWeightsVisible}
       onRequestClose={() => {
         setIsModalWeightsVisible(false);
