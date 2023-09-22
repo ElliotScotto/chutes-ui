@@ -18,6 +18,9 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
   errorMaterial,
   toggleMaterial,
 }) => {
+  {
+    console.log(errorMaterial);
+  }
   return (
     <>
       <View style={scrapCreation.materialContainer}>
@@ -70,9 +73,9 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
           ))}
         </View>
       </View>
-      <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-        {errorMaterial && (
-          <Text style={{ color: color.error }}>*{errorMaterial}</Text>
+      <View style={scrapCreation.errors}>
+        {errorMaterial && material.length < 1 && (
+          <Text style={{ color: color.error }}>{errorMaterial}</Text>
         )}
       </View>
     </>

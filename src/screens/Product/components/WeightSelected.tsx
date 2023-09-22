@@ -33,7 +33,12 @@ const WeightSelected: FC<WeightSelectedProps> = ({
       </View>
       <Spacer height={5} />
       <Pressable
-        style={scrapCreation.modalWeights}
+        style={[
+          scrapCreation.modalWeights,
+          {
+            borderColor: errorWeight && !weight ? color.error : color.tertiary2,
+          },
+        ]}
         onPress={() => {
           setIsModalWeightsVisible(true);
         }}
@@ -46,9 +51,9 @@ const WeightSelected: FC<WeightSelectedProps> = ({
         setIsModalWeightsVisible={setIsModalWeightsVisible}
         setData={setWeight}
       />
-      <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-        {errorWeight && (
-          <Text style={{ color: color.error }}>*{errorWeight}</Text>
+      <View style={scrapCreation.errors}>
+        {errorWeight && !weight && (
+          <Text style={{ color: color.error }}>{errorWeight}</Text>
         )}
       </View>
     </>

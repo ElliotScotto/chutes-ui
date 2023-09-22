@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { TextInput } from "react-native-paper";
 import ChutesColors from "../../../styles/colors";
+import scrapCreation from "../../../styles/scrapCreation";
 const color = ChutesColors();
 
 export interface QuantitySelectedProps {
+  quantity: number | undefined;
   setQuantity: React.Dispatch<React.SetStateAction<number | undefined>>;
   errorQuantity: string;
 }
 
 const QuantitySelected: React.FC<QuantitySelectedProps> = ({
+  quantity,
   setQuantity,
   errorQuantity,
 }) => {
@@ -37,11 +40,20 @@ const QuantitySelected: React.FC<QuantitySelectedProps> = ({
         onChangeText={handleValueChange}
         keyboardType="number-pad"
         style={{ width: "100%", backgroundColor: color.white }}
+        theme={{
+          colors: {
+            primary: quantity
+              ? color.tertiary
+              : errorQuantity
+              ? color.error
+              : color.tertiary,
+          },
+        }}
         placeholder="Saisissez la quantité"
       />
-      <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-        {errorQuantity && (
-          <Text style={{ color: color.error }}>*{errorQuantity}</Text>
+      <View style={scrapCreation.errors}>
+        {errorQuantity && !quantity && (
+          <Text style={{ color: color.error }}>{errorQuantity}</Text>
         )}
       </View>
     </>

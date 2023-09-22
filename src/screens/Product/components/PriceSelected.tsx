@@ -3,13 +3,16 @@ import { View, Text } from "react-native";
 import { TextInput } from "react-native-paper";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
+import scrapCreation from "../../../styles/scrapCreation";
 
 export interface PriceSelectedProps {
+  price: number | undefined;
   setPrice: React.Dispatch<React.SetStateAction<number | undefined>>;
   errorPrice: string;
 }
 
 const PriceSelected: React.FC<PriceSelectedProps> = ({
+  price,
   setPrice,
   errorPrice,
 }) => {
@@ -43,7 +46,7 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
         // Alert.alert(
         //   "Vous ne pouvez pas vendre un produit à un prix inférieur à 1€ ou supérieur à 14000€."
         // );
-        setPrice(1);
+        setPrice(undefined);
       }
     }
   };
@@ -57,11 +60,23 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
         onChangeText={handleValueChange}
         keyboardType="default"
         style={{ width: "100%", backgroundColor: color.white }}
+        theme={{
+          colors: {
+            primary: price
+              ? color.tertiary
+              : errorPrice
+              ? color.error
+              : color.tertiary,
+          },
+        }}
+        right={
+          <TextInput.Affix text="€" textStyle={{ color: color.tertiary }} />
+        }
         placeholder="Saisissez le prix"
       />
-      <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-        {errorPrice && (
-          <Text style={{ color: color.error }}>*{errorPrice}</Text>
+      <View style={scrapCreation.errors}>
+        {errorPrice && !price && (
+          <Text style={{ color: color.error }}>{errorPrice}</Text>
         )}
       </View>
     </>

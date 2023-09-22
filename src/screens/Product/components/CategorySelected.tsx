@@ -70,9 +70,9 @@ const MaterialSelected: FC<CategorySelectedProps> = ({
           ))}
         </View>
       </View>
-      <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-        {errorCategory && (
-          <Text style={{ color: color.error }}>*{errorCategory}</Text>
+      <View style={scrapCreation.errors}>
+        {errorCategory && category.length < 1 && (
+          <Text style={{ color: color.error }}>{errorCategory}</Text>
         )}
       </View>
     </>

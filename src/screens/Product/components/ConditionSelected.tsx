@@ -48,9 +48,9 @@ const ConditionSelected: FC<ConditionSelectedProps> = ({
         setIsModalConditionsVisible={setIsModalConditionsVisible}
         setData={setCondition}
       />
-      <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-        {errorCondition && (
-          <Text style={{ color: color.error }}>*{errorCondition}</Text>
+      <View style={scrapCreation.errors}>
+        {errorCondition && !condition && (
+          <Text style={{ color: color.error }}>{errorCondition}</Text>
         )}
       </View>
     </>

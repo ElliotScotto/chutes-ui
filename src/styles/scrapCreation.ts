@@ -31,7 +31,6 @@ const scrapCreation = StyleSheet.create({
     justifyContent: "space-between",
     alignSelf: "stretch",
     paddingHorizontal: 20,
-    borderColor: colors.secondary,
     borderWidth: 1,
     borderRadius: 2,
     flexDirection: "row",
@@ -89,6 +88,13 @@ const scrapCreation = StyleSheet.create({
     margin: 6,
     paddingVertical: "auto",
     paddingHorizontal: 10,
+  },
+  //errors
+  errors: {
+    height: 18,
+    marginTop: 2,
+    marginLeft: 8,
+    alignSelf: "flex-start",
   },
 });
 export default scrapCreation;

@@ -1,16 +1,15 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
-import { TextInput } from "react-native-paper";
 //packages
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 //styles
-import ChutesColors from "../../styles/colors";
-const color = ChutesColors();
 import displays from "../../styles/display";
 import buttons from "../../styles/buttons";
 import fonts from "../../styles/fonts";
 //components
 import Spacer from "../../utils/Spacer";
+import NameSelected from "./components/NameSelected";
+import DescriptionSelected from "./components/DescriptionSelected";
 import PriceSelected from "./components/PriceSelected";
 import QuantitySelected from "./components/QuantitySelected";
 import ConditionSelected from "./components/ConditionSelected";
@@ -55,6 +54,7 @@ const CreateScreen = () => {
   const handleSubmit = () => {
     const isValidForm = handleErrors(
       name,
+      setName,
       description,
       condition,
       price,
@@ -101,6 +101,7 @@ const CreateScreen = () => {
   };
   console.log("######################################");
   console.log("name : ", name);
+  console.log("name.length : ", name.length);
   console.log("description : ", description);
   console.log("condition : ", condition);
   console.log("quantity : ", quantity);
@@ -120,50 +121,22 @@ const CreateScreen = () => {
         <View style={[displays.aliC, displays.w95]}>
           <ScrollView>
             <Spacer height={20} />
-            <TextInput
-              mode="outlined"
-              label="Nom*"
-              value={name}
-              style={{ width: "100%", backgroundColor: color.white }}
-              onChangeText={setName}
-            />
-            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-              {errorName && (
-                <Text
-                  style={{
-                    color: color.error,
-                  }}
-                >
-                  *{errorName}
-                </Text>
-              )}
-            </View>
+            <NameSelected name={name} setName={setName} errorName={errorName} />
             <Spacer height={20} />
-            <TextInput
-              mode="outlined"
-              label="Description*"
-              placeholder="Décrivez votre chute : Dimensions, couleurs... (300 caractères maximum)"
-              dense={true}
-              multiline={true}
-              style={{
-                justifyContent: "flex-start",
-                textAlign: "left",
-                height: 150,
-                width: "100%",
-                backgroundColor: color.white,
-              }}
-              value={description}
-              onChangeText={setDescription}
+            <DescriptionSelected
+              description={description}
+              setDescription={setDescription}
+              errorDescription={errorDescription}
             />
-            <View style={{ marginTop: 6, alignSelf: "flex-end" }}>
-              {errorDescription && (
-                <Text style={{ color: color.error }}>*{errorDescription}</Text>
-              )}
-            </View>
             <Spacer height={20} />
-            <PriceSelected setPrice={setPrice} errorPrice={errorPrice} />
+            <PriceSelected
+              price={price}
+              setPrice={setPrice}
+              errorPrice={errorPrice}
+            />
             <Spacer height={20} />
             <QuantitySelected
+              quantity={quantity}
               setQuantity={setQuantity}
               errorQuantity={errorQuantity}
             />

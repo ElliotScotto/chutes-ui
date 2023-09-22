@@ -1,5 +1,6 @@
 export const handleErrors = (
   name: string,
+  setName: React.Dispatch<React.SetStateAction<string>>,
   description: string,
   condition: string,
   price: number | undefined,
@@ -28,11 +29,8 @@ export const handleErrors = (
   if (!name) {
     setErrorName("Champs requis");
     isValid = false;
-  } else {
-    setErrorName("");
-  }
-  if (name && name.length > 35) {
-    setErrorName("35 caractères maximum");
+  } else if (name.length > 40) {
+    setErrorName("40 caractères maximum");
     isValid = false;
   } else {
     setErrorName("");
@@ -41,15 +39,13 @@ export const handleErrors = (
   if (!description) {
     setErrorDescription("Champs requis");
     isValid = false;
-  } else {
-    setErrorDescription("");
-  }
-  if (description && description.length > 300) {
+  } else if (description && description.length > 300) {
     setErrorDescription("300 caractères maximum");
     isValid = false;
   } else {
     setErrorDescription("");
   }
+
   //Condition errors
   if (!condition) {
     setErrorCondition("Champs requis");
@@ -95,46 +91,40 @@ export const handleErrors = (
     setErrorWeight("");
   }
   //Material errors
-  if (!material || material.length < 1) {
+  if (!material || material.length === 0) {
     setErrorMaterial("Sélectionnez au moins 1 matière");
-    isValid = false;
-  } else if (material.length > 2) {
-    setErrorMaterial("Un maximum de 2 matières est accepté");
     isValid = false;
   } else {
     setErrorMaterial("");
   }
   //Category errors
-  if (!category || category.length < 1) {
+  if (!category || category.length === 0) {
     setErrorCategory("Sélectionnez au moins 1 catégorie");
-    isValid = false;
-  } else if (category.length > 2) {
-    setErrorCategory("Un maximum de 2 catégories est accepté");
     isValid = false;
   } else {
     setErrorCategory("");
   }
   //ProductLocation errors
-  if (!productLocation) {
-    setErrorProductLocation("Champs requis");
-    isValid = false;
-  } else {
-    setErrorProductLocation("");
-  }
+  // if (!productLocation) {
+  //   setErrorProductLocation("Champs requis");
+  //   isValid = false;
+  // } else {
+  //   setErrorProductLocation("");
+  // }
   //HomePickup errors
-  if (!homePickup) {
-    setErrorHomePickup("Champs requis");
-    isValid = false;
-  } else {
-    setErrorHomePickup("");
-  }
+  // if (homePickup) {
+  //   setErrorHomePickup("Champs requis");
+  //   isValid = false;
+  // } else {
+  //   setErrorHomePickup("");
+  // }
   //Sending errors
-  if (!sending) {
-    setErrorSending("Champs requis");
-    isValid = false;
-  } else {
-    setErrorSending("");
-  }
+  // if (!sending) {
+  //   setErrorSending("Champs requis");
+  //   isValid = false;
+  // } else {
+  //   setErrorSending("");
+  // }
   // ... Add vérifications here
   return isValid;
 };
