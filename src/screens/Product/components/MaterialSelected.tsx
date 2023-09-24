@@ -29,7 +29,7 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
             Matière(s) principale(s)... (2 max.)
           </Text>
         </View>
-        <Spacer height={5} />
+        <Spacer height={10} />
         <View style={scrapCreation.materialItemContainer}>
           {Object.values(MATERIALS).map((key) => (
             <Pressable

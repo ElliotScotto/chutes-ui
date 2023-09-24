@@ -31,7 +31,7 @@ const WeightSelected: FC<WeightSelectedProps> = ({
       <View style={scrapCreation.weightTitle}>
         <Text style={scrapCreation.weightTitleFont}>Quel est son poids ?*</Text>
       </View>
-      <Spacer height={5} />
+      <Spacer height={10} />
       <Pressable
         style={[
           scrapCreation.modalWeights,

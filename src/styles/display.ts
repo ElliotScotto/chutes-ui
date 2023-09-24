@@ -9,6 +9,7 @@ const displays = StyleSheet.create({
   flex: { flex: 1 },
   w100: { width: widthScreen * 1 },
   w95: { width: widthScreen * 0.95 },
+  w90: { width: widthScreen * 0.9 },
   white: { backgroundColor: colors.white },
   bot100: { position: "absolute", bottom: 100 },
   searchBar: {

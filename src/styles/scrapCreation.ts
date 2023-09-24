@@ -89,11 +89,14 @@ const scrapCreation = StyleSheet.create({
     paddingVertical: "auto",
     paddingHorizontal: 10,
   },
+  //Product Location
+  productLocationTitle: { alignSelf: "flex-start" },
   //errors
   errors: {
     height: 18,
+    width: "100%",
     marginTop: 2,
-    marginLeft: 8,
+    paddingLeft: 8,
     alignSelf: "flex-start",
   },
 });

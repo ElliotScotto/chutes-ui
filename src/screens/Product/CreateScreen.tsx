@@ -16,6 +16,8 @@ import ConditionSelected from "./components/ConditionSelected";
 import WeightSelected from "./components/WeightSelected";
 import MaterialSelected from "./components/MaterialSelected";
 import CategorySelected from "./components/CategorySelected";
+import ProductLocationSelected from "./components/ProductLocationSelected";
+import DeliverySelected from "./components/DeliverySelected";
 //functions
 import { handleErrors } from "./functions/validateForm";
 const CreateScreen = () => {
@@ -48,6 +50,7 @@ const CreateScreen = () => {
   const [errorCategory, setErrorCategory] = useState("");
   const [errorProductLocation, setErrorProductLocation] = useState("");
   const [errorHomePickup, setErrorHomePickup] = useState("");
+  const [sellerDelivers, setSellerDelivers] = useState(false);
   const [errorSending, setErrorSending] = useState("");
 
   //Form validation
@@ -111,6 +114,7 @@ const CreateScreen = () => {
   console.log("category : ", category);
   console.log("productLocation : ", productLocation);
   console.log("homePickup : ", homePickup);
+  console.log("sellerDelivers : ", sellerDelivers);
   console.log("sending : ", sending);
   console.log("######################################");
   return (
@@ -118,8 +122,8 @@ const CreateScreen = () => {
       <SafeAreaView
         style={[displays.flex, displays.white, displays.w100, displays.aliC]}
       >
-        <View style={[displays.aliC, displays.w95]}>
-          <ScrollView>
+        <ScrollView>
+          <View style={[displays.aliC, displays.w90]}>
             <Spacer height={20} />
             <NameSelected name={name} setName={setName} errorName={errorName} />
             <Spacer height={20} />
@@ -169,15 +173,30 @@ const CreateScreen = () => {
               errorCategory={errorCategory}
               toggleCategory={toggleCategory}
             />
-            <Spacer height={100} />
+            <Spacer height={20} />
+            <DeliverySelected
+              homePickup={homePickup}
+              setHomePickup={setHomePickup}
+              errorHomePickup={errorHomePickup}
+              setErrorHomePickup={setErrorHomePickup}
+              setSellerDelivers={setSellerDelivers}
+            />
+            <ProductLocationSelected
+              productLocation={productLocation}
+              setProductLocation={setProductLocation}
+              errorProductLocation={errorProductLocation}
+              setErrorProductLocation={setErrorProductLocation}
+              sellerDelivers={sellerDelivers}
+            />
+            <Spacer height={50} />
             <View style={displays.aliC}>
               <Pressable onPress={handleSubmit} style={buttons.primary}>
                 <Text style={fonts.primary}>Publier</Text>
               </Pressable>
             </View>
             <Spacer height={20} />
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
   );

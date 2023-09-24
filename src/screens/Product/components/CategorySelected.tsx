@@ -26,7 +26,7 @@ const MaterialSelected: FC<CategorySelectedProps> = ({
             Catégorie(s) principale(s)... (2 max.)
           </Text>
         </View>
-        <Spacer height={5} />
+        <Spacer height={10} />
         <View style={scrapCreation.categoryItemContainer}>
           {Object.values(CATEGORIES).map((key) => (
             <Pressable

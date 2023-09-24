@@ -33,7 +33,7 @@ const ConditionSelected: FC<ConditionSelectedProps> = ({
           Quel est l'état de votre chute ?*
         </Text>
       </View>
-      <Spacer height={5} />
+      <Spacer height={10} />
       <Pressable
         style={scrapCreation.modalConditions}
         onPress={() => {

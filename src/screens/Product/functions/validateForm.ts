@@ -105,12 +105,15 @@ export const handleErrors = (
     setErrorCategory("");
   }
   //ProductLocation errors
-  // if (!productLocation) {
-  //   setErrorProductLocation("Champs requis");
-  //   isValid = false;
-  // } else {
-  //   setErrorProductLocation("");
-  // }
+  if (!productLocation) {
+    setErrorProductLocation("Champs requis");
+    isValid = false;
+  } else if (productLocation.length > 40) {
+    setErrorProductLocation("45 caractères maximum");
+    isValid = false;
+  } else {
+    setErrorProductLocation("");
+  }
   //HomePickup errors
   // if (homePickup) {
   //   setErrorHomePickup("Champs requis");
