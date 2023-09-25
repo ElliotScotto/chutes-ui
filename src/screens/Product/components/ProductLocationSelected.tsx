@@ -13,30 +13,25 @@ interface ProductLocationSelectedProps {
   productLocation: string;
   setProductLocation: React.Dispatch<React.SetStateAction<string>>;
   errorProductLocation: string;
-  setErrorProductLocation: React.Dispatch<React.SetStateAction<string>>;
   sellerDelivers: boolean;
   counterPressed: number;
-  productLocationRef: React.RefObject<any>;
 }
 
 const ProductLocationSelected: FC<ProductLocationSelectedProps> = ({
   productLocation,
   setProductLocation,
   errorProductLocation,
-  setErrorProductLocation,
   sellerDelivers,
   counterPressed,
-  productLocationRef,
 }) => {
   return sellerDelivers ? null : (
-    <View ref={productLocationRef} style={{ width: "100%" }}>
+    <View style={{ width: "100%" }}>
       <Spacer height={20} />
       <View style={scrapCreation.productLocationTitle}>
         <Text style={fonts.productLocation}>Lieu de vente ?*</Text>
       </View>
       <Spacer height={10} />
       <TextInput
-        ref={productLocationRef}
         mode="outlined"
         label="Ville*"
         placeholder="ex: Rosny-sur-Seine"

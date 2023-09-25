@@ -3,21 +3,18 @@ import { View, Text } from "react-native";
 import { Switch } from "react-native-paper";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
-import scrapCreation from "../../../styles/scrapCreation";
 import displays from "../../../styles/display";
 import fonts from "../../../styles/fonts";
 interface DeliverySelectedProps {
   homePickup: boolean;
   setHomePickup: React.Dispatch<React.SetStateAction<boolean>>;
   setSellerDelivers: React.Dispatch<React.SetStateAction<boolean>>;
-  homePickupRef: React.RefObject<any>;
 }
 
 const DeliverySelected: React.FC<DeliverySelectedProps> = ({
   homePickup,
   setHomePickup,
   setSellerDelivers,
-  homePickupRef,
 }) => {
   const handleToggleSwitch = (value: boolean) => {
     setHomePickup(value);
@@ -30,7 +27,6 @@ const DeliverySelected: React.FC<DeliverySelectedProps> = ({
 
   return (
     <View
-      ref={homePickupRef}
       style={{
         width: "100%",
         flexDirection: "row",

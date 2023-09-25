@@ -23,7 +23,7 @@ import ProductLocationSelected from "./components/ProductLocationSelected";
 import PostScrapButton from "./components/PostScrapButton";
 //functions
 import { handleErrors } from "./functions/validateForm";
-type RefType = React.RefObject<View>;
+import { scrollToRef } from "./functions/handleFocus";
 
 const CreateScreen = () => {
   //product states
@@ -40,16 +40,15 @@ const CreateScreen = () => {
   const [sellerDelivers, setSellerDelivers] = useState<boolean>(false);
   //Focus & ref
   const scrollViewRef = useRef<ScrollView>(null);
-  const nameRef = useRef<View | null>(null);
-  const descriptionRef = useRef<View | null>(null);
-  const priceRef = useRef<View | null>(null);
-  const quantityRef = useRef<View | null>(null);
-  const conditionRef = useRef<View | null>(null);
-  const weightRef = useRef<View | null>(null);
-  const materialRef = useRef<View | null>(null);
-  const categoryRef = useRef<View | null>(null);
-  const homePickupRef = useRef<View | null>(null);
-  const productLocationRef = useRef<View | null>(null);
+  const nameRef = useRef<View>(null);
+  const descriptionRef = useRef<View>(null);
+  const priceRef = useRef<View>(null);
+  const quantityRef = useRef<View>(null);
+  const conditionRef = useRef<View>(null);
+  const weightRef = useRef<View>(null);
+  const materialRef = useRef<View>(null);
+  const categoryRef = useRef<View>(null);
+  const productLocationRef = useRef<View>(null);
   //Modal visibility
   const [isModalConditionsVisible, setIsModalConditionsVisible] =
     useState(false);
@@ -69,23 +68,6 @@ const CreateScreen = () => {
   const [counterPressed, setCounterPressed] = useState<number>(0);
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [shadowButton, setShadowButton] = useState<boolean>(true);
-  //Focus
-  const scrollToRef = (ref: RefType) => {
-    if (ref.current && scrollViewRef.current) {
-      (ref.current as any).measureLayout(
-        scrollViewRef.current as any,
-        (_: number, y: number, width: number, height: number) => {
-          console.log("Position Y:", y);
-          let offset = y - 20; // Ajout d'une marge de 50 pixels pour décaler vers le haut
-          scrollViewRef.current?.scrollTo({
-            x: 0,
-            y: offset,
-            animated: true,
-          });
-        }
-      );
-    }
-  };
   //Form validation
   const handleSubmit = () => {
     const isValidForm = handleErrors(
@@ -108,46 +90,40 @@ const CreateScreen = () => {
       setErrorMaterial,
       setErrorCategory,
       setErrorProductLocation,
-      nameRef,
-      descriptionRef,
-      priceRef,
-      quantityRef,
-      conditionRef,
-      weightRef,
-      materialRef,
-      categoryRef,
-      homePickupRef,
-      productLocationRef,
-      scrollToRef
+      setErrorMessage
     );
     if (isValidForm) {
       setIsButtonEnabled(true);
-      setErrorMessage("");
     } else {
-      setErrorMessage("Veuillez remplir tous les champs");
       setIsButtonEnabled(false);
+      //if multiple errors focus set on the first area from top to bottom
+      if (!name) {
+        scrollToRef(scrollViewRef, nameRef);
+      } else if (name && name.length > 45) {
+        scrollToRef(scrollViewRef, nameRef);
+      } else if (!description) {
+        scrollToRef(scrollViewRef, descriptionRef);
+      } else if (description && description.length > 300) {
+        scrollToRef(scrollViewRef, descriptionRef);
+      } else if (!price) {
+        scrollToRef(scrollViewRef, priceRef);
+      } else if (!quantity) {
+        scrollToRef(scrollViewRef, quantityRef);
+      } else if (!condition) {
+        scrollToRef(scrollViewRef, conditionRef);
+      } else if (!weight) {
+        scrollToRef(scrollViewRef, weightRef, -30);
+      } else if (!material || material.length === 0) {
+        scrollToRef(scrollViewRef, materialRef);
+      } else if (!category || category.length === 0) {
+        scrollToRef(scrollViewRef, categoryRef, -15);
+      } else if (homePickup === true && !productLocation) {
+        scrollToRef(scrollViewRef, productLocationRef);
+      }
     }
   };
-  // Gestion changement de sélection de matériaux
-  const toggleMaterial = (mat: string) => {
-    if (material.includes(mat)) {
-      setMaterial((prev) => prev.filter((item) => item !== mat));
-    } else {
-      setMaterial((prev) => [...prev, mat]);
-    }
-  };
-  // Gestion changement de sélection de catégorie
-  const toggleCategory = (cat: string) => {
-    if (category.includes(cat)) {
-      setCategory((prev) => prev.filter((item) => item !== cat));
-    } else {
-      setCategory((prev) => [...prev, cat]);
-    }
-  };
-
   console.log("######################################");
   console.log("name : ", name);
-  console.log("name.length : ", name.length);
   console.log("description : ", description);
   console.log("condition : ", condition);
   console.log("quantity : ", quantity);
@@ -160,7 +136,6 @@ const CreateScreen = () => {
   console.log("sellerDelivers : ", sellerDelivers);
   console.log("isButtonEnabled : ", isButtonEnabled);
   console.log("######################################");
-
   return (
     <SafeAreaProvider>
       <SafeAreaView
@@ -225,34 +200,32 @@ const CreateScreen = () => {
             <Spacer height={20} />
             <MaterialSelected
               material={material}
+              setMaterial={setMaterial}
               errorMaterial={errorMaterial}
-              toggleMaterial={toggleMaterial}
               counterPressed={counterPressed}
               materialRef={materialRef}
             />
             <Spacer height={20} />
             <CategorySelected
               category={category}
+              setCategory={setCategory}
               errorCategory={errorCategory}
-              toggleCategory={toggleCategory}
               counterPressed={counterPressed}
               categoryRef={categoryRef}
             />
+
             <Spacer height={20} />
             <DeliverySelected
               homePickup={homePickup}
               setHomePickup={setHomePickup}
               setSellerDelivers={setSellerDelivers}
-              homePickupRef={homePickupRef}
             />
             <ProductLocationSelected
               productLocation={productLocation}
               setProductLocation={setProductLocation}
               errorProductLocation={errorProductLocation}
-              setErrorProductLocation={setErrorProductLocation}
               sellerDelivers={sellerDelivers}
               counterPressed={counterPressed}
-              productLocationRef={productLocationRef}
             />
             <Spacer height={50} />
             <Spacer height={10} />
@@ -269,48 +242,35 @@ const CreateScreen = () => {
               )}
             </View>
             <Spacer height={10} />
-            {scrollToRef && (
-              <PostScrapButton
-                shadowButton={shadowButton}
-                setShadowButton={setShadowButton}
-                isButtonEnabled={isButtonEnabled}
-                setIsButtonEnabled={setIsButtonEnabled}
-                handleSubmit={handleSubmit}
-                name={name}
-                description={description}
-                condition={condition}
-                price={price}
-                quantity={quantity}
-                weight={weight}
-                material={material}
-                category={category}
-                productLocation={productLocation}
-                homePickup={homePickup}
-                setErrorName={setErrorName}
-                setErrorDescription={setErrorDescription}
-                setErrorCondition={setErrorCondition}
-                setErrorPrice={setErrorPrice}
-                setErrorQuantity={setErrorQuantity}
-                setErrorWeight={setErrorWeight}
-                setErrorMaterial={setErrorMaterial}
-                setErrorCategory={setErrorCategory}
-                setErrorProductLocation={setErrorProductLocation}
-                setErrorMessage={setErrorMessage}
-                counterPressed={counterPressed}
-                setCounterPressed={setCounterPressed}
-                nameRef={nameRef}
-                descriptionRef={descriptionRef}
-                priceRef={priceRef}
-                quantityRef={quantityRef}
-                conditionRef={conditionRef}
-                weightRef={weightRef}
-                materialRef={materialRef}
-                categoryRef={categoryRef}
-                homePickupRef={homePickupRef}
-                productLocationRef={productLocationRef}
-                scrollToRef={scrollToRef}
-              />
-            )}
+            <PostScrapButton
+              shadowButton={shadowButton}
+              setShadowButton={setShadowButton}
+              isButtonEnabled={isButtonEnabled}
+              setIsButtonEnabled={setIsButtonEnabled}
+              handleSubmit={handleSubmit}
+              name={name}
+              description={description}
+              condition={condition}
+              price={price}
+              quantity={quantity}
+              weight={weight}
+              material={material}
+              category={category}
+              productLocation={productLocation}
+              homePickup={homePickup}
+              setErrorName={setErrorName}
+              setErrorDescription={setErrorDescription}
+              setErrorCondition={setErrorCondition}
+              setErrorPrice={setErrorPrice}
+              setErrorQuantity={setErrorQuantity}
+              setErrorWeight={setErrorWeight}
+              setErrorMaterial={setErrorMaterial}
+              setErrorCategory={setErrorCategory}
+              setErrorProductLocation={setErrorProductLocation}
+              setErrorMessage={setErrorMessage}
+              counterPressed={counterPressed}
+              setCounterPressed={setCounterPressed}
+            />
             <Spacer height={20} />
           </View>
         </ScrollView>

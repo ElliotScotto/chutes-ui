@@ -38,6 +38,7 @@ const scrapCreation = StyleSheet.create({
   //Materials
   materialContainer: {
     flexDirection: "column",
+    height: 230,
   },
   materialTitle: {},
   materialTitleFont: {

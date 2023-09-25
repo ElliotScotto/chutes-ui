@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Pressable } from "react-native";
+import { Text, Pressable } from "react-native";
 import { Shadow } from "react-native-shadow-2";
-import displays from "../../../styles/display";
-import fonts from "../../../styles/fonts";
 import buttons from "../../../styles/buttons";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
@@ -36,17 +34,6 @@ export interface PostScrapButtonProps {
   setErrorProductLocation: React.Dispatch<React.SetStateAction<string>>;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   setCounterPressed: React.Dispatch<React.SetStateAction<number>>;
-  nameRef: React.RefObject<any>;
-  descriptionRef: React.RefObject<any>;
-  priceRef: React.RefObject<any>;
-  quantityRef: React.RefObject<any>;
-  conditionRef: React.RefObject<View>;
-  weightRef: React.RefObject<View>;
-  materialRef: React.RefObject<View>;
-  categoryRef: React.RefObject<View>;
-  homePickupRef: React.RefObject<View>;
-  productLocationRef: React.RefObject<View>;
-  scrollToRef: (ref: React.RefObject<View>) => void;
 }
 
 const PostScrapButton: React.FC<PostScrapButtonProps> = ({
@@ -77,17 +64,6 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   setErrorProductLocation,
   setErrorMessage,
   setCounterPressed,
-  nameRef,
-  descriptionRef,
-  priceRef,
-  quantityRef,
-  conditionRef,
-  weightRef,
-  materialRef,
-  categoryRef,
-  homePickupRef,
-  productLocationRef,
-  scrollToRef,
 }) => {
   const [textColor, setTextColor] = useState<string>(`${color.secondary}`);
 
@@ -123,21 +99,10 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         setErrorMaterial,
         setErrorCategory,
         setErrorProductLocation,
-        nameRef,
-        descriptionRef,
-        priceRef,
-        quantityRef,
-        conditionRef,
-        weightRef,
-        materialRef,
-        categoryRef,
-        homePickupRef,
-        productLocationRef,
-        scrollToRef
+        setErrorMessage
       )
     );
   });
-  console.log("scrollToRef in PostScrapButton", scrollToRef);
   return (
     <Shadow
       distance={shadowButton ? 4 : 0}
@@ -179,8 +144,5 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
       </Pressable>
     </Shadow>
   );
-};
-PostScrapButton.defaultProps = {
-  scrollToRef: () => {},
 };
 export default PostScrapButton;

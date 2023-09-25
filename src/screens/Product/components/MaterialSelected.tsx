@@ -1,27 +1,36 @@
 import React, { FC } from "react";
 import { View, Text, Pressable } from "react-native";
-import { Checkbox, TextInput } from "react-native-paper";
+import { Checkbox } from "react-native-paper";
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
 import Spacer from "../../../utils/Spacer";
 import { MATERIALS } from "../../../types/dataTypes";
+import displays from "../../../styles/display";
 
 interface MaterialSelectedProps {
   material: string[];
+  setMaterial: React.Dispatch<React.SetStateAction<string[]>>;
   errorMaterial: string;
-  toggleMaterial: (key: string) => void;
   counterPressed: number;
   materialRef: React.RefObject<any>;
 }
 
 const MaterialSelected: FC<MaterialSelectedProps> = ({
   material,
+  setMaterial,
   errorMaterial,
-  toggleMaterial,
   counterPressed,
   materialRef,
 }) => {
+  // Management of material selection change
+  const toggleMaterial = (mat: string) => {
+    if (material.includes(mat)) {
+      setMaterial((prev) => prev.filter((item) => item !== mat));
+    } else {
+      setMaterial((prev) => [...prev, mat]);
+    }
+  };
   return (
     <View ref={materialRef} style={{ width: "100%" }}>
       <View style={scrapCreation.materialContainer}>
@@ -34,7 +43,6 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
         <View style={scrapCreation.materialItemContainer}>
           {Object.values(MATERIALS).map((key) => (
             <Pressable
-              ref={materialRef}
               key={key}
               style={scrapCreation.materialCheckButton}
               onPress={() => toggleMaterial(key)}

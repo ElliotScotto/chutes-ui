@@ -1,28 +1,35 @@
 import React, { FC } from "react";
 import { View, Text, Pressable } from "react-native";
-import { Checkbox, TextInput } from "react-native-paper";
+import { Checkbox } from "react-native-paper";
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
 import Spacer from "../../../utils/Spacer";
 import { CATEGORIES } from "../../../types/dataTypes";
-import displays from "../../../styles/display";
 
 interface CategorySelectedProps {
   category: string[];
+  setCategory: React.Dispatch<React.SetStateAction<string[]>>;
   errorCategory: string;
-  toggleCategory: (key: string) => void;
   counterPressed: number;
   categoryRef: React.RefObject<any>;
 }
 
-const MaterialSelected: FC<CategorySelectedProps> = ({
+const CategorySelected: FC<CategorySelectedProps> = ({
   category,
+  setCategory,
   errorCategory,
-  toggleCategory,
   counterPressed,
   categoryRef,
 }) => {
+  // Management of category selection change
+  const toggleCategory = (cat: string) => {
+    if (category.includes(cat)) {
+      setCategory((prev) => prev.filter((item) => item !== cat));
+    } else {
+      setCategory((prev) => [...prev, cat]);
+    }
+  };
   return (
     <View ref={categoryRef} style={{ width: "100%" }}>
       <View style={scrapCreation.categoryContainer}>
@@ -35,7 +42,6 @@ const MaterialSelected: FC<CategorySelectedProps> = ({
         <View style={scrapCreation.categoryItemContainer}>
           {Object.values(CATEGORIES).map((key) => (
             <Pressable
-              ref={categoryRef}
               key={key}
               style={scrapCreation.categoryCheckButton}
               onPress={() => toggleCategory(key)}
@@ -90,4 +96,4 @@ const MaterialSelected: FC<CategorySelectedProps> = ({
     </View>
   );
 };
-export default MaterialSelected;
+export default CategorySelected;

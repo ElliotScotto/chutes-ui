@@ -62,7 +62,7 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
         label="Prix*"
         value={inputValue}
         onChangeText={handleValueChange}
-        keyboardType="default"
+        keyboardType="number-pad"
         style={{ width: "100%", backgroundColor: color.white }}
         theme={{
           colors: {
