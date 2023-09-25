@@ -227,7 +227,6 @@ const CreateScreen = () => {
               sellerDelivers={sellerDelivers}
               counterPressed={counterPressed}
             />
-            <Spacer height={50} />
             <Spacer height={10} />
             <View style={[{ height: 30, width: "100%" }, displays.center]}>
               {errorMessage && counterPressed !== 0 && (
@@ -241,7 +240,7 @@ const CreateScreen = () => {
                 </Text>
               )}
             </View>
-            <Spacer height={10} />
+            <Spacer height={40} />
             <PostScrapButton
               shadowButton={shadowButton}
               setShadowButton={setShadowButton}
@@ -271,7 +270,7 @@ const CreateScreen = () => {
               counterPressed={counterPressed}
               setCounterPressed={setCounterPressed}
             />
-            <Spacer height={20} />
+            <Spacer height={40} />
           </View>
         </ScrollView>
       </SafeAreaView>
