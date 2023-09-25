@@ -9,12 +9,16 @@ export interface QuantitySelectedProps {
   quantity: number | undefined;
   setQuantity: React.Dispatch<React.SetStateAction<number | undefined>>;
   errorQuantity: string;
+  counterPressed: number;
+  quantityRef: React.RefObject<any>;
 }
 
 const QuantitySelected: React.FC<QuantitySelectedProps> = ({
   quantity,
   setQuantity,
   errorQuantity,
+  counterPressed,
+  quantityRef,
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
 
@@ -32,7 +36,7 @@ const QuantitySelected: React.FC<QuantitySelectedProps> = ({
   };
 
   return (
-    <>
+    <View ref={quantityRef} style={{ width: "100%" }}>
       <TextInput
         mode="outlined"
         label="Quantité*"
@@ -44,7 +48,7 @@ const QuantitySelected: React.FC<QuantitySelectedProps> = ({
           colors: {
             primary: quantity
               ? color.tertiary
-              : errorQuantity
+              : errorQuantity && counterPressed !== 0
               ? color.error
               : color.tertiary,
           },
@@ -52,11 +56,11 @@ const QuantitySelected: React.FC<QuantitySelectedProps> = ({
         placeholder="Saisissez la quantité"
       />
       <View style={scrapCreation.errors}>
-        {errorQuantity && !quantity && (
+        {errorQuantity && !quantity && counterPressed !== 0 && (
           <Text style={{ color: color.error }}>{errorQuantity}</Text>
         )}
       </View>
-    </>
+    </View>
   );
 };
 

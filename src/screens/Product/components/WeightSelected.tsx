@@ -1,5 +1,7 @@
 import React, { FC } from "react";
 import { View, Text, Pressable } from "react-native";
+//packages
+import { TextInput } from "react-native-paper";
 //styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
@@ -17,6 +19,8 @@ interface WeightSelectedProps {
   isModalWeightsVisible: boolean;
   setIsModalWeightsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   errorWeight: string;
+  counterPressed: number;
+  weightRef: React.RefObject<any>;
 }
 
 const WeightSelected: FC<WeightSelectedProps> = ({
@@ -25,18 +29,24 @@ const WeightSelected: FC<WeightSelectedProps> = ({
   isModalWeightsVisible,
   setIsModalWeightsVisible,
   errorWeight,
+  counterPressed,
+  weightRef,
 }) => {
   return (
-    <>
+    <View ref={weightRef} style={{ width: "100%" }}>
       <View style={scrapCreation.weightTitle}>
         <Text style={scrapCreation.weightTitleFont}>Quel est son poids ?*</Text>
       </View>
       <Spacer height={10} />
       <Pressable
+        ref={weightRef}
         style={[
           scrapCreation.modalWeights,
           {
-            borderColor: errorWeight && !weight ? color.error : color.tertiary2,
+            borderColor:
+              errorWeight && !weight && counterPressed !== 0
+                ? color.error
+                : color.tertiary2,
           },
         ]}
         onPress={() => {
@@ -52,11 +62,11 @@ const WeightSelected: FC<WeightSelectedProps> = ({
         setData={setWeight}
       />
       <View style={scrapCreation.errors}>
-        {errorWeight && !weight && (
+        {errorWeight && !weight && counterPressed !== 0 && (
           <Text style={{ color: color.error }}>{errorWeight}</Text>
         )}
       </View>
-    </>
+    </View>
   );
 };
 export default WeightSelected;

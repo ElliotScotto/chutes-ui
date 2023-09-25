@@ -15,6 +15,8 @@ interface ProductLocationSelectedProps {
   errorProductLocation: string;
   setErrorProductLocation: React.Dispatch<React.SetStateAction<string>>;
   sellerDelivers: boolean;
+  counterPressed: number;
+  productLocationRef: React.RefObject<any>;
 }
 
 const ProductLocationSelected: FC<ProductLocationSelectedProps> = ({
@@ -23,15 +25,18 @@ const ProductLocationSelected: FC<ProductLocationSelectedProps> = ({
   errorProductLocation,
   setErrorProductLocation,
   sellerDelivers,
+  counterPressed,
+  productLocationRef,
 }) => {
   return sellerDelivers ? null : (
-    <>
+    <View ref={productLocationRef} style={{ width: "100%" }}>
       <Spacer height={20} />
       <View style={scrapCreation.productLocationTitle}>
         <Text style={fonts.productLocation}>Lieu de vente ?*</Text>
       </View>
       <Spacer height={10} />
       <TextInput
+        ref={productLocationRef}
         mode="outlined"
         label="Ville*"
         placeholder="ex: Rosny-sur-Seine"
@@ -45,7 +50,7 @@ const ProductLocationSelected: FC<ProductLocationSelectedProps> = ({
               ? productLocation.length <= 45
                 ? color.tertiary
                 : color.error
-              : errorProductLocation
+              : errorProductLocation && counterPressed !== 0
               ? color.error
               : color.tertiary,
           },
@@ -53,7 +58,7 @@ const ProductLocationSelected: FC<ProductLocationSelectedProps> = ({
         onChangeText={setProductLocation}
       />
       <View style={scrapCreation.errors}>
-        {errorProductLocation && !productLocation && (
+        {errorProductLocation && !productLocation && counterPressed !== 0 && (
           <Text
             style={{
               color: color.error,
@@ -63,7 +68,7 @@ const ProductLocationSelected: FC<ProductLocationSelectedProps> = ({
           </Text>
         )}
       </View>
-    </>
+    </View>
   );
 };
 export default ProductLocationSelected;

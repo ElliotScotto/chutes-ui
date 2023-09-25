@@ -11,15 +11,19 @@ interface DescriptionSelectedProps {
   description: string;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
   errorDescription: string;
+  counterPressed: number;
+  descriptionRef: React.RefObject<any>;
 }
 
 const DescriptionSelected: FC<DescriptionSelectedProps> = ({
   description,
   setDescription,
   errorDescription,
+  counterPressed,
+  descriptionRef,
 }) => {
   return (
-    <>
+    <View ref={descriptionRef} style={{ width: "100%" }}>
       <TextInput
         mode="outlined"
         label="Description*"
@@ -34,7 +38,7 @@ const DescriptionSelected: FC<DescriptionSelectedProps> = ({
               ? description.length <= 300
                 ? color.tertiary
                 : color.error
-              : errorDescription
+              : errorDescription && counterPressed !== 0
               ? color.error
               : color.tertiary,
           },
@@ -42,7 +46,7 @@ const DescriptionSelected: FC<DescriptionSelectedProps> = ({
         onChangeText={setDescription}
       />
       <View style={scrapCreation.errors}>
-        {errorDescription && !description && (
+        {errorDescription && !description && counterPressed !== 0 && (
           <Text
             style={{
               color: color.error,
@@ -52,7 +56,7 @@ const DescriptionSelected: FC<DescriptionSelectedProps> = ({
           </Text>
         )}
       </View>
-    </>
+    </View>
   );
 };
 export default DescriptionSelected;

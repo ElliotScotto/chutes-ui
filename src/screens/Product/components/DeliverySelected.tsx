@@ -9,17 +9,15 @@ import fonts from "../../../styles/fonts";
 interface DeliverySelectedProps {
   homePickup: boolean;
   setHomePickup: React.Dispatch<React.SetStateAction<boolean>>;
-  errorHomePickup?: string;
-  setErrorHomePickup: React.Dispatch<React.SetStateAction<string>>;
   setSellerDelivers: React.Dispatch<React.SetStateAction<boolean>>;
+  homePickupRef: React.RefObject<any>;
 }
 
 const DeliverySelected: React.FC<DeliverySelectedProps> = ({
   homePickup,
   setHomePickup,
-  errorHomePickup,
-  setErrorHomePickup,
   setSellerDelivers,
+  homePickupRef,
 }) => {
   const handleToggleSwitch = (value: boolean) => {
     setHomePickup(value);
@@ -31,36 +29,30 @@ const DeliverySelected: React.FC<DeliverySelectedProps> = ({
   };
 
   return (
-    <>
-      <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <View style={displays.flex}>
-          <Text style={fonts.homePickup}>
-            {homePickup
-              ? "J'autorise le retrait à domicile"
-              : "Je l'apporte chez le client"}
-          </Text>
-        </View>
-        <View>
-          <Switch
-            color={color.tertiary2}
-            value={homePickup}
-            onValueChange={handleToggleSwitch}
-          />
-        </View>
+    <View
+      ref={homePickupRef}
+      style={{
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <View style={displays.flex}>
+        <Text style={fonts.homePickup}>
+          {homePickup
+            ? "J'autorise le retrait à domicile"
+            : "Je l'apporte chez le client"}
+        </Text>
       </View>
-      <View style={scrapCreation.errors}>
-        {errorHomePickup && (
-          <Text style={{ color: color.error }}>{errorHomePickup}</Text>
-        )}
+      <View>
+        <Switch
+          color={color.tertiary2}
+          value={homePickup}
+          onValueChange={handleToggleSwitch}
+        />
       </View>
-    </>
+    </View>
   );
 };
 

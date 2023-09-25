@@ -8,11 +8,23 @@ const buttons = StyleSheet.create({
   primary: {
     width: widthScreen * 0.8,
     justifyContent: "center",
-    borderRadius: 3,
+    borderRadius: 50,
     alignItems: "center",
     paddingVertical: 10,
-    backgroundColor: colors.primary,
+    borderColor: colors.secondary,
+    borderWidth: 1,
   },
+  primaryDisabled: {
+    width: widthScreen * 0.8,
+    justifyContent: "center",
+    borderRadius: 50,
+    alignItems: "center",
+    paddingVertical: 10,
+    backgroundColor: colors.white,
+    borderColor: colors.secondary,
+    borderWidth: 1,
+  },
+
   //HomeScreen
   scrapAction: {
     justifyContent: "space-evenly",

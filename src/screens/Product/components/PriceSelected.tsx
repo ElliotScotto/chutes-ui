@@ -9,12 +9,16 @@ export interface PriceSelectedProps {
   price: number | undefined;
   setPrice: React.Dispatch<React.SetStateAction<number | undefined>>;
   errorPrice: string;
+  counterPressed: number;
+  priceRef: React.RefObject<any>;
 }
 
 const PriceSelected: React.FC<PriceSelectedProps> = ({
   price,
   setPrice,
   errorPrice,
+  counterPressed,
+  priceRef,
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const handleValueChange = (text: string) => {
@@ -52,7 +56,7 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
   };
 
   return (
-    <>
+    <View ref={priceRef} style={{ width: "100%" }}>
       <TextInput
         mode="outlined"
         label="Prix*"
@@ -64,7 +68,7 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
           colors: {
             primary: price
               ? color.tertiary
-              : errorPrice
+              : errorPrice && counterPressed !== 0
               ? color.error
               : color.tertiary,
           },
@@ -75,11 +79,11 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
         placeholder="Saisissez le prix"
       />
       <View style={scrapCreation.errors}>
-        {errorPrice && !price && (
+        {errorPrice && !price && counterPressed !== 0 && (
           <Text style={{ color: color.error }}>{errorPrice}</Text>
         )}
       </View>
-    </>
+    </View>
   );
 };
 

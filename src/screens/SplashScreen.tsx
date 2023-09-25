@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
+import { Shadow } from "react-native-shadow-2";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
+  Pressable,
   Image,
   Dimensions,
 } from "react-native";
@@ -17,21 +19,24 @@ import logo from "../../assets/images/chutes_logo_v5-colors.png";
 import buttons from "../styles/buttons";
 import displays from "../styles/display";
 import fonts from "../styles/fonts";
+import ChutesColors from "../styles/colors";
+const color = ChutesColors();
 
-interface SplashScreenProps {
-  title?: string;
-  slogan?: string;
-}
 type MyStackParamList = {
   Splash: undefined;
   Tabs: undefined;
 };
-export default function SplashScreen({
-  title = "CHUTES",
-  slogan = "Faites le ménage sur votre établi.",
-}: SplashScreenProps) {
+const SplashScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<MyStackParamList, "Splash">>();
+  //Style Publish Button
+  const [shadowButton, setShadowButton] = useState<boolean>(true);
+  const handlePressIn = () => {
+    setShadowButton(false);
+  };
+  const handlePressOut = () => {
+    setShadowButton(true);
+  };
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -40,17 +45,43 @@ export default function SplashScreen({
         style={{ width: widthScreen * 0.75, height: 200, opacity: 0.8 }}
         resizeMode="contain"
       />
-      <TouchableOpacity
-        style={[buttons.primary, displays.bot100]}
-        onPress={() => {
-          navigation.navigate("Tabs");
-        }}
-      >
-        <Text style={fonts.primary}>Démarrer</Text>
-      </TouchableOpacity>
+      <View style={displays.bot100}>
+        <Shadow
+          distance={shadowButton ? 4 : 0}
+          offset={[0, 0]}
+          paintInside={false}
+          sides={{ top: true, bottom: true, start: true, end: true }}
+          corners={{
+            topStart: true,
+            topEnd: true,
+            bottomStart: true,
+            bottomEnd: true,
+          }}
+          startColor={color.lightAccent}
+          style={{ borderRadius: 50 }}
+        >
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Tabs");
+            }}
+            style={[buttons.primary, { backgroundColor: color.secondary }]}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+          >
+            <Text
+              style={{
+                color: color.white,
+                textTransform: "uppercase",
+              }}
+            >
+              DÉMARRER
+            </Text>
+          </Pressable>
+        </Shadow>
+      </View>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -59,3 +90,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+export default SplashScreen;

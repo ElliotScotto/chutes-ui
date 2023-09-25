@@ -21,9 +21,11 @@ const ChutesColors = () => {
     burlyWood: "#DEB887",
     peru: "#CD853F",
     darkWood: "#281b0b",
-    //HOME CardScrap
+    //Shadow
     scrapBord: "#d6e0f5",
     lightAccent: "#eaeffa",
+    lightAccent2: "#c6ccd9",
+    gainsboro: "#DCDCDC",
   };
   return colors;
 };

@@ -58,9 +58,8 @@ const scrapCreation = StyleSheet.create({
     borderColor: colors.tertiary2,
     borderWidth: 1,
     borderRadius: 20,
-    margin: 6,
-    paddingVertical: "auto",
-    paddingHorizontal: 10,
+    margin: 5,
+    paddingHorizontal: 8,
   },
   //Categories
   categoryContainer: {
@@ -85,9 +84,8 @@ const scrapCreation = StyleSheet.create({
     borderColor: colors.orange2,
     borderWidth: 1,
     borderRadius: 5,
-    margin: 6,
-    paddingVertical: "auto",
-    paddingHorizontal: 10,
+    margin: 5,
+    paddingHorizontal: 8,
   },
   //Product Location
   productLocationTitle: { alignSelf: "flex-start" },

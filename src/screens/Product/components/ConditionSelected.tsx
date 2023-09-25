@@ -17,6 +17,8 @@ interface ConditionSelectedProps {
   isModalConditionsVisible: boolean;
   setIsModalConditionsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   errorCondition: string;
+  counterPressed: number;
+  conditionRef: React.RefObject<any>;
 }
 
 const ConditionSelected: FC<ConditionSelectedProps> = ({
@@ -25,9 +27,11 @@ const ConditionSelected: FC<ConditionSelectedProps> = ({
   isModalConditionsVisible,
   setIsModalConditionsVisible,
   errorCondition,
+  counterPressed,
+  conditionRef,
 }) => {
   return (
-    <>
+    <View ref={conditionRef} style={{ width: "100%" }}>
       <View style={scrapCreation.conditionTitle}>
         <Text style={scrapCreation.conditionTitleFont}>
           Quel est l'état de votre chute ?*
@@ -35,7 +39,15 @@ const ConditionSelected: FC<ConditionSelectedProps> = ({
       </View>
       <Spacer height={10} />
       <Pressable
-        style={scrapCreation.modalConditions}
+        style={[
+          scrapCreation.modalConditions,
+          {
+            borderColor:
+              errorCondition && !condition && counterPressed !== 0
+                ? color.error
+                : color.tertiary2,
+          },
+        ]}
         onPress={() => {
           setIsModalConditionsVisible(true);
         }}
@@ -49,11 +61,11 @@ const ConditionSelected: FC<ConditionSelectedProps> = ({
         setData={setCondition}
       />
       <View style={scrapCreation.errors}>
-        {errorCondition && !condition && (
+        {errorCondition && !condition && counterPressed !== 0 && (
           <Text style={{ color: color.error }}>{errorCondition}</Text>
         )}
       </View>
-    </>
+    </View>
   );
 };
 export default ConditionSelected;

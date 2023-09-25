@@ -1,6 +1,6 @@
+import { View } from "react-native";
 export const handleErrors = (
   name: string,
-  setName: React.Dispatch<React.SetStateAction<string>>,
   description: string,
   condition: string,
   price: number | undefined,
@@ -10,7 +10,6 @@ export const handleErrors = (
   category: string[],
   productLocation: string,
   homePickup: boolean,
-  sending: boolean,
   setErrorName: React.Dispatch<React.SetStateAction<string>>,
   setErrorDescription: React.Dispatch<React.SetStateAction<string>>,
   setErrorCondition: React.Dispatch<React.SetStateAction<string>>,
@@ -20,12 +19,22 @@ export const handleErrors = (
   setErrorMaterial: React.Dispatch<React.SetStateAction<string>>,
   setErrorCategory: React.Dispatch<React.SetStateAction<string>>,
   setErrorProductLocation: React.Dispatch<React.SetStateAction<string>>,
-  setErrorHomePickup: React.Dispatch<React.SetStateAction<string>>,
-  setErrorSending: React.Dispatch<React.SetStateAction<string>>
+  nameRef: React.RefObject<any>,
+  descriptionRef: React.RefObject<any>,
+  priceRef: React.RefObject<any>,
+  quantityRef: React.RefObject<any>,
+  conditionRef: React.RefObject<any>,
+  weightRef: React.RefObject<any>,
+  materialRef: React.RefObject<any>,
+  categoryRef: React.RefObject<any>,
+  homePickupRef: React.RefObject<any>,
+  productLocationRef: React.RefObject<any>,
+  scrollToRef: (ref: React.RefObject<View>) => void
 ): boolean => {
   let isValid = true;
 
   //Name errors
+  console.log("scrollToRef in handleErrors", scrollToRef);
   if (!name) {
     setErrorName("Champs requis");
     isValid = false;
@@ -67,7 +76,7 @@ export const handleErrors = (
       setErrorPrice("");
     }
   } else {
-    setErrorPrice("Veuillez entrer un prix valide");
+    setErrorPrice("Veuillez entrer un prix");
     isValid = false;
   }
   //Quantity errors
@@ -104,30 +113,49 @@ export const handleErrors = (
   } else {
     setErrorCategory("");
   }
-  //ProductLocation errors
-  if (!productLocation) {
-    setErrorProductLocation("Champs requis");
-    isValid = false;
-  } else if (productLocation.length > 40) {
-    setErrorProductLocation("45 caractères maximum");
-    isValid = false;
-  } else {
-    setErrorProductLocation("");
+  //HomePickup errors And ProductLocation errors
+  if (homePickup === true) {
+    if (!productLocation) {
+      setErrorProductLocation("Champs requis");
+      isValid = false;
+    } else if (productLocation.length > 45) {
+      setErrorProductLocation("45 caractères maximum");
+      isValid = false;
+    } else {
+      setErrorProductLocation("");
+    }
   }
-  //HomePickup errors
-  // if (homePickup) {
-  //   setErrorHomePickup("Champs requis");
-  //   isValid = false;
-  // } else {
-  //   setErrorHomePickup("");
-  // }
-  //Sending errors
-  // if (!sending) {
-  //   setErrorSending("Champs requis");
-  //   isValid = false;
-  // } else {
-  //   setErrorSending("");
-  // }
   // ... Add vérifications here
+
+  //if multiple errors we put focus on the first field from top to bottom
+  if (!name) {
+    //nameRef.current?.focus();
+    scrollToRef(nameRef);
+  } else if (name && name.length > 45) {
+    scrollToRef(nameRef);
+  } else if (!description) {
+    scrollToRef(descriptionRef);
+  } else if (description && description.length > 300) {
+    scrollToRef(descriptionRef);
+  } else if (!price) {
+    scrollToRef(priceRef);
+  } else if (!quantity) {
+    scrollToRef(quantityRef);
+  } else if (!condition) {
+    scrollToRef(conditionRef);
+  } else if (!weight) {
+    scrollToRef(weightRef);
+  } else if (!material) {
+    scrollToRef(materialRef);
+  } else if (!category) {
+    scrollToRef(categoryRef);
+  } else if (!homePickup) {
+    scrollToRef(homePickupRef);
+  } else if (!productLocation) {
+    scrollToRef(productLocationRef);
+  }
+  // else if (!productLocation) {
+  //   productLocationRef.current?.focus();
+  // }
   return isValid;
 };

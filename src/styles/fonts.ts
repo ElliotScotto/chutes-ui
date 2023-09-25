@@ -4,7 +4,13 @@ const colors = ChutesColors();
 const fonts = StyleSheet.create({
   //BUTTONS : "démarrer", "publier"
   primary: {
-    color: colors.white,
+    // color: colors.white,
+    fontWeight: "500",
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
+  },
+  primaryDisabled: {
+    // color: colors.secondary,
     fontWeight: "500",
     letterSpacing: 0.4,
     textTransform: "uppercase",
@@ -60,13 +66,19 @@ const fonts = StyleSheet.create({
     letterSpacing: 0.3,
   },
   //CreateScreen
+  createTitle: {
+    fontSize: 20,
+    color: colors.tertiary,
+    textTransform: "uppercase",
+    fontWeight: "500",
+  },
   conditions: { marginVertical: 10, fontSize: 16, color: colors.secondary },
   weights: { marginVertical: 10, fontSize: 16, color: colors.secondary },
   categories: { marginVertical: 10, fontSize: 16, color: colors.secondary },
   homePickup: { fontSize: 16, color: colors.secondary },
   productLocation: {
     fontSize: 16,
-    color: colors.secondary,
+    color: colors.tertiary2,
   },
 });
 export default fonts;

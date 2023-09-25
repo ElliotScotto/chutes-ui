@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { View, Text, Pressable } from "react-native";
-import { Checkbox } from "react-native-paper";
+import { Checkbox, TextInput } from "react-native-paper";
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
@@ -11,18 +11,19 @@ interface MaterialSelectedProps {
   material: string[];
   errorMaterial: string;
   toggleMaterial: (key: string) => void;
+  counterPressed: number;
+  materialRef: React.RefObject<any>;
 }
 
 const MaterialSelected: FC<MaterialSelectedProps> = ({
   material,
   errorMaterial,
   toggleMaterial,
+  counterPressed,
+  materialRef,
 }) => {
-  {
-    console.log(errorMaterial);
-  }
   return (
-    <>
+    <View ref={materialRef} style={{ width: "100%" }}>
       <View style={scrapCreation.materialContainer}>
         <View style={scrapCreation.materialTitle}>
           <Text style={scrapCreation.materialTitleFont}>
@@ -33,6 +34,7 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
         <View style={scrapCreation.materialItemContainer}>
           {Object.values(MATERIALS).map((key) => (
             <Pressable
+              ref={materialRef}
               key={key}
               style={scrapCreation.materialCheckButton}
               onPress={() => toggleMaterial(key)}
@@ -46,7 +48,7 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
                       ? color.tertiary2
                       : color.white,
                     opacity:
-                      material.length >= 2 && !material.includes(key) ? 0.5 : 1,
+                      material.length >= 2 && !material.includes(key) ? 0.3 : 1,
                   },
                 ]}
               >
@@ -74,11 +76,11 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
         </View>
       </View>
       <View style={scrapCreation.errors}>
-        {errorMaterial && material.length < 1 && (
+        {errorMaterial && material.length < 1 && counterPressed !== 0 && (
           <Text style={{ color: color.error }}>{errorMaterial}</Text>
         )}
       </View>
-    </>
+    </View>
   );
 };
 export default MaterialSelected;
