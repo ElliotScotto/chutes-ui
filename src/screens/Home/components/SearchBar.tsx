@@ -32,19 +32,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
       <View style={displays.searchBar}>
         <View style={displays.searchItem}>
           <Text>
-            <AntDesign name={"search1"} size={20} color={colors.primary} />
+            <AntDesign name={"search1"} size={20} color={colors.tertiary} />
           </Text>
         </View>
-        <View
-          style={[
-            displays.searchItem,
-            displays.searchInputItem,
-            displays.bordPrimary,
-          ]}
-        >
+        <View style={displays.searchInputItem}>
           <TextInput
+            selectionColor={colors.gainsboro}
+            cursorColor={colors.tertiary2}
             placeholder="Rechercher..."
             autoCapitalize="none"
+            returnKeyType="search"
             style={displays.searchInputStyle}
           />
         </View>
@@ -52,7 +49,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           <MaterialCommunityIcons
             name={filtersVisible ? "filter-outline" : "filter"}
             size={24}
-            color={colors.primary}
+            color={colors.tertiary}
           />
         </Pressable>
       </View>
