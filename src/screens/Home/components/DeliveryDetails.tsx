@@ -19,23 +19,24 @@ type DeliveryDetailsProps = {
 };
 const DeliveryDetails: React.FC<DeliveryDetailsProps> = ({ item }) => {
   return (
-    <View style={[displays.aliC, { marginVertical: 10 }]}>
+    <View style={[{ flex: 1, width: "100%" }]}>
       <Shadow
         distance={5}
         offset={[0, 0]}
         paintInside={true}
         sides={{ top: true, bottom: true, start: true, end: true }}
-        startColor={colors.lightAccent2}
-        style={[displays.aliC]}
+        startColor={colors.gainsboro}
+        style={[displays.aliC, { flex: 1, width: "100%" }]}
       >
         <View
           style={[
             {
-              paddingHorizontal: 20,
+              flex: 1,
+              width: "100%",
+              paddingHorizontal: 15,
               paddingVertical: 10,
               backgroundColor: colors.tertiary,
             },
-            displays.w95,
           ]}
         >
           {item.home_pickup === true ? (

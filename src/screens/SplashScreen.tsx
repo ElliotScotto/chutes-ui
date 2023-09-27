@@ -20,7 +20,7 @@ import buttons from "../styles/buttons";
 import displays from "../styles/display";
 import fonts from "../styles/fonts";
 import ChutesColors from "../styles/colors";
-const color = ChutesColors();
+const colors = ChutesColors();
 
 type MyStackParamList = {
   Splash: undefined;
@@ -57,20 +57,20 @@ const SplashScreen = () => {
             bottomStart: true,
             bottomEnd: true,
           }}
-          startColor={color.lightAccent}
+          startColor={colors.gainsboro}
           style={{ borderRadius: 50 }}
         >
           <Pressable
             onPress={() => {
               navigation.navigate("Tabs");
             }}
-            style={[buttons.primary, { backgroundColor: color.secondary }]}
+            style={[buttons.primary, { backgroundColor: colors.secondary }]}
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}
           >
             <Text
               style={{
-                color: color.white,
+                color: colors.white,
                 textTransform: "uppercase",
               }}
             >
@@ -85,7 +85,7 @@ const SplashScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     alignItems: "center",
     justifyContent: "center",
   },

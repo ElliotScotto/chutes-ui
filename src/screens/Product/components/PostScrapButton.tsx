@@ -88,8 +88,8 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         weight,
         material,
         category,
-        productLocation,
         homePickup,
+        productLocation,
         setErrorName,
         setErrorDescription,
         setErrorCondition,
@@ -115,7 +115,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         bottomStart: true,
         bottomEnd: true,
       }}
-      startColor={color.lightAccent}
+      startColor={color.gainsboro}
       style={{ borderRadius: 50 }}
     >
       <Pressable

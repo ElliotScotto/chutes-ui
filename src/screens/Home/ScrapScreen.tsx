@@ -1,15 +1,8 @@
 import React, { FC, useState } from "react";
-import {
-  Text,
-  StyleSheet,
-  View,
-  Dimensions,
-  Pressable,
-  ScrollView,
-} from "react-native";
+import { Text, StyleSheet, View, Pressable, ScrollView } from "react-native";
 //packages
 import { Shadow } from "react-native-shadow-2";
-import { LinearGradient } from "expo-linear-gradient";
+// import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 //navigation
 import { useRoute, RouteProp } from "@react-navigation/native";
@@ -20,11 +13,8 @@ import {
 } from "../../types/navigationTypes";
 //icons
 import IconSLI from "react-native-vector-icons/SimpleLineIcons";
-import IconFA5 from "react-native-vector-icons/FontAwesome5";
-import IconO from "react-native-vector-icons/Octicons";
 import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
 import IconFe from "react-native-vector-icons/Feather";
-import IconE from "react-native-vector-icons/Entypo";
 //styles
 import displays from "../../styles/display";
 import ChutesColors from "../../styles/colors";
@@ -44,149 +34,169 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
   const item = route.params.item;
   const iconContionNames = getIconCondition(item.condition);
   const [save, setSave] = useState(false);
-  {
-    console.log(item);
-  }
+  //Style Publish Button
+  const [shadowButton, setShadowButton] = useState<boolean>(true);
+  const handlePressIn = () => {
+    setShadowButton(false);
+  };
+  const handlePressOut = () => {
+    setShadowButton(true);
+  };
   return (
     <SafeAreaProvider>
       <SafeAreaView
-        style={[displays.flex, displays.white, displays.w100, displays.aliC]}
+        style={[
+          displays.flex,
+          displays.white,
+          displays.w100,
+          displays.aliC,
+          displays.bord1,
+        ]}
       >
         <ScrollView>
-          <Spacer height={20} />
-          <Shadow
-            distance={4}
-            offset={[0, 0]}
-            paintInside={false}
-            sides={{ top: false, bottom: true, start: true, end: true }}
-            corners={{
-              topStart: false,
-              topEnd: false,
-              bottomStart: true,
-              bottomEnd: true,
-            }}
-            startColor={colors.gainsboro}
-            style={[displays.aliC, displays.w95, { borderRadius: 10 }]}
-          >
-            <LinearGradient
-              colors={[colors.lightTertiary, colors.white]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              locations={[0, 1]}
-              style={displays.linear}
-            />
-            <View style={[styles.container, displays.w95]}>
-              <View
-                style={{
-                  height: 80,
-                  width: "100%",
-                  flexDirection: "row",
-                }}
-              >
-                <View style={{ alignItems: "flex-start" }}>
-                  <Pressable
-                    style={[buttons.scrapScreenClose]}
-                    onPress={() => {
-                      navigation.navigate("Home");
-                    }}
-                  >
-                    <IconMCI
-                      name="keyboard-backspace"
-                      size={40}
-                      color={colors.tertiary2}
-                    />
-                  </Pressable>
-                </View>
-                <View
-                  style={{ flex: 1, alignItems: "flex-end", paddingTop: 20 }}
+          <View style={styles.container}>
+            <View
+              style={{
+                height: 80,
+                width: "100%",
+                flexDirection: "row",
+              }}
+            >
+              <View style={{ alignItems: "flex-start" }}>
+                <Pressable
+                  style={[buttons.scrapScreenClose]}
+                  onPress={() => {
+                    navigation.navigate("Home");
+                  }}
                 >
-                  <Pressable
-                    onPress={() => {
-                      setSave(!save);
-                    }}
-                  >
-                    <IconMCI
-                      name={changeFavIcon(save)}
-                      size={40}
-                      color={colors.tertiary2}
-                    />
-                  </Pressable>
-                </View>
-              </View>
-              <View style={styles.header}>
-                <Text style={styles.title} numberOfLines={2}>
-                  {item.name}
-                </Text>
-              </View>
-              <Spacer height={10} />
-              <ScrollView
-                showsVerticalScrollIndicator={true}
-                style={{ flex: 1 }}
-              >
-                <Text style={styles.description}>{item.description}</Text>
-              </ScrollView>
-              <Spacer height={10} />
-              <View style={styles.detailCondition}>
-                {iconContionNames.map((iconName, index) => (
                   <IconMCI
-                    key={index}
-                    name={iconName}
-                    size={20}
+                    name="keyboard-backspace"
+                    size={40}
                     color={colors.tertiary2}
-                    style={{
-                      opacity: iconName === "wrench-outline" ? 0.3 : 1,
-                    }}
                   />
-                ))}
-                <Text style={styles.detail}>({item.condition})</Text>
+                </Pressable>
               </View>
-              <View style={styles.detailRow}>
-                <IconMCI name="tag" size={20} color={colors.tertiary2} />
-                <Text style={styles.detail}>
-                  {item.price < 14000 ? item.price : "--"} €
-                </Text>
-              </View>
-              <View style={styles.detailRow}>
-                <IconMCI name="weight" size={20} color={colors.tertiary2} />
-                <Text style={styles.detail}>{item.weight}</Text>
-              </View>
-              <View style={styles.detailRow}>
-                <IconMCI name="details" size={20} color={colors.tertiary2} />
-                <Text style={styles.detail}>
-                  {item.material.length === 2
-                    ? `${item.material[0]}, ${item.material[1]}`
-                    : item.material}
-                </Text>
-              </View>
-              <View style={styles.detailRow}>
-                <IconSLI name="folder-alt" size={20} color={colors.tertiary2} />
-                <Text style={styles.detail}>
-                  {item.category.length === 2
-                    ? `${item.category[0]}, ${item.category[1]}`
-                    : item.category}
-                </Text>
-              </View>
-              <DeliveryDetails item={item} />
-              <Text style={styles.ownerTitle}>Propriétaire</Text>
-              <View style={styles.detailRow}>
-                <IconFe name="user" size={20} color={colors.tertiary2} />
-                <Text style={styles.detail}>{item.owner_detail.username}</Text>
-              </View>
-              <View style={styles.detailRow}>
-                <IconFe name="mail" size={20} color={colors.tertiary2} />
-                <Text style={[styles.detail, fonts.low]}>
-                  {item.owner_detail.email}
-                </Text>
-              </View>
-              <View style={styles.detailRow}>
-                <IconFe name="smartphone" size={20} color={colors.tertiary2} />
-                <Text style={styles.detail}>
-                  {item.owner_detail.phone_number}
-                </Text>
+              <View style={{ flex: 1, alignItems: "flex-end", paddingTop: 20 }}>
+                <Pressable
+                  onPress={() => {
+                    setSave(!save);
+                  }}
+                >
+                  <IconMCI
+                    name={changeFavIcon(save)}
+                    size={40}
+                    color={colors.tertiary2}
+                  />
+                </Pressable>
               </View>
             </View>
-          </Shadow>
-          <Spacer height={20} />
+            <View style={styles.header}>
+              <Text style={styles.title} numberOfLines={2}>
+                {item.name}
+              </Text>
+            </View>
+            <Spacer height={10} />
+            <ScrollView showsVerticalScrollIndicator={true}>
+              <Text style={styles.description}>{item.description}</Text>
+            </ScrollView>
+            <Spacer height={10} />
+            <View style={styles.detailCondition}>
+              {iconContionNames.map((iconName, index) => (
+                <IconMCI
+                  key={index}
+                  name={iconName}
+                  size={20}
+                  color={colors.tertiary2}
+                  style={{
+                    opacity: iconName === "wrench-outline" ? 0.3 : 1,
+                  }}
+                />
+              ))}
+              <Text style={styles.detail}>({item.condition})</Text>
+            </View>
+            <View style={styles.detailRow}>
+              <IconMCI name="tag" size={20} color={colors.tertiary2} />
+              <Text style={styles.detail}>
+                {item.price < 14000 ? item.price : "--"} €
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <IconMCI name="weight" size={20} color={colors.tertiary2} />
+              <Text style={styles.detail}>{item.weight}</Text>
+            </View>
+            <View style={styles.detailRow}>
+              <IconMCI name="details" size={20} color={colors.tertiary2} />
+              <Text style={styles.detail}>
+                {item.material.length === 2
+                  ? `${item.material[0]}, ${item.material[1]}`
+                  : item.material}
+              </Text>
+            </View>
+            <View style={styles.detailRow}>
+              <IconSLI name="folder-alt" size={20} color={colors.tertiary2} />
+              <Text style={styles.detail}>
+                {item.category.length === 2
+                  ? `${item.category[0]}, ${item.category[1]}`
+                  : item.category}
+              </Text>
+            </View>
+          </View>
+
+          <View style={{ width: "100%", marginVertical: 15 }}>
+            <DeliveryDetails item={item} />
+          </View>
+          <View style={styles.container}>
+            <Text style={styles.ownerTitle}>Propriétaire</Text>
+            <View style={styles.detailRow}>
+              <IconFe name="user" size={20} color={colors.tertiary2} />
+              <Text style={styles.detail}>{item.owner_detail.username}</Text>
+            </View>
+            <View style={styles.detailRow}>
+              <IconFe name="mail" size={20} color={colors.tertiary2} />
+              <Text style={[styles.detail, fonts.low]}>
+                {item.owner_detail.email}
+              </Text>
+            </View>
+            <Spacer height={30} />
+            <View style={displays.aliC}>
+              <Shadow
+                distance={shadowButton ? 4 : 0}
+                offset={[0, 0]}
+                paintInside={false}
+                sides={{ top: true, bottom: true, start: true, end: true }}
+                corners={{
+                  topStart: true,
+                  topEnd: true,
+                  bottomStart: true,
+                  bottomEnd: true,
+                }}
+                startColor={colors.gainsboro}
+                style={{ borderRadius: 50 }}
+              >
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate("Tabs");
+                  }}
+                  style={[
+                    buttons.primary,
+                    { backgroundColor: colors.secondary },
+                  ]}
+                  onPressIn={handlePressIn}
+                  onPressOut={handlePressOut}
+                >
+                  <Text
+                    style={{
+                      color: colors.white,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    CONTACTER
+                  </Text>
+                </Pressable>
+              </Shadow>
+            </View>
+          </View>
+          <Spacer height={30} />
         </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
@@ -194,12 +204,7 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
 };
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    borderWidth: 1,
-    borderColor: colors.tertiary,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 10,
+    paddingHorizontal: 15,
   },
   header: {
     flexDirection: "row",
