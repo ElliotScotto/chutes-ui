@@ -27,7 +27,7 @@ const DescriptionSelected: FC<DescriptionSelectedProps> = ({
       <TextInput
         mode="outlined"
         label="Description*"
-        placeholder="Ecrivez une description : dimensions, couleurs, usage..."
+        placeholder="Ecrivez une description : quantité, dimensions, couleurs, usage..."
         multiline={true}
         textAlignVertical="top"
         value={description}

@@ -20,10 +20,11 @@ const fonts = StyleSheet.create({
   scrapName: {
     color: colors.primary,
     fontSize: 16,
-    letterSpacing: 0.4,
+    letterSpacing: 0.3,
+    fontWeight: "500",
   },
   scrapDetails: {
-    color: colors.primary,
+    color: colors.secondary,
     fontSize: 14,
     letterSpacing: 0.3,
   },

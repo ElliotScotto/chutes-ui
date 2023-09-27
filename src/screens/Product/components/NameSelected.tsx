@@ -33,7 +33,7 @@ const NameSelected: FC<NameSelectedProps> = ({
       <TextInput
         mode="outlined"
         label="Nom*"
-        placeholder="Saisissez le nom de votre chute ex:Planches stratifié L.120x18 ep.12mm"
+        placeholder="ex: Lot 10 Planches stratifié L.120x18 ep.12mm"
         multiline={true}
         textAlignVertical="top"
         textAlign="left"

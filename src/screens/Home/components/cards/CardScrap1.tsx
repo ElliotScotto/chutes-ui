@@ -16,11 +16,13 @@ import displays from "../../../../styles/display";
 import fonts from "../../../../styles/fonts";
 //types
 import { ScrapData } from "../../../../types/dataTypes";
-
+//functions
+import { getIconCondition } from "../../functions/getIconCondition";
 interface CardScrap1Props {
   data: ScrapData;
 }
 const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
+  const iconContionNames = getIconCondition(data.condition);
   return (
     <>
       <View style={displays.card}>
@@ -39,7 +41,7 @@ const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
         >
           <View style={displays.scrapCard}>
             <View style={[displays.scrapCardTop]}>
-              <View style={[displays.scrapCardLeft]}>
+              <View style={displays.scrapCardLeft}>
                 <Icon name={"lightbulb-fluorescent-tube-outline"} size={50} />
               </View>
               <Spacer width={5} />
@@ -56,14 +58,20 @@ const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
                         ? `${data.category[0]}, ${data.category[1]}`
                         : data.category}
                     </Text>
-                    <Text style={fonts.scrapDetails}>{data.condition}</Text>
-                    <View style={{ flexDirection: "row" }}>
-                      <Text style={fonts.scrapDetails}>{data.price}€</Text>
-                      <Text> | </Text>
-                      <Text style={fonts.scrapDetails}>
-                        Quantité : {data.quantity}
-                      </Text>
+                    <View style={[displays.row, { marginVertical: 6 }]}>
+                      {iconContionNames.map((iconName, index) => (
+                        <Icon
+                          key={index}
+                          name={iconName}
+                          size={16}
+                          color={colors.tertiary2}
+                          style={{
+                            opacity: iconName === "wrench-outline" ? 0.3 : 1,
+                          }}
+                        />
+                      ))}
                     </View>
+                    <Text style={fonts.scrapDetails}>{data.price} €</Text>
                   </View>
                 </View>
               </View>
