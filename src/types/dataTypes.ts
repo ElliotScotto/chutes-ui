@@ -19,8 +19,10 @@ export interface ScrapData {
   is_for_sell: boolean;
   city: string;
   home_pickup: boolean;
+  product_location: string;
   sending: boolean;
-  owner: UserCustom;
+  owner: number;
+  owner_detail: UserCustom;
 }
 // CreateScreen
 export type ScrapDataCreation = {
@@ -32,8 +34,8 @@ export type ScrapDataCreation = {
   weight: string;
   material: string[];
   category: string[];
-  productLocation: string;
   homePickup: boolean;
+  productLocation: string;
   sending: boolean;
 };
 
@@ -45,7 +47,7 @@ export interface Conditions {
   tresAbime: string;
 }
 export const CONDITIONS: Conditions = {
-  commeNeuf: "Comme Neuf",
+  commeNeuf: "Comme neuf",
   TresBonEtat: "Très bon état",
   correct: "Correct",
   abime: "Abîmé",

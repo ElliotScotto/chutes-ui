@@ -1,7 +1,10 @@
 import React, { useState, useRef } from "react";
 import { View, Text, ScrollView } from "react-native";
 //packages
+import axios from "axios";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import Constants from "expo-constants";
+const deviceName = Constants.deviceName;
 //styles
 import displays from "../../styles/display";
 import fonts from "../../styles/fonts";
@@ -79,8 +82,8 @@ const CreateScreen = () => {
       weight,
       material,
       category,
-      productLocation,
       homePickup,
+      productLocation,
       setErrorName,
       setErrorDescription,
       setErrorCondition,
@@ -94,6 +97,13 @@ const CreateScreen = () => {
     );
     if (isValidForm) {
       setIsButtonEnabled(true);
+      let currentHost;
+      if (deviceName === "LYA-L29") {
+        currentHost = "192.168.1.38";
+      } else {
+        currentHost = "localhost";
+      }
+      postScrapData(currentHost);
     } else {
       setIsButtonEnabled(false);
       //if multiple errors focus set on the first area from top to bottom
@@ -119,6 +129,32 @@ const CreateScreen = () => {
         scrollToRef(scrollViewRef, categoryRef, -15);
       } else if (homePickup === true && !productLocation) {
         scrollToRef(scrollViewRef, productLocationRef);
+      }
+    }
+  };
+  const postScrapData = async (currentHost: string) => {
+    try {
+      const response = await axios.post(
+        `http://${currentHost}:8000/api/scraps/`,
+        {
+          owner: 3, //dev mode
+          name,
+          description,
+          condition,
+          price,
+          quantity,
+          weight,
+          material,
+          category,
+          homePickup,
+          productLocation,
+        }
+      );
+      console.log("response.data : ", response);
+    } catch (error) {
+      console.error("Erreur lors de l'envoi des données:", error);
+      if ((error as any).response) {
+        console.error("Détails de l’erreur:", (error as any).response.data);
       }
     }
   };

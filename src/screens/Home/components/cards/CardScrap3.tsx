@@ -52,16 +52,16 @@ const CardScrap3: FC<CardScrap3Props> = ({ data }) => {
                 </View>
                 <View style={[displays.scrapCard3LeftContentRight]}>
                   <Text numberOfLines={1} style={fonts.contactDetails}>
-                    {data.owner.username}
+                    {data.owner_detail.username}
                   </Text>
                   <Text numberOfLines={1} style={fonts.contactDetails}>
-                    {data.owner.phone_number}
+                    {data.owner_detail.phone_number}
+                  </Text>
+                  <Text numberOfLines={1} style={fonts.contactEmail}>
+                    {data.owner_detail.email}
                   </Text>
                   <Text numberOfLines={1} style={fonts.contactDetails}>
-                    {data.owner.email}
-                  </Text>
-                  <Text numberOfLines={1} style={fonts.contactDetails}>
-                    {data.owner.city}
+                    {data.owner_detail.city}
                   </Text>
                 </View>
               </View>

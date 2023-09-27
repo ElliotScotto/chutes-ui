@@ -101,6 +101,8 @@ const HomeScreen: FC = () => {
       .get(`http://${currentHost}:8000/api/scraps/`)
       .then((response) => {
         setData(response.data);
+        console.log("response.data : ", response.data);
+        console.log("response.status : ", response.status);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des données:", error);

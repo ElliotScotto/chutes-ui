@@ -51,7 +51,11 @@ const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
                 </View>
                 <View style={displays.scrapCardRightContentMiddle}>
                   <View style={[displays.scrapCardRightContentMiddleLeft]}>
-                    <Text style={fonts.scrapDetails}>{data.category}</Text>
+                    <Text style={fonts.scrapDetails}>
+                      {data.category.length === 2
+                        ? `${data.category[0]}, ${data.category[1]}`
+                        : data.category}
+                    </Text>
                     <Text style={fonts.scrapDetails}>{data.condition}</Text>
                     <View style={{ flexDirection: "row" }}>
                       <Text style={fonts.scrapDetails}>{data.price}€</Text>

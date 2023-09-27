@@ -8,6 +8,8 @@ import {
   ScrollView,
 } from "react-native";
 //packages
+import { Shadow } from "react-native-shadow-2";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 //navigation
 import { useRoute, RouteProp } from "@react-navigation/native";
@@ -29,9 +31,12 @@ import ChutesColors from "../../styles/colors";
 import buttons from "../../styles/buttons";
 import Spacer from "../../utils/Spacer";
 const colors = ChutesColors();
+//components
+import DeliveryDetails from "./components/DeliveryDetails";
 //functions
 import { getIconCondition } from "./functions/getIconCondition";
 import { changeFavIcon } from "./functions/changeFavIcon";
+import fonts from "../../styles/fonts";
 type ScrapScreenRouteParams = RouteProp<MyStackParamList, "Scrap">;
 
 const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
@@ -39,6 +44,9 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
   const item = route.params.item;
   const iconContionNames = getIconCondition(item.condition);
   const [save, setSave] = useState(false);
+  {
+    console.log(item);
+  }
   return (
     <SafeAreaProvider>
       <SafeAreaView
@@ -46,152 +54,138 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
       >
         <ScrollView>
           <Spacer height={20} />
-          <View style={[styles.container, displays.w95]}>
-            <View
-              style={{
-                height: 80,
-                width: "100%",
-                flexDirection: "row",
-              }}
-            >
-              <View style={{ alignItems: "flex-start" }}>
-                <Pressable
-                  style={[buttons.scrapScreenClose]}
-                  onPress={() => {
-                    navigation.navigate("Home");
-                  }}
+          <Shadow
+            distance={4}
+            offset={[0, 0]}
+            paintInside={false}
+            sides={{ top: false, bottom: true, start: true, end: true }}
+            corners={{
+              topStart: false,
+              topEnd: false,
+              bottomStart: true,
+              bottomEnd: true,
+            }}
+            startColor={colors.gainsboro}
+            style={[displays.aliC, displays.w95, { borderRadius: 10 }]}
+          >
+            <LinearGradient
+              colors={[colors.lightTertiary, colors.white]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              locations={[0, 1]}
+              style={displays.linear}
+            />
+            <View style={[styles.container, displays.w95]}>
+              <View
+                style={{
+                  height: 80,
+                  width: "100%",
+                  flexDirection: "row",
+                }}
+              >
+                <View style={{ alignItems: "flex-start" }}>
+                  <Pressable
+                    style={[buttons.scrapScreenClose]}
+                    onPress={() => {
+                      navigation.navigate("Home");
+                    }}
+                  >
+                    <IconMCI
+                      name="keyboard-backspace"
+                      size={40}
+                      color={colors.tertiary2}
+                    />
+                  </Pressable>
+                </View>
+                <View
+                  style={{ flex: 1, alignItems: "flex-end", paddingTop: 20 }}
                 >
-                  <IconMCI
-                    name="keyboard-backspace"
-                    size={40}
-                    color={colors.tertiary2}
-                  />
-                </Pressable>
+                  <Pressable
+                    onPress={() => {
+                      setSave(!save);
+                    }}
+                  >
+                    <IconMCI
+                      name={changeFavIcon(save)}
+                      size={40}
+                      color={colors.tertiary2}
+                    />
+                  </Pressable>
+                </View>
               </View>
-              <View style={{ flex: 1, alignItems: "flex-end", paddingTop: 20 }}>
-                <Pressable
-                  onPress={() => {
-                    setSave(!save);
-                  }}
-                >
-                  <IconMCI
-                    name={changeFavIcon(save)}
-                    size={40}
-                    color={colors.tertiary2}
-                  />
-                </Pressable>
+              <View style={styles.header}>
+                <Text style={styles.title} numberOfLines={2}>
+                  {item.name}
+                </Text>
               </View>
-            </View>
-            <View style={styles.header}>
-              <Text style={styles.title} numberOfLines={2}>
-                {item.name}
-              </Text>
-            </View>
-            <Spacer height={10} />
-            <ScrollView
-              showsVerticalScrollIndicator={true}
-              style={{ height: 70 }}
-            >
-              {/* <Text style={styles.description}>{item.description}</Text> */}
-              <Text style={styles.description}>
-                Chute de matériaux de construction idéale pour les petits
-                projets ou les réparations. Provenant d'un surplus de
-                production, cette chute est en excellent état. Son origine
-                garantit sa qualité, et elle est adaptée pour une variété
-                d'usages en construction. Une opportunité à ne pas manquer pour
-                obtenir des matériaux fiables à un prix réduit. Idéal pour les
-                artisans et bricoleurs.XXXXXXXXXXXXXXXXXXXXXX
-              </Text>
-            </ScrollView>
-            <Spacer height={10} />
-            <View style={styles.detailCondition}>
-              {iconContionNames.map((iconName, index) => (
-                <IconMCI
-                  key={index}
-                  name={iconName}
-                  size={20}
-                  color={colors.tertiary2}
-                />
-              ))}
-              <Text style={styles.detail2}>({item.condition})</Text>
-            </View>
-            <View style={styles.bothDetails}>
-              <View style={styles.detailRow}>
-                <IconO name="stack" size={20} color={colors.tertiary2} />
-                <Text style={styles.detail}>Quantité : {item.quantity}</Text>
+              <Spacer height={10} />
+              <ScrollView
+                showsVerticalScrollIndicator={true}
+                style={{ flex: 1 }}
+              >
+                <Text style={styles.description}>{item.description}</Text>
+              </ScrollView>
+              <Spacer height={10} />
+              <View style={styles.detailCondition}>
+                {iconContionNames.map((iconName, index) => (
+                  <IconMCI
+                    key={index}
+                    name={iconName}
+                    size={20}
+                    color={colors.tertiary2}
+                    style={{
+                      opacity: iconName === "wrench-outline" ? 0.3 : 1,
+                    }}
+                  />
+                ))}
+                <Text style={styles.detail}>({item.condition})</Text>
               </View>
               <View style={styles.detailRow}>
                 <IconMCI name="tag" size={20} color={colors.tertiary2} />
-                {item.is_free ? (
-                  <Text style={styles.detail}>Gratuit</Text>
-                ) : item.price ? (
-                  <Text style={styles.detail}>{item.price} €</Text>
-                ) : (
-                  <Text>N/C</Text>
-                )}
+                <Text style={styles.detail}>
+                  {item.price < 14000 ? item.price : "--"} €
+                </Text>
               </View>
               <View style={styles.detailRow}>
                 <IconMCI name="weight" size={20} color={colors.tertiary2} />
-                <Text style={styles.detail}>{item.weight} kg</Text>
+                <Text style={styles.detail}>{item.weight}</Text>
               </View>
-            </View>
-            <View style={styles.detailRow}>
-              <IconMCI name="details" size={20} color={colors.tertiary2} />
-              <Text style={styles.detail}>{item.material}</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <IconSLI name="folder-alt" size={20} color={colors.tertiary2} />
-              <Text style={styles.detail}>{item.category}</Text>
-            </View>
-            <Text style={styles.separator} />
-            {item.home_pickup ? (
               <View style={styles.detailRow}>
-                <IconMCI
-                  name="home-export-outline"
-                  size={20}
-                  color={colors.tertiary2}
-                />
-                <Text style={styles.detail2}>Recupérable à domicile</Text>
-              </View>
-            ) : (
-              <View style={styles.detailRow}>
-                <IconE name="location" size={20} color={colors.tertiary2} />
-                <Text style={styles.detail2}>
-                  Lieu du produit si différent domicile A DEFINIR EN BDD
+                <IconMCI name="details" size={20} color={colors.tertiary2} />
+                <Text style={styles.detail}>
+                  {item.material.length === 2
+                    ? `${item.material[0]}, ${item.material[1]}`
+                    : item.material}
                 </Text>
               </View>
-            )}
-            {!item.sending ? null : (
               <View style={styles.detailRow}>
-                <IconFA5
-                  name="shipping-fast"
-                  size={20}
-                  color={colors.tertiary2}
-                />
-                <Text style={styles.detail2}>
-                  Envoi possible par {item.owner.username}
+                <IconSLI name="folder-alt" size={20} color={colors.tertiary2} />
+                <Text style={styles.detail}>
+                  {item.category.length === 2
+                    ? `${item.category[0]}, ${item.category[1]}`
+                    : item.category}
                 </Text>
               </View>
-            )}
-            <Text style={styles.separator} />
-            <Text style={styles.ownerTitle}>Propriétaire</Text>
-            <View style={styles.detailRow}>
-              <IconFe name="user" size={20} color={colors.tertiary2} />
-              <Text style={styles.detail2}>{item.owner.username}</Text>
+              <DeliveryDetails item={item} />
+              <Text style={styles.ownerTitle}>Propriétaire</Text>
+              <View style={styles.detailRow}>
+                <IconFe name="user" size={20} color={colors.tertiary2} />
+                <Text style={styles.detail}>{item.owner_detail.username}</Text>
+              </View>
+              <View style={styles.detailRow}>
+                <IconFe name="mail" size={20} color={colors.tertiary2} />
+                <Text style={[styles.detail, fonts.low]}>
+                  {item.owner_detail.email}
+                </Text>
+              </View>
+              <View style={styles.detailRow}>
+                <IconFe name="smartphone" size={20} color={colors.tertiary2} />
+                <Text style={styles.detail}>
+                  {item.owner_detail.phone_number}
+                </Text>
+              </View>
             </View>
-            <View style={styles.detailRow}>
-              <IconFe name="mail" size={20} color={colors.tertiary2} />
-              <Text style={styles.mail}>{item.owner.email}</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <IconFe name="smartphone" size={20} color={colors.tertiary2} />
-              <Text style={styles.detail}>{item.owner.phone_number}</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <IconFe name="map-pin" size={20} color={colors.tertiary2} />
-              <Text style={styles.detail}>{item.owner.city}</Text>
-            </View>
-          </View>
+          </Shadow>
           <Spacer height={20} />
         </ScrollView>
       </SafeAreaView>
@@ -203,9 +197,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 20,
     borderWidth: 1,
-    borderColor: colors.tertiary2,
-    borderRadius: 15,
-    backgroundColor: colors.white,
+    borderColor: colors.tertiary,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
   },
   header: {
     flexDirection: "row",
@@ -234,6 +228,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 5,
     justifyContent: "space-evenly",
+    overflow: "hidden",
   },
   description: {
     fontSize: 16,
@@ -241,30 +236,11 @@ const styles = StyleSheet.create({
     overflow: "scroll",
     color: colors.secondary,
   },
-  mail: {
-    fontSize: 16,
-    marginVertical: 5,
-    textTransform: "lowercase",
-    paddingLeft: 5,
-    color: colors.secondary,
-  },
   detail: {
     fontSize: 16,
     marginVertical: 5,
-    textTransform: "capitalize",
     paddingLeft: 5,
     color: colors.secondary,
-  },
-  detail2: {
-    fontSize: 16,
-    marginVertical: 5,
-    paddingLeft: 5,
-    color: colors.secondary,
-  },
-  separator: {
-    height: 2,
-    backgroundColor: colors.tertiary2,
-    marginVertical: 10,
   },
   ownerTitle: {
     fontSize: 18,

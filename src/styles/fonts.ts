@@ -15,6 +15,7 @@ const fonts = StyleSheet.create({
     letterSpacing: 0.4,
     textTransform: "uppercase",
   },
+  low: { textTransform: "lowercase" },
   //card1
   scrapName: {
     color: colors.primary,
@@ -24,7 +25,6 @@ const fonts = StyleSheet.create({
   scrapDetails: {
     color: colors.primary,
     fontSize: 14,
-    textTransform: "capitalize",
     letterSpacing: 0.3,
   },
   //card2
@@ -48,6 +48,11 @@ const fonts = StyleSheet.create({
     color: colors.primary,
     fontSize: 14,
     textTransform: "capitalize",
+  },
+  contactEmail: {
+    color: colors.primary,
+    fontSize: 14,
+    textTransform: "lowercase",
   },
   //card4
   details: {
@@ -79,6 +84,13 @@ const fonts = StyleSheet.create({
   productLocation: {
     fontSize: 16,
     color: colors.tertiary2,
+  },
+  detailDelivery: {
+    fontSize: 16,
+    marginVertical: 5,
+    paddingLeft: 5,
+    color: colors.lightAccent,
+    letterSpacing: 0.3,
   },
 });
 export default fonts;

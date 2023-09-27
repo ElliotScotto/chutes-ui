@@ -8,6 +8,7 @@ const displays = StyleSheet.create({
   aliC: { alignItems: "center" },
   flex: { flex: 1 },
   w100: { width: widthScreen * 1 },
+  w95L: { width: widthScreen * 0.95 + 1.5 },
   w95: { width: widthScreen * 0.95 },
   w90: { width: widthScreen * 0.9 },
   w80: { width: widthScreen * 0.8 },
@@ -202,5 +203,23 @@ const displays = StyleSheet.create({
   displayDetailsProduct: { flexDirection: "row" },
   fontTitle: { fontWeight: "bold", marginRight: 5 },
   picturesScrap: { width: 250, height: 250 },
+  linear: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: "100%",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  linear2: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: "100%",
+  },
 });
 export default displays;

@@ -14,6 +14,7 @@ const ChutesColors = () => {
     disabledBlue: "#c1d0f0",
     disabledDark: "#5B6463",
     disabledLight: "#E6EAEA",
+    disabledLight2: "#f2f4f4",
     //orange
     navajoWhite: "#FFDEAD",
     orange1: "#faa564",
@@ -25,6 +26,8 @@ const ChutesColors = () => {
     scrapBord: "#d6e0f5",
     lightAccent: "#eaeffa",
     lightAccent2: "#c6ccd9",
+    lightAccent3: "#edf1fb",
+    lightTertiary: "#f3f4f6",
     gainsboro: "#DCDCDC",
   };
   return colors;
