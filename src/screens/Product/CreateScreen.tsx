@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Platform } from "react-native";
 //packages
 import axios from "axios";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
@@ -13,10 +13,10 @@ const color = ChutesColors();
 //utils
 import Spacer from "../../utils/Spacer";
 //components
+import PhotoSelected from "./components/PhotoSelected";
 import NameSelected from "./components/NameSelected";
 import DescriptionSelected from "./components/DescriptionSelected";
 import PriceSelected from "./components/PriceSelected";
-import QuantitySelected from "./components/QuantitySelected";
 import ConditionSelected from "./components/ConditionSelected";
 import WeightSelected from "./components/WeightSelected";
 import MaterialSelected from "./components/MaterialSelected";
@@ -27,13 +27,19 @@ import PostScrapButton from "./components/PostScrapButton";
 //functions
 import { handleErrors } from "./functions/validateForm";
 import { scrollToRef } from "./functions/handleFocus";
-
+//types
+type ImageInfo = { uri: string };
 const CreateScreen = () => {
   //product states
+  const [photo1, setPhoto1] = useState<ImageInfo | null>(null);
+  const [photo2, setPhoto2] = useState<ImageInfo | null>(null);
+  const [photo3, setPhoto3] = useState<ImageInfo | null>(null);
+  const [photo4, setPhoto4] = useState<ImageInfo | null>(null);
+  const [photo5, setPhoto5] = useState<ImageInfo | null>(null);
+  const [owner, setOwner] = useState<number>(3);
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [condition, setCondition] = useState<string>("");
-  const [quantity, setQuantity] = useState<number | undefined>();
   const [price, setPrice] = useState<number | undefined>();
   const [weight, setWeight] = useState<string>("");
   const [material, setMaterial] = useState<string[]>([]);
@@ -46,7 +52,6 @@ const CreateScreen = () => {
   const nameRef = useRef<View>(null);
   const descriptionRef = useRef<View>(null);
   const priceRef = useRef<View>(null);
-  const quantityRef = useRef<View>(null);
   const conditionRef = useRef<View>(null);
   const weightRef = useRef<View>(null);
   const materialRef = useRef<View>(null);
@@ -60,7 +65,6 @@ const CreateScreen = () => {
   const [errorName, setErrorName] = useState("");
   const [errorDescription, setErrorDescription] = useState("");
   const [errorCondition, setErrorCondition] = useState("");
-  const [errorQuantity, setErrorQuantity] = useState("");
   const [errorPrice, setErrorPrice] = useState("");
   const [errorWeight, setErrorWeight] = useState("");
   const [errorMaterial, setErrorMaterial] = useState("");
@@ -78,7 +82,6 @@ const CreateScreen = () => {
       description,
       condition,
       price,
-      quantity,
       weight,
       material,
       category,
@@ -88,7 +91,6 @@ const CreateScreen = () => {
       setErrorDescription,
       setErrorCondition,
       setErrorPrice,
-      setErrorQuantity,
       setErrorWeight,
       setErrorMaterial,
       setErrorCategory,
@@ -117,8 +119,6 @@ const CreateScreen = () => {
         scrollToRef(scrollViewRef, descriptionRef);
       } else if (!price) {
         scrollToRef(scrollViewRef, priceRef);
-      } else if (!quantity) {
-        scrollToRef(scrollViewRef, quantityRef);
       } else if (!condition) {
         scrollToRef(scrollViewRef, conditionRef);
       } else if (!weight) {
@@ -132,25 +132,74 @@ const CreateScreen = () => {
       }
     }
   };
+  // async postMedia(path: string, uri: string) {
+  //   let type = uri.substring(uri.lastIndexOf(".") + 1);
+  //   const headers = await this.getHeaders('multipart/form-data')
+  //   const form = new FormData()
+  //   form.append('file', { uri, name: 'media', type: `image/${type}` } as any)
+  //   const options: RequestInit = {
+  //     method: 'POST',
+  //     headers,
+  //     body: form
+  //   }
+  //   return this.fetch(path, options).then(res => {
+  //     console.log("FETCH MEDIA", res)
+  //     this.processResponse(path, options, res)
+  //   }).catch(err => {
+  //     console.log("FETCH ERROR", err)
+  //   })
   const postScrapData = async (currentHost: string) => {
     try {
+      // 1. Préparez les données du formulaire
+
+      // return this.fetch(path, options).then(res => {
+      //   console.log("FETCH MEDIA", res)
+      //   this.processResponse(path, options, res)
+      // }).catch(err => {
+      //   console.log("FETCH ERROR", err)
+      // })
+      if (!photo1 || !photo1.uri) {
+        console.error("photo1 n'est pas défini");
+        return;
+      }
+      let photo = {
+        uri:
+          Platform.OS === "android"
+            ? photo1.uri
+            : photo1.uri.replace("file://", ""),
+        name: "photo1.jpg",
+        type: "image/jpeg",
+      };
+      let type = photo1.uri.substring(photo1.uri.lastIndexOf(".") + 1);
+      const formData = new FormData();
+      formData.append("owner", String(owner));
+      formData.append("photo1", {
+        uri: photo.uri,
+        name: photo.name,
+        type: `image/${type}`,
+      } as any);
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("condition", condition);
+      formData.append("price", String(price));
+      formData.append("weight", weight);
+      material.forEach((m) => formData.append("material", m));
+      category.forEach((c) => formData.append("category", c));
+      formData.append("homePickup", homePickup ? "true" : "false");
+      formData.append("productLocation", productLocation);
+
+      // // ... ajoutez d'autres champs ici
+      // // 2. Effectuez la requête avec axios
       const response = await axios.post(
         `http://${currentHost}:8000/api/scraps/`,
+        formData,
         {
-          owner: 3, //dev mode
-          name,
-          description,
-          condition,
-          price,
-          quantity,
-          weight,
-          material,
-          category,
-          homePickup,
-          productLocation,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
-      console.log("response.data : ", response);
+      console.log("response.data : ", response.data);
     } catch (error) {
       console.error("Erreur lors de l'envoi des données:", error);
       if ((error as any).response) {
@@ -159,10 +208,10 @@ const CreateScreen = () => {
     }
   };
   console.log("######################################");
+  console.log("photo1 : ", photo1);
   console.log("name : ", name);
   console.log("description : ", description);
   console.log("condition : ", condition);
-  console.log("quantity : ", quantity);
   console.log("price :", price);
   console.log("material : ", material);
   console.log("weight : ", weight);
@@ -181,6 +230,19 @@ const CreateScreen = () => {
           <View style={[displays.aliC, displays.w90]}>
             <Spacer height={20} />
             <Text style={fonts.createTitle}>Publie ta chute</Text>
+            <Spacer height={20} />
+            <PhotoSelected
+              photo1={photo1}
+              setPhoto1={setPhoto1}
+              photo2={photo2}
+              setPhoto2={setPhoto2}
+              photo3={photo3}
+              setPhoto3={setPhoto3}
+              photo4={photo4}
+              setPhoto4={setPhoto4}
+              photo5={photo5}
+              setPhoto5={setPhoto5}
+            />
             <Spacer height={20} />
             <NameSelected
               name={name}
@@ -204,14 +266,6 @@ const CreateScreen = () => {
               errorPrice={errorPrice}
               counterPressed={counterPressed}
               priceRef={priceRef}
-            />
-            <Spacer height={20} />
-            <QuantitySelected
-              quantity={quantity}
-              setQuantity={setQuantity}
-              errorQuantity={errorQuantity}
-              counterPressed={counterPressed}
-              quantityRef={quantityRef}
             />
             <Spacer height={20} />
             <ConditionSelected
@@ -287,7 +341,6 @@ const CreateScreen = () => {
               description={description}
               condition={condition}
               price={price}
-              quantity={quantity}
               weight={weight}
               material={material}
               category={category}
@@ -297,7 +350,6 @@ const CreateScreen = () => {
               setErrorDescription={setErrorDescription}
               setErrorCondition={setErrorCondition}
               setErrorPrice={setErrorPrice}
-              setErrorQuantity={setErrorQuantity}
               setErrorWeight={setErrorWeight}
               setErrorMaterial={setErrorMaterial}
               setErrorCategory={setErrorCategory}

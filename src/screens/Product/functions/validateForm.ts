@@ -3,7 +3,6 @@ export const handleErrors = (
   description: string,
   condition: string,
   price: number | undefined,
-  quantity: number | undefined,
   weight: string,
   material: string[],
   category: string[],
@@ -13,7 +12,6 @@ export const handleErrors = (
   setErrorDescription: React.Dispatch<React.SetStateAction<string>>,
   setErrorCondition: React.Dispatch<React.SetStateAction<string>>,
   setErrorPrice: React.Dispatch<React.SetStateAction<string>>,
-  setErrorQuantity: React.Dispatch<React.SetStateAction<string>>,
   setErrorWeight: React.Dispatch<React.SetStateAction<string>>,
   setErrorMaterial: React.Dispatch<React.SetStateAction<string>>,
   setErrorCategory: React.Dispatch<React.SetStateAction<string>>,
@@ -66,19 +64,6 @@ export const handleErrors = (
     }
   } else {
     setErrorPrice("Veuillez entrer un prix");
-    isValid = false;
-  }
-  //Quantity errors
-  if (quantity !== undefined) {
-    // Vérifiez d'abord si price a une valeur
-    if (quantity < 1) {
-      setErrorQuantity("minimum 1");
-      isValid = false;
-    } else {
-      setErrorQuantity("");
-    }
-  } else {
-    setErrorQuantity("Entrez une quantité valide");
     isValid = false;
   }
   //Weight errors

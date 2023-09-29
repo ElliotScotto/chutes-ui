@@ -7,6 +7,16 @@ export interface UserCustom {
 }
 
 export interface ScrapData {
+  photo1: string;
+  photo2: string;
+  photo3: string;
+  photo4: string;
+  photo5: string;
+  photo1_url: string;
+  photo2_url: string;
+  photo3_url: string;
+  photo4_url: string;
+  photo5_url: string;
   name: string;
   description: string;
   condition: string;
@@ -96,7 +106,7 @@ export const MATERIALS: Material = {
   Glass: "Verre",
   Liquid: "Liquide",
   Powders: "Poudre",
-  Stones: "Pierre",
+  Stones: "Pierres",
   Others: "Autres",
 };
 export interface Weight {

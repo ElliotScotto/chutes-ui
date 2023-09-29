@@ -56,6 +56,11 @@ const displays = StyleSheet.create({
     color: colors.tertiary,
   },
   bordPrimary: { borderWidth: 1, borderColor: colors.primary },
+  bordlightAccent: {
+    borderWidth: 1,
+    borderColor: colors.lightAccent,
+    borderTopLeftRadius: 5,
+  },
   bord1: { borderWidth: 1, borderColor: "black" },
   bord2: { borderWidth: 1, borderColor: "red" },
   bord3: { borderWidth: 1, borderColor: "green" },

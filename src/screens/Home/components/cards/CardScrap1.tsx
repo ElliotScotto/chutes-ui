@@ -1,6 +1,6 @@
 //Card model for all scrap listed
 import React, { FC } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 //packages
 import { Shadow } from "react-native-shadow-2";
 //utils
@@ -18,11 +18,15 @@ import fonts from "../../../../styles/fonts";
 import { ScrapData } from "../../../../types/dataTypes";
 //functions
 import { getIconCondition } from "../../functions/getIconCondition";
+//env
+import { HOST } from "@env";
+
 interface CardScrap1Props {
   data: ScrapData;
 }
 const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
   const iconContionNames = getIconCondition(data.condition);
+
   return (
     <>
       <View style={displays.card}>
@@ -41,8 +45,17 @@ const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
         >
           <View style={displays.scrapCard}>
             <View style={[displays.scrapCardTop]}>
-              <View style={displays.scrapCardLeft}>
-                <Icon name={"lightbulb-fluorescent-tube-outline"} size={50} />
+              <View style={[displays.scrapCardLeft]}>
+                {/* <Icon name={"lightbulb-fluorescent-tube-outline"} size={50} /> */}
+                <Image
+                  source={{ uri: `${HOST}${data.photo1_url}` }}
+                  style={[
+                    displays.bordlightAccent,
+                    displays.flex,
+                    { height: 60, width: "100%" },
+                  ]}
+                  resizeMode="cover"
+                />
               </View>
               <Spacer width={5} />
               <View style={[displays.scrapCardRight]}>

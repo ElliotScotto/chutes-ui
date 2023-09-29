@@ -16,7 +16,6 @@ export interface PostScrapButtonProps {
   description: string;
   condition: string;
   price: number | undefined;
-  quantity: number | undefined;
   weight: string;
   material: string[];
   category: string[];
@@ -27,7 +26,6 @@ export interface PostScrapButtonProps {
   setErrorDescription: React.Dispatch<React.SetStateAction<string>>;
   setErrorCondition: React.Dispatch<React.SetStateAction<string>>;
   setErrorPrice: React.Dispatch<React.SetStateAction<string>>;
-  setErrorQuantity: React.Dispatch<React.SetStateAction<string>>;
   setErrorWeight: React.Dispatch<React.SetStateAction<string>>;
   setErrorMaterial: React.Dispatch<React.SetStateAction<string>>;
   setErrorCategory: React.Dispatch<React.SetStateAction<string>>;
@@ -46,7 +44,6 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   description,
   condition,
   price,
-  quantity,
   weight,
   material,
   category,
@@ -57,7 +54,6 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   setErrorDescription,
   setErrorCondition,
   setErrorPrice,
-  setErrorQuantity,
   setErrorWeight,
   setErrorMaterial,
   setErrorCategory,
@@ -84,7 +80,6 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         description,
         condition,
         price,
-        quantity,
         weight,
         material,
         category,
@@ -94,7 +89,6 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         setErrorDescription,
         setErrorCondition,
         setErrorPrice,
-        setErrorQuantity,
         setErrorWeight,
         setErrorMaterial,
         setErrorCategory,
