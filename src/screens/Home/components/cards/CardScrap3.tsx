@@ -38,9 +38,6 @@ const CardScrap3: FC<CardScrap3Props> = ({ data }) => {
         <View style={displays.scrapCard3}>
           <View style={{ flexDirection: "column", flex: 1 }}>
             <View style={displays.scrapCard3Left}>
-              <View style={displays.scrapCard3LeftTitle}>
-                <Text style={fonts.contact}>Contact</Text>
-              </View>
               <View
                 style={{
                   flexDirection: "row",
@@ -53,9 +50,6 @@ const CardScrap3: FC<CardScrap3Props> = ({ data }) => {
                 <View style={[displays.scrapCard3LeftContentRight]}>
                   <Text numberOfLines={1} style={fonts.contactDetails}>
                     {data.owner_detail.username}
-                  </Text>
-                  <Text numberOfLines={1} style={fonts.contactDetails}>
-                    {data.owner_detail.phone_number}
                   </Text>
                   <Text numberOfLines={1} style={fonts.contactEmail}>
                     {data.owner_detail.email}

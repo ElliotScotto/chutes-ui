@@ -45,10 +45,11 @@ const CreateScreen = () => {
   const [material, setMaterial] = useState<string[]>([]);
   const [category, setCategory] = useState<string[]>([]);
   const [homePickup, setHomePickup] = useState<boolean>(true);
+  const [sending, setSending] = useState<boolean>(false);
   const [productLocation, setProductLocation] = useState<string>("");
-  const [sellerDelivers, setSellerDelivers] = useState<boolean>(false);
   //Focus & ref
   const scrollViewRef = useRef<ScrollView>(null);
+  const photoRef = useRef<View>(null);
   const nameRef = useRef<View>(null);
   const descriptionRef = useRef<View>(null);
   const priceRef = useRef<View>(null);
@@ -62,6 +63,7 @@ const CreateScreen = () => {
     useState(false);
   const [isModalWeightsVisible, setIsModalWeightsVisible] = useState(false);
   //errors
+  const [errorPhoto, setErrorPhoto] = useState("");
   const [errorName, setErrorName] = useState("");
   const [errorDescription, setErrorDescription] = useState("");
   const [errorCondition, setErrorCondition] = useState("");
@@ -78,6 +80,7 @@ const CreateScreen = () => {
   //Form validation
   const handleSubmit = () => {
     const isValidForm = handleErrors(
+      photo1,
       name,
       description,
       condition,
@@ -86,7 +89,9 @@ const CreateScreen = () => {
       material,
       category,
       homePickup,
+      sending,
       productLocation,
+      setErrorPhoto,
       setErrorName,
       setErrorDescription,
       setErrorCondition,
@@ -109,7 +114,9 @@ const CreateScreen = () => {
     } else {
       setIsButtonEnabled(false);
       //if multiple errors focus set on the first area from top to bottom
-      if (!name) {
+      if (!photo1) {
+        scrollToRef(scrollViewRef, photoRef);
+      } else if (!name) {
         scrollToRef(scrollViewRef, nameRef);
       } else if (name && name.length > 45) {
         scrollToRef(scrollViewRef, nameRef);
@@ -132,32 +139,9 @@ const CreateScreen = () => {
       }
     }
   };
-  // async postMedia(path: string, uri: string) {
-  //   let type = uri.substring(uri.lastIndexOf(".") + 1);
-  //   const headers = await this.getHeaders('multipart/form-data')
-  //   const form = new FormData()
-  //   form.append('file', { uri, name: 'media', type: `image/${type}` } as any)
-  //   const options: RequestInit = {
-  //     method: 'POST',
-  //     headers,
-  //     body: form
-  //   }
-  //   return this.fetch(path, options).then(res => {
-  //     console.log("FETCH MEDIA", res)
-  //     this.processResponse(path, options, res)
-  //   }).catch(err => {
-  //     console.log("FETCH ERROR", err)
-  //   })
   const postScrapData = async (currentHost: string) => {
     try {
       // 1. Préparez les données du formulaire
-
-      // return this.fetch(path, options).then(res => {
-      //   console.log("FETCH MEDIA", res)
-      //   this.processResponse(path, options, res)
-      // }).catch(err => {
-      //   console.log("FETCH ERROR", err)
-      // })
       if (!photo1 || !photo1.uri) {
         console.error("photo1 n'est pas défini");
         return;
@@ -187,9 +171,7 @@ const CreateScreen = () => {
       category.forEach((c) => formData.append("category", c));
       formData.append("homePickup", homePickup ? "true" : "false");
       formData.append("productLocation", productLocation);
-
-      // // ... ajoutez d'autres champs ici
-      // // 2. Effectuez la requête avec axios
+      // 2. Effectuez la requête avec axios
       const response = await axios.post(
         `http://${currentHost}:8000/api/scraps/`,
         formData,
@@ -218,7 +200,6 @@ const CreateScreen = () => {
   console.log("category : ", category);
   console.log("productLocation : ", productLocation);
   console.log("homePickup : ", homePickup);
-  console.log("sellerDelivers : ", sellerDelivers);
   console.log("isButtonEnabled : ", isButtonEnabled);
   console.log("######################################");
   return (
@@ -242,6 +223,9 @@ const CreateScreen = () => {
               setPhoto4={setPhoto4}
               photo5={photo5}
               setPhoto5={setPhoto5}
+              errorPhoto={errorPhoto}
+              counterPressed={counterPressed}
+              photoRef={photoRef}
             />
             <Spacer height={20} />
             <NameSelected
@@ -303,18 +287,19 @@ const CreateScreen = () => {
               counterPressed={counterPressed}
               categoryRef={categoryRef}
             />
-
             <Spacer height={20} />
             <DeliverySelected
               homePickup={homePickup}
               setHomePickup={setHomePickup}
-              setSellerDelivers={setSellerDelivers}
+              sending={sending}
+              setSending={setSending}
             />
             <ProductLocationSelected
+              homePickup={homePickup}
+              sending={sending}
               productLocation={productLocation}
               setProductLocation={setProductLocation}
               errorProductLocation={errorProductLocation}
-              sellerDelivers={sellerDelivers}
               counterPressed={counterPressed}
             />
             <Spacer height={10} />
@@ -337,6 +322,7 @@ const CreateScreen = () => {
               isButtonEnabled={isButtonEnabled}
               setIsButtonEnabled={setIsButtonEnabled}
               handleSubmit={handleSubmit}
+              photo1={photo1}
               name={name}
               description={description}
               condition={condition}
@@ -346,6 +332,8 @@ const CreateScreen = () => {
               category={category}
               productLocation={productLocation}
               homePickup={homePickup}
+              sending={sending}
+              setErrorPhoto={setErrorPhoto}
               setErrorName={setErrorName}
               setErrorDescription={setErrorDescription}
               setErrorCondition={setErrorCondition}

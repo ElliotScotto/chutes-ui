@@ -1,4 +1,7 @@
+import { ImageInfo } from "../../../types/dataTypes";
+
 export const handleErrors = (
+  photo1: ImageInfo | null,
   name: string,
   description: string,
   condition: string,
@@ -7,7 +10,9 @@ export const handleErrors = (
   material: string[],
   category: string[],
   homePickup: boolean,
+  sending: boolean,
   productLocation: string,
+  setErrorPhoto: React.Dispatch<React.SetStateAction<string>>,
   setErrorName: React.Dispatch<React.SetStateAction<string>>,
   setErrorDescription: React.Dispatch<React.SetStateAction<string>>,
   setErrorCondition: React.Dispatch<React.SetStateAction<string>>,
@@ -19,9 +24,14 @@ export const handleErrors = (
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>
 ): boolean => {
   let isValid = true;
-
+  //Photo errors
+  if (!photo1) {
+    setErrorPhoto("Ajouter 1 photo minimum");
+    isValid = false;
+  } else {
+    setErrorPhoto("");
+  }
   //Name errors
-  // console.log("scrollToRef in handleErrors", scrollToRef);
   if (!name) {
     setErrorName("Champs requis");
     isValid = false;
@@ -41,7 +51,6 @@ export const handleErrors = (
   } else {
     setErrorDescription("");
   }
-
   //Condition errors
   if (!condition) {
     setErrorCondition("Choisissez un état dans la liste");
@@ -49,7 +58,6 @@ export const handleErrors = (
   } else {
     setErrorCondition("");
   }
-
   //Price errors
   if (price !== undefined) {
     // Vérifiez d'abord si price a une valeur
@@ -88,12 +96,12 @@ export const handleErrors = (
     setErrorCategory("");
   }
   //HomePickup errors And ProductLocation errors
-  if (homePickup === true) {
+  if (homePickup === false && sending === false) {
     if (!productLocation) {
       setErrorProductLocation("Champs requis");
       isValid = false;
-    } else if (productLocation.length > 45) {
-      setErrorProductLocation("45 caractères maximum");
+    } else if (productLocation.length > 40) {
+      setErrorProductLocation("40 caractères maximum");
       isValid = false;
     } else {
       setErrorProductLocation("");

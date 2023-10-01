@@ -5,6 +5,7 @@ import buttons from "../../../styles/buttons";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
 import { handleErrors } from "../functions/validateForm";
+import { ImageInfo } from "../../../types/dataTypes";
 
 export interface PostScrapButtonProps {
   shadowButton: boolean;
@@ -12,6 +13,7 @@ export interface PostScrapButtonProps {
   isButtonEnabled: boolean;
   setIsButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>;
   handleSubmit: () => void;
+  photo1: ImageInfo | null;
   name: string;
   description: string;
   condition: string;
@@ -21,7 +23,9 @@ export interface PostScrapButtonProps {
   category: string[];
   productLocation: string;
   homePickup: boolean;
+  sending: boolean;
   counterPressed: number;
+  setErrorPhoto: React.Dispatch<React.SetStateAction<string>>;
   setErrorName: React.Dispatch<React.SetStateAction<string>>;
   setErrorDescription: React.Dispatch<React.SetStateAction<string>>;
   setErrorCondition: React.Dispatch<React.SetStateAction<string>>;
@@ -40,6 +44,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   isButtonEnabled,
   setIsButtonEnabled,
   handleSubmit,
+  photo1,
   name,
   description,
   condition,
@@ -49,7 +54,9 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   category,
   productLocation,
   homePickup,
+  sending,
   counterPressed,
+  setErrorPhoto,
   setErrorName,
   setErrorDescription,
   setErrorCondition,
@@ -76,6 +83,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   useEffect(() => {
     setIsButtonEnabled(
       handleErrors(
+        photo1,
         name,
         description,
         condition,
@@ -84,7 +92,9 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         material,
         category,
         homePickup,
+        sending,
         productLocation,
+        setErrorPhoto,
         setErrorName,
         setErrorDescription,
         setErrorCondition,

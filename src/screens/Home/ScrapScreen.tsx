@@ -2,7 +2,6 @@ import React, { FC, useState } from "react";
 import { Text, StyleSheet, View, Pressable, ScrollView } from "react-native";
 //packages
 import { Shadow } from "react-native-shadow-2";
-// import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 //navigation
 import { useRoute, RouteProp } from "@react-navigation/native";

@@ -42,5 +42,12 @@ const buttons = StyleSheet.create({
     paddingVertical: 10,
   },
   //CreateScreen
+  //Signup
+  signupBack: {
+    height: 60,
+    width: 60,
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
 });
 export default buttons;

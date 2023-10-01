@@ -10,23 +10,25 @@ import Spacer from "../../../utils/Spacer";
 import fonts from "../../../styles/fonts";
 
 interface ProductLocationSelectedProps {
+  homePickup: boolean;
+  sending: boolean;
   productLocation: string;
   setProductLocation: React.Dispatch<React.SetStateAction<string>>;
   errorProductLocation: string;
-  sellerDelivers: boolean;
   counterPressed: number;
 }
 
 const ProductLocationSelected: FC<ProductLocationSelectedProps> = ({
+  homePickup,
+  sending,
   productLocation,
   setProductLocation,
   errorProductLocation,
-  sellerDelivers,
   counterPressed,
 }) => {
-  return sellerDelivers ? null : (
+  return (
     <View style={{ width: "100%" }}>
-      <Spacer height={20} />
+      <Spacer height={5} />
       <View style={scrapCreation.productLocationTitle}>
         <Text style={fonts.productLocation}>Lieu de vente ?*</Text>
       </View>
@@ -51,6 +53,7 @@ const ProductLocationSelected: FC<ProductLocationSelectedProps> = ({
           },
         }}
         onChangeText={setProductLocation}
+        disabled={true}
       />
       <View style={scrapCreation.errors}>
         {errorProductLocation && !productLocation && counterPressed !== 0 && (

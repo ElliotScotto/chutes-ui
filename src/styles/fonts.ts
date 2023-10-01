@@ -24,11 +24,16 @@ const fonts = StyleSheet.create({
     fontWeight: "500",
   },
   scrapDetails: {
-    color: colors.secondary,
+    color: colors.tertiary2,
     fontSize: 14,
     letterSpacing: 0.3,
   },
   //card2
+  scrapDetails2: {
+    color: colors.white,
+    fontSize: 14,
+    letterSpacing: 0.3,
+  },
   dimensions: {
     color: colors.white,
     fontSize: 16,

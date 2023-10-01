@@ -109,7 +109,11 @@ const displays = StyleSheet.create({
   scrapCardRight: { flex: 4, flexDirection: "column" },
   scrapCardRightContent: { flex: 1 },
   scrapCardRightContentTop: { flex: 1, justifyContent: "center" },
-  scrapCardRightContentMiddle: { flex: 2, flexDirection: "row" },
+  scrapCardRightContentMiddle: {
+    flex: 2,
+    flexDirection: "row",
+    paddingLeft: 3,
+  },
   scrapCardRightContentMiddleLeft: {
     flex: 2,
     flexDirection: "column",
@@ -130,16 +134,20 @@ const displays = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.white,
   },
-  scrapCard2Content: { flexDirection: "row", flex: 1, paddingLeft: 5 },
+  scrapCard2Content: { flexDirection: "row", flex: 1, paddingTop: 5 },
   scrapCard2ContentLeft: {
     flex: 1,
+    paddingLeft: 70,
     alignItems: "flex-start",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    // borderColor: colors.white,
+    // borderWidth: 1,
   },
   scrapCard2ContentRight: {
-    flex: 1,
+    // flex: 1,
+    // paddingLeft: 10,
     alignItems: "flex-start",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
   },
   //card3
   scrapCard3: {
@@ -166,7 +174,7 @@ const displays = StyleSheet.create({
   },
   scrapCard3LeftContentRight: {
     flex: 3,
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "flex-start",
     paddingLeft: 5,
   },

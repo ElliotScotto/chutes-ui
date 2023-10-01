@@ -1,16 +1,28 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-//styles
-interface ProfileProps {
-  title?: string;
-}
+import { Pressable, StyleSheet, Text, View } from "react-native";
+//navigation
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-export default function HomeScreen({ title = "PROFILE" }: ProfileProps) {
+type ProfileParamList = {
+  Signup: undefined;
+};
+
+export default function HomeScreen() {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<ProfileParamList, "Signup">>();
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>{title}</Text>
+
+      <Pressable
+        onPress={() => {
+          navigation.navigate("Signup");
+        }}
+      >
+        <Text>Créer un compte</Text>
+      </Pressable>
     </View>
   );
 }

@@ -6,7 +6,8 @@ import { Shadow } from "react-native-shadow-2";
 //utils
 import Spacer from "../../../../utils/Spacer";
 //icons
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
+import IconFA5 from "react-native-vector-icons/FontAwesome5";
 //components
 import ArrowSwiper from "./ArrowSwiper";
 //style
@@ -24,7 +25,7 @@ import { HOST } from "@env";
 interface CardScrap1Props {
   data: ScrapData;
 }
-const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
+const CardScrap1: FC<CardScrap1Props> = ({ data }) => {
   const iconContionNames = getIconCondition(data.condition);
 
   return (
@@ -46,7 +47,6 @@ const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
           <View style={displays.scrapCard}>
             <View style={[displays.scrapCardTop]}>
               <View style={[displays.scrapCardLeft]}>
-                {/* <Icon name={"lightbulb-fluorescent-tube-outline"} size={50} /> */}
                 <Image
                   source={{ uri: `${HOST}${data.photo1_url}` }}
                   style={[
@@ -66,14 +66,9 @@ const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
                 </View>
                 <View style={displays.scrapCardRightContentMiddle}>
                   <View style={[displays.scrapCardRightContentMiddleLeft]}>
-                    <Text style={fonts.scrapDetails}>
-                      {data.category.length === 2
-                        ? `${data.category[0]}, ${data.category[1]}`
-                        : data.category}
-                    </Text>
                     <View style={[displays.row, { marginVertical: 6 }]}>
                       {iconContionNames.map((iconName, index) => (
-                        <Icon
+                        <IconMCI
                           key={index}
                           name={iconName}
                           size={16}
@@ -84,7 +79,27 @@ const CardScrap1: React.FC<CardScrap1Props> = ({ data }) => {
                         />
                       ))}
                     </View>
-                    <Text style={fonts.scrapDetails}>{data.price} €</Text>
+                    <View style={[displays.row, displays.aliC]}>
+                      <IconMCI name="tag" size={16} color={colors.tertiary2} />
+                      <Spacer width={3} />
+                      <Text style={fonts.scrapDetails}>{data.price} €</Text>
+                      <Spacer width={10} />
+                      <Text style={fonts.scrapDetails}>|</Text>
+                      <Spacer width={10} />
+                      <IconFA5
+                        name="shipping-fast"
+                        size={16}
+                        color={colors.tertiary2}
+                        style={{ opacity: data.sending === true ? 1 : 0.2 }}
+                      />
+                      <Spacer width={5} />
+                      <IconMCI
+                        name="home-export-outline"
+                        size={20}
+                        color={colors.tertiary2}
+                        style={{ opacity: data.home_pickup === true ? 1 : 0.2 }}
+                      />
+                    </View>
                   </View>
                 </View>
               </View>

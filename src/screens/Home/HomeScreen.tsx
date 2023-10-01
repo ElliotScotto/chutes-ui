@@ -24,6 +24,8 @@ import Spacer from "../../utils/Spacer";
 import { ScrapData } from "../../types/dataTypes";
 //screens
 import CardScrap4 from "./components/cards/CardScrap4";
+//env
+import { HOST } from "@env";
 
 type MyStackParamList = {
   Scrap: { item: ScrapData[] };
@@ -96,26 +98,25 @@ const HomeScreen: FC = () => {
     }
   };
 
-  const fetchData = async (currentHost: string) => {
+  const fetchData = async () => {
     await axios
-      .get(`http://${currentHost}:8000/api/scraps/`)
+      .get(`${HOST}/api/scraps/`)
       .then((response) => {
         setData(response.data);
-        console.log("response.data : ", response.data);
-        console.log("response.status : ", response.status);
+        // console.log("response.data : ", response.data);
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération des données:", error);
       });
   };
   useEffect(() => {
-    let currentHost;
-    if (deviceName === "LYA-L29") {
-      currentHost = "192.168.1.38";
-    } else {
-      currentHost = "localhost";
-    }
-    fetchData(currentHost);
+    // let currentHost;
+    // if (deviceName === "LYA-L29") {
+    //   currentHost = "192.168.1.38";
+    // } else {
+    //   currentHost = "localhost";
+    // }
+    fetchData();
   }, []);
   return (
     <SafeAreaProvider>

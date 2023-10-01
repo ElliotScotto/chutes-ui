@@ -5,7 +5,6 @@ export interface UserCustom {
   address: string;
   city: string;
 }
-
 export interface ScrapData {
   photo1: string;
   photo2: string;
@@ -20,7 +19,6 @@ export interface ScrapData {
   name: string;
   description: string;
   condition: string;
-  quantity: number;
   price: number;
   weight: number;
   material: string;
@@ -39,7 +37,6 @@ export type ScrapDataCreation = {
   name: string;
   description: string;
   condition: string;
-  quantity: number;
   price: number;
   weight: string;
   material: string[];
@@ -48,7 +45,7 @@ export type ScrapDataCreation = {
   productLocation: string;
   sending: boolean;
 };
-
+export type ImageInfo = { uri: string };
 export interface Conditions {
   commeNeuf: string;
   TresBonEtat: string;
@@ -127,3 +124,13 @@ export const WEIGHTS: Weight = {
   fiftyToHundred: "Entre 50kg et 100kg",
   moreHundred: "Plus de 100kg",
 };
+//Profile
+export interface Profile {
+  username: string;
+  email: string;
+  password1: string;
+  password2: string;
+  phoneNumber: number;
+  address: string;
+  city: string;
+}

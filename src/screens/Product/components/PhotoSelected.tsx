@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import { Button, Image, View } from "react-native";
+import React, { FC } from "react";
+import { Button, Image, View, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import scrapCreation from "../../../styles/scrapCreation";
+import ChutesColors from "../../../styles/colors";
+const colors = ChutesColors();
 
 type PhotoSelectedProps = {
   photo1: ImageInfo | null;
@@ -13,10 +16,14 @@ type PhotoSelectedProps = {
   setPhoto4: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
   photo5: ImageInfo | null;
   setPhoto5: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
+  errorPhoto: string;
+  counterPressed: number;
+  photoRef: React.RefObject<any>;
 };
+
 type ImageInfo = { uri: string };
 
-const PhotoSelected: React.FC<PhotoSelectedProps> = ({
+const PhotoSelected: FC<PhotoSelectedProps> = ({
   photo1,
   setPhoto1,
   photo2,
@@ -27,6 +34,9 @@ const PhotoSelected: React.FC<PhotoSelectedProps> = ({
   setPhoto4,
   photo5,
   setPhoto5,
+  errorPhoto,
+  counterPressed,
+  photoRef,
 }) => {
   const pickImage = async (
     setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
@@ -68,7 +78,10 @@ const PhotoSelected: React.FC<PhotoSelectedProps> = ({
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View
+      ref={photoRef}
+      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+    >
       <Button
         title="Sélectionnez une photo 1"
         onPress={() => pickImage(setPhoto1)}
@@ -144,6 +157,17 @@ const PhotoSelected: React.FC<PhotoSelectedProps> = ({
         title="Prendre une photo 5"
         onPress={() => captureImage(setPhoto5)}
       />
+      <View style={scrapCreation.errors}>
+        {errorPhoto && !photo1 && counterPressed !== 0 && (
+          <Text
+            style={{
+              color: colors.error,
+            }}
+          >
+            {errorPhoto}
+          </Text>
+        )}
+      </View>
     </View>
   );
 };

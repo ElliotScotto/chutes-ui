@@ -14,10 +14,12 @@ import ScrapScreen from "./screens/Home/ScrapScreen";
 import CreateScreen from "./screens/Product/CreateScreen";
 //User
 import ProfileScreen from "./screens/User/ProfileScreen";
+import SignUpScreen from "./screens/User/SignUpScreen";
 //icons
 import Icon from "react-native-vector-icons/AntDesign";
 //styles
 import ChutesColors from "./styles/colors";
+
 const colors = ChutesColors();
 
 const DisplayTabs = () => {
@@ -69,6 +71,7 @@ const Auth = () => {
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Tabs" component={DisplayTabs} />
         <Stack.Screen name="Scrap" component={ScrapScreen} />
+        <Stack.Screen name="Signup" component={SignUpScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
