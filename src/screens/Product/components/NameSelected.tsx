@@ -22,14 +22,7 @@ const NameSelected: FC<NameSelectedProps> = ({
   nameRef,
 }) => {
   return (
-    <View
-      ref={nameRef}
-      style={{ width: "100%" }}
-      onLayout={(event) => {
-        const layout = event.nativeEvent.layout;
-        console.log("y:", layout.y);
-      }}
-    >
+    <View ref={nameRef} style={{ width: "100%" }}>
       <TextInput
         mode="outlined"
         label="Nom*"

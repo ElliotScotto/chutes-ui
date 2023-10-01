@@ -98,5 +98,7 @@ const fonts = StyleSheet.create({
     color: colors.lightAccent,
     letterSpacing: 0.3,
   },
+  //signup
+  errors: { color: colors.error, fontSize: 16, letterSpacing: 0.3 },
 });
 export default fonts;
