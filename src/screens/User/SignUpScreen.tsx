@@ -64,7 +64,7 @@ const SignUpScreen: React.FC = () => {
   const [textColor, setTextColor] = useState<string>(`${colors.secondary}`);
   const [iconColor, setIconColor] = useState<string>(colors.disabledDark);
 
-  const handleSignUp = async () => {
+  const register = async () => {
     try {
       const response = await axios.post(`${HOST}/api/scraps/`, {
         username: username,
@@ -83,7 +83,7 @@ const SignUpScreen: React.FC = () => {
     }
   };
   const handleSubmit = () => {
-    handleErrorsAccount(
+    const isValidForm = handleErrorsAccount(
       username,
       email,
       password,
@@ -111,6 +111,9 @@ const SignUpScreen: React.FC = () => {
       addressRef,
       cityRef
     );
+    if (isValidForm) {
+      register;
+    }
   };
   useFocusEffect(
     useCallback(() => {
