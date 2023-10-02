@@ -13,10 +13,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 //utils
 import Spacer from "../../utils/Spacer";
 //functions
-import { isValidEmail } from "./functions/validateEmail";
-import { isValidUsername } from "./functions/validateUsername";
-import { isValidPhoneNumber } from "./functions/validatePhoneNumber";
 import { setInputFocusErrors } from "./functions/setInputFocusErrors";
+import { handleErrorsAccount } from "./functions/handleErrorsAccount";
+import { handleFocusOnNextInput } from "./functions/handleFocusOnNextInput";
 //styles
 import ChutesColors from "../../styles/colors";
 const colors = ChutesColors();
@@ -24,8 +23,6 @@ import buttons from "../../styles/buttons";
 import displays from "../../styles/display";
 import signup from "../../styles/signup";
 import fonts from "../../styles/fonts";
-import { handleErrorsAccount } from "./functions/handleErrorsAccount";
-import { handleFocusOnNextInput } from "./functions/handleFocusOnNextInput";
 
 type MyStackParamList = {
   Profil: undefined;
@@ -42,7 +39,6 @@ const SignUpScreen: React.FC = () => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   //Focus & ref
-  //   const scrollViewRef = useRef<ScrollView>(null);
   const usernameRef = useRef<RNTextInput | null>(null);
   const emailRef = useRef<RNTextInput | null>(null);
   const passwordRef = useRef<RNTextInput | null>(null);
@@ -61,7 +57,6 @@ const SignUpScreen: React.FC = () => {
   const [counterPressed, setCounterPressed] = useState<number>(0);
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [shadowButton, setShadowButton] = useState<boolean>(true);
-  const [textColor, setTextColor] = useState<string>(`${colors.secondary}`);
   const [iconColor, setIconColor] = useState<string>(colors.disabledDark);
 
   const register = async () => {
@@ -133,11 +128,9 @@ const SignUpScreen: React.FC = () => {
   //Signup Button
   const handlePressIn = () => {
     setShadowButton(false);
-    setTextColor(colors.white);
   };
   const handlePressOut = () => {
     setShadowButton(true);
-    setTextColor(colors.secondary);
   };
   const handleIconColor = (status: string) => {
     if (status === "focus") {
