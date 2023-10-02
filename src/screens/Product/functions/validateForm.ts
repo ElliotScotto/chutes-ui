@@ -1,6 +1,6 @@
 import { ImageInfo } from "../../../types/dataTypes";
 
-export const handleErrors = (
+export const handleErrorsScrap = (
   photo1: ImageInfo | null,
   name: string,
   description: string,

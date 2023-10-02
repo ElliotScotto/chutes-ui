@@ -7,7 +7,7 @@ const signup = StyleSheet.create({
   container: { backgroundColor: colors.white },
   //errors
   errors: {
-    height: 18,
+    height: 28,
     width: "100%",
     marginTop: 2,
     paddingLeft: 8,

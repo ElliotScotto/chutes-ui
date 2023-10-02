@@ -4,7 +4,7 @@ import { Shadow } from "react-native-shadow-2";
 import buttons from "../../../styles/buttons";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
-import { handleErrors } from "../functions/validateForm";
+import { handleErrorsScrap } from "../functions/validateForm";
 import { ImageInfo } from "../../../types/dataTypes";
 
 export interface PostScrapButtonProps {
@@ -82,7 +82,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   };
   useEffect(() => {
     setIsButtonEnabled(
-      handleErrors(
+      handleErrorsScrap(
         photo1,
         name,
         description,

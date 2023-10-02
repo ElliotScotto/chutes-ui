@@ -25,7 +25,7 @@ import DeliverySelected from "./components/DeliverySelected";
 import ProductLocationSelected from "./components/ProductLocationSelected";
 import PostScrapButton from "./components/PostScrapButton";
 //functions
-import { handleErrors } from "./functions/validateForm";
+import { handleErrorsScrap } from "./functions/validateForm";
 import { scrollToRef } from "./functions/handleFocus";
 //types
 type ImageInfo = { uri: string };
@@ -79,7 +79,7 @@ const CreateScreen = () => {
   const [shadowButton, setShadowButton] = useState<boolean>(true);
   //Form validation
   const handleSubmit = () => {
-    const isValidForm = handleErrors(
+    const isValidForm = handleErrorsScrap(
       photo1,
       name,
       description,

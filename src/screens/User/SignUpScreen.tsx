@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, Text, Pressable, TextInput as RNTextInput } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { TextInput } from "react-native-paper";
@@ -12,6 +12,11 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 //utils
 import Spacer from "../../utils/Spacer";
+//functions
+import { isValidEmail } from "./functions/validateEmail";
+import { isValidUsername } from "./functions/validateUsername";
+import { isValidPhoneNumber } from "./functions/validatePhoneNumber";
+import { setInputFocusErrors } from "./functions/setInputFocusErrors";
 //styles
 import ChutesColors from "../../styles/colors";
 const colors = ChutesColors();
@@ -19,6 +24,7 @@ import buttons from "../../styles/buttons";
 import displays from "../../styles/display";
 import signup from "../../styles/signup";
 import fonts from "../../styles/fonts";
+import { handleErrorsAccount } from "./functions/handleErrorsAccount";
 
 type MyStackParamList = {
   Profil: undefined;
@@ -50,6 +56,7 @@ const SignUpScreen: React.FC = () => {
   const [errorAddress, setErrorAddress] = useState("");
   const [errorCity, setErrorCity] = useState("");
   //Form
+  const [securePassword, setSecurePassword] = useState<boolean>(true);
   const [counterPressed, setCounterPressed] = useState<number>(0);
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [shadowButton, setShadowButton] = useState<boolean>(true);
@@ -73,63 +80,53 @@ const SignUpScreen: React.FC = () => {
     }
   };
   const handleSubmit = () => {
-    let isValidForm = true;
-    if (username) {
-      if (username.length > 35) {
-        setErrorUsername("35 caractères maximum");
-        isValidForm = false;
-      } else {
-        setErrorUsername("");
-      }
-    } else {
-      setErrorUsername("Champs requis");
-      isValidForm = false;
-    }
-    if (email) {
-      setErrorEmail("");
-    } else {
-      setErrorEmail("Champs requis");
-      isValidForm = false;
-    }
-    if (password) {
-      if (password.length < 10) {
-        setErrorPassword(
-          "Votre mot de passe doit comporter au moins 10 caractères"
-        );
-        isValidForm = false;
-      } else {
-        setErrorPassword("");
-      }
-    } else {
-      setErrorPassword("Champs requis");
-      isValidForm = false;
-    }
-
-    if (phoneNumber) {
-      setPhoneNumber("");
-    } else {
-      setPhoneNumber("Champs requis");
-      isValidForm = false;
-    }
-    if (address) {
-      setErrorAddress("");
-    } else {
-      setErrorAddress("Champs requis");
-      isValidForm = false;
-    }
-    if (city) {
-      setErrorCity("");
-    } else {
-      setErrorCity("Champs requis");
-      isValidForm = false;
-    }
-    return isValidForm;
+    handleErrorsAccount(
+      username,
+      email,
+      password,
+      phoneNumber,
+      address,
+      city,
+      setErrorUsername,
+      setErrorEmail,
+      setErrorPassword,
+      setErrorPhoneNumber,
+      setErrorAddress,
+      setErrorCity
+    );
+    setInputFocusErrors(
+      username,
+      email,
+      password,
+      phoneNumber,
+      address,
+      city,
+      usernameRef,
+      emailRef,
+      passwordRef,
+      phoneNumberRef,
+      addressRef,
+      cityRef
+    );
   };
+  useEffect(() => {
+    if (
+      counterPressed === 0 &&
+      !username &&
+      !email &&
+      !password &&
+      !phoneNumber &&
+      !address &&
+      !city
+    ) {
+      usernameRef.current?.focus();
+    }
+  });
   const handleFocusOnNextInput = (value: string) => {
     if (value === "email") {
       emailRef.current?.focus();
     }
-    if (value === "password1") {
+    if (value === "password") {
       passwordRef.current?.focus();
     }
     if (value === "phoneNumber") {
@@ -142,6 +139,16 @@ const SignUpScreen: React.FC = () => {
       cityRef.current?.focus();
     }
   };
+
+  console.log("###########################");
+  console.log(username, typeof username);
+  console.log(email, typeof email);
+  console.log(password, typeof password);
+  console.log(phoneNumber, typeof phoneNumber);
+  console.log(address, typeof address);
+  console.log(city, typeof city);
+  console.log(counterPressed);
+  console.log("###########################");
   return (
     <KeyboardAwareScrollView style={[displays.white]}>
       <SafeAreaProvider>
@@ -171,17 +178,22 @@ const SignUpScreen: React.FC = () => {
                 </Pressable>
               </View>
             </View>
-            <Spacer height={10} />
+            <Spacer height={5} />
             <Text style={fonts.createTitle}>Crée un compte</Text>
-            <Spacer height={10} />
+            <Spacer height={15} />
             <TextInput
               ref={usernameRef}
               mode="outlined"
               label="Nom d'utilisateur"
               value={username}
-              onChangeText={setUsername}
               error={errorUsername ? true : false}
+              onChangeText={setUsername}
+              outlineColor={errorUsername ? colors.error : colors.tertiary}
+              activeOutlineColor={
+                errorUsername ? colors.error : colors.tertiary2
+              }
               multiline={false}
+              maxLength={25}
               textAlign="left"
               style={{
                 width: "100%",
@@ -189,13 +201,7 @@ const SignUpScreen: React.FC = () => {
               }}
               theme={{
                 colors: {
-                  primary: username
-                    ? username.length <= 30
-                      ? colors.tertiary
-                      : colors.error
-                    : errorUsername && counterPressed !== 0
-                    ? colors.error
-                    : colors.tertiary,
+                  primary: errorUsername ? colors.error : colors.tertiary,
                 },
               }}
               onSubmitEditing={() => {
@@ -203,7 +209,7 @@ const SignUpScreen: React.FC = () => {
               }}
             />
             <View style={signup.errors}>
-              {errorUsername && !username && counterPressed !== 0 && (
+              {errorUsername && counterPressed !== 0 && (
                 <Text style={fonts.errors}>{errorUsername}</Text>
               )}
             </View>
@@ -211,29 +217,27 @@ const SignUpScreen: React.FC = () => {
               ref={emailRef}
               mode="outlined"
               label="Email"
+              autoCapitalize="none"
               value={email}
+              error={errorEmail ? true : false}
               onChangeText={setEmail}
+              outlineColor={errorEmail ? colors.error : colors.tertiary}
+              activeOutlineColor={errorEmail ? colors.error : colors.tertiary2}
               style={{
                 width: "100%",
                 backgroundColor: colors.white,
               }}
               theme={{
                 colors: {
-                  primary: email
-                    ? email.length <= 30
-                      ? colors.tertiary
-                      : colors.error
-                    : errorEmail && counterPressed !== 0
-                    ? colors.error
-                    : colors.tertiary,
+                  primary: errorEmail ? colors.error : colors.tertiary,
                 },
               }}
               onSubmitEditing={() => {
-                handleFocusOnNextInput("password1");
+                handleFocusOnNextInput("password");
               }}
             />
             <View style={signup.errors}>
-              {errorEmail && !email && counterPressed !== 0 && (
+              {errorEmail && counterPressed !== 0 && (
                 <Text style={fonts.errors}>{errorEmail}</Text>
               )}
             </View>
@@ -241,22 +245,35 @@ const SignUpScreen: React.FC = () => {
               ref={passwordRef}
               mode="outlined"
               label="Mot de passe"
-              secureTextEntry
+              secureTextEntry={securePassword}
               value={password}
+              error={errorPassword ? true : false}
               onChangeText={setPassword}
+              outlineColor={errorPassword ? colors.error : colors.tertiary}
+              activeOutlineColor={
+                errorPassword ? colors.error : colors.tertiary2
+              }
+              right={
+                <TextInput.Icon
+                  icon={() => (
+                    <IconMCI
+                      name={securePassword ? "eye-off" : "eye"}
+                      size={25}
+                      color={colors.tertiary2}
+                    />
+                  )}
+                  onPress={() => {
+                    setSecurePassword(!securePassword);
+                  }}
+                />
+              }
               style={{
                 width: "100%",
                 backgroundColor: colors.white,
               }}
               theme={{
                 colors: {
-                  primary: password
-                    ? password.length <= 30
-                      ? colors.tertiary
-                      : colors.error
-                    : errorPassword && counterPressed !== 0
-                    ? colors.error
-                    : colors.tertiary,
+                  primary: errorPassword ? colors.error : colors.tertiary,
                 },
               }}
               onSubmitEditing={() => {
@@ -264,7 +281,7 @@ const SignUpScreen: React.FC = () => {
               }}
             />
             <View style={signup.errors}>
-              {errorPassword && !password && counterPressed !== 0 && (
+              {errorPassword && counterPressed !== 0 && (
                 <Text style={fonts.errors}>{errorPassword}</Text>
               )}
             </View>
@@ -272,21 +289,23 @@ const SignUpScreen: React.FC = () => {
               ref={phoneNumberRef}
               mode="outlined"
               label="Numéro de téléphone"
+              keyboardType="phone-pad"
               value={phoneNumber}
+              multiline={false}
+              maxLength={10}
+              error={errorPhoneNumber ? true : false}
               onChangeText={setPhoneNumber}
+              outlineColor={errorPhoneNumber ? colors.error : colors.tertiary}
+              activeOutlineColor={
+                errorPhoneNumber ? colors.error : colors.tertiary2
+              }
               style={{
                 width: "100%",
                 backgroundColor: colors.white,
               }}
               theme={{
                 colors: {
-                  primary: phoneNumber
-                    ? phoneNumber.length <= 30
-                      ? colors.tertiary
-                      : colors.error
-                    : errorPhoneNumber && counterPressed !== 0
-                    ? colors.error
-                    : colors.tertiary,
+                  primary: errorPhoneNumber ? colors.error : colors.tertiary,
                 },
               }}
               onSubmitEditing={() => {
@@ -294,7 +313,7 @@ const SignUpScreen: React.FC = () => {
               }}
             />
             <View style={signup.errors}>
-              {errorPhoneNumber && !phoneNumber && counterPressed !== 0 && (
+              {errorPhoneNumber && counterPressed !== 0 && (
                 <Text style={fonts.errors}>{errorPhoneNumber}</Text>
               )}
             </View>
@@ -303,20 +322,19 @@ const SignUpScreen: React.FC = () => {
               mode="outlined"
               label="Adresse"
               value={address}
+              error={errorAddress ? true : false}
               onChangeText={setAddress}
+              outlineColor={errorAddress ? colors.error : colors.tertiary}
+              activeOutlineColor={
+                errorAddress ? colors.error : colors.tertiary2
+              }
               style={{
                 width: "100%",
                 backgroundColor: colors.white,
               }}
               theme={{
                 colors: {
-                  primary: address
-                    ? address.length <= 30
-                      ? colors.tertiary
-                      : colors.error
-                    : errorAddress && counterPressed !== 0
-                    ? colors.error
-                    : colors.tertiary,
+                  primary: errorAddress ? colors.error : colors.tertiary,
                 },
               }}
               onSubmitEditing={() => {
@@ -324,7 +342,7 @@ const SignUpScreen: React.FC = () => {
               }}
             />
             <View style={signup.errors}>
-              {errorAddress && !address && counterPressed !== 0 && (
+              {errorAddress && counterPressed !== 0 && (
                 <Text style={fonts.errors}>{errorAddress}</Text>
               )}
             </View>
@@ -333,29 +351,26 @@ const SignUpScreen: React.FC = () => {
               mode="outlined"
               label="Ville"
               value={city}
+              error={errorCity ? true : false}
               onChangeText={setCity}
+              outlineColor={errorCity ? colors.error : colors.tertiary}
+              activeOutlineColor={errorCity ? colors.error : colors.tertiary2}
               style={{
                 width: "100%",
                 backgroundColor: colors.white,
               }}
               theme={{
                 colors: {
-                  primary: city
-                    ? city.length <= 30
-                      ? colors.tertiary
-                      : colors.error
-                    : errorCity && counterPressed !== 0
-                    ? colors.error
-                    : colors.tertiary,
+                  primary: errorCity ? colors.error : colors.tertiary,
                 },
               }}
             />
             <View style={signup.errors}>
-              {errorCity && !city && counterPressed !== 0 && (
+              {errorCity && counterPressed !== 0 && (
                 <Text style={fonts.errors}>{errorCity}</Text>
               )}
             </View>
-            <Spacer height={30} />
+            <Spacer height={15} />
             <Shadow
               distance={4}
               offset={[0, 0]}
@@ -370,7 +385,10 @@ const SignUpScreen: React.FC = () => {
               startColor={colors.gainsboro}
             >
               <Pressable
-                onPress={handleSubmit}
+                onPress={() => {
+                  handleSubmit();
+                  setCounterPressed(counterPressed + 1);
+                }}
                 style={[buttons.primary, { backgroundColor: colors.secondary }]}
               >
                 <Text

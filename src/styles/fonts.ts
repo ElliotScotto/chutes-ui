@@ -99,6 +99,6 @@ const fonts = StyleSheet.create({
     letterSpacing: 0.3,
   },
   //signup
-  errors: { color: colors.error, fontSize: 16, letterSpacing: 0.3 },
+  errors: { color: colors.error, fontSize: 12, letterSpacing: 0.4 },
 });
 export default fonts;
