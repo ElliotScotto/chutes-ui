@@ -18,19 +18,17 @@ const handleErrorsAccount = (
   let isValidForm = true;
   if (username) {
     if (!isValidUsername(username)) {
-      setErrorUsername(
-        "Saisissez un nom d'utilisateur entre 3 et 25 caractères maximum"
-      );
+      setErrorUsername("Saisissez 3 à 25 caractères maximum");
       isValidForm = false;
     } else {
       setErrorUsername("");
     }
   } else {
-    setErrorUsername("Champs requis");
+    setErrorUsername("Saisissez un nom d'utilisateur");
     isValidForm = false;
   }
   if (!email) {
-    setErrorEmail("Veuillez entrer une adresse email");
+    setErrorEmail("Saisissez une adresse email");
     isValidForm = false;
   }
   if (email && !isValidEmail(email)) {
@@ -59,7 +57,7 @@ const handleErrorsAccount = (
       setErrorPhoneNumber("");
     }
   } else {
-    setErrorPhoneNumber("Veuillez entrer un numéro de téléphone");
+    setErrorPhoneNumber("Saisissez un numéro de téléphone");
     isValidForm = false;
   }
   if (address) {

@@ -3,7 +3,7 @@ import { Text, Pressable } from "react-native";
 import { Shadow } from "react-native-shadow-2";
 import buttons from "../../../styles/buttons";
 import ChutesColors from "../../../styles/colors";
-const color = ChutesColors();
+const colors = ChutesColors();
 import { handleErrorsScrap } from "../functions/validateForm";
 import { ImageInfo } from "../../../types/dataTypes";
 
@@ -68,17 +68,17 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   setErrorMessage,
   setCounterPressed,
 }) => {
-  const [textColor, setTextColor] = useState<string>(`${color.secondary}`);
+  const [textColor, setTextColor] = useState<string>(`${colors.secondary}`);
 
   console.log("counterPressed : ", counterPressed);
   //Style Publish Button
   const handlePressIn = () => {
     setShadowButton(false);
-    setTextColor(color.white);
+    setTextColor(colors.white);
   };
   const handlePressOut = () => {
     setShadowButton(true);
-    setTextColor(color.secondary);
+    setTextColor(colors.secondary);
   };
   useEffect(() => {
     setIsButtonEnabled(
@@ -119,7 +119,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         bottomStart: true,
         bottomEnd: true,
       }}
-      startColor={color.gainsboro}
+      startColor={colors.gainsboro}
       style={{ borderRadius: 50 }}
     >
       <Pressable
@@ -131,7 +131,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
           buttons.primary,
           {
             backgroundColor:
-              pressed || isButtonEnabled ? color.secondary : color.white,
+              pressed || isButtonEnabled ? colors.secondary : colors.white,
           },
         ]}
         onPressIn={handlePressIn}
@@ -139,7 +139,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
       >
         <Text
           style={{
-            color: isButtonEnabled ? color.white : textColor,
+            color: isButtonEnabled ? colors.white : textColor,
             textTransform: "uppercase",
           }}
         >

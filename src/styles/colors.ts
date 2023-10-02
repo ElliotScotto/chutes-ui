@@ -9,6 +9,7 @@ const ChutesColors = () => {
     black: "#151515",
     silver: "#C0C0C0",
     error: "#CD5C5C",
+    error2: "#d75c50",
     success: "#009688",
     //disabled
     disabledBlue: "#c1d0f0",

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { View, Text, Pressable, TextInput as RNTextInput } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { TextInput } from "react-native-paper";
@@ -8,7 +8,7 @@ import axios from "axios";
 import { Shadow } from "react-native-shadow-2";
 import { HOST } from "@env";
 //navigation
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 //utils
 import Spacer from "../../utils/Spacer";
@@ -60,6 +60,8 @@ const SignUpScreen: React.FC = () => {
   const [counterPressed, setCounterPressed] = useState<number>(0);
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [shadowButton, setShadowButton] = useState<boolean>(true);
+  const [textColor, setTextColor] = useState<string>(`${colors.secondary}`);
+  const [iconColor, setIconColor] = useState<string>(colors.disabledDark);
 
   const handleSignUp = async () => {
     try {
@@ -109,19 +111,22 @@ const SignUpScreen: React.FC = () => {
       cityRef
     );
   };
-  useEffect(() => {
-    if (
-      counterPressed === 0 &&
-      !username &&
-      !email &&
-      !password &&
-      !phoneNumber &&
-      !address &&
-      !city
-    ) {
-      usernameRef.current?.focus();
-    }
-  });
+  useFocusEffect(
+    useCallback(() => {
+      if (
+        counterPressed === 0 &&
+        !username &&
+        !email &&
+        !password &&
+        !phoneNumber &&
+        !address &&
+        !city
+      ) {
+        usernameRef.current?.focus();
+      }
+    }, [])
+  );
+
   const handleFocusOnNextInput = (value: string) => {
     if (value === "email") {
       emailRef.current?.focus();
@@ -139,7 +144,40 @@ const SignUpScreen: React.FC = () => {
       cityRef.current?.focus();
     }
   };
-
+  //Style Publish Button
+  const handlePressIn = () => {
+    setShadowButton(false);
+    setTextColor(colors.white);
+  };
+  const handlePressOut = () => {
+    setShadowButton(true);
+    setTextColor(colors.secondary);
+  };
+  const handleIconColor = (status: string) => {
+    if (status === "focus") {
+      setIconColor(colors.tertiary2);
+    } else {
+      setIconColor(colors.disabledDark);
+    }
+  };
+  useEffect(() => {
+    setIsButtonEnabled(
+      handleErrorsAccount(
+        username,
+        email,
+        password,
+        phoneNumber,
+        address,
+        city,
+        setErrorUsername,
+        setErrorEmail,
+        setErrorPassword,
+        setErrorPhoneNumber,
+        setErrorAddress,
+        setErrorCity
+      )
+    );
+  });
   console.log("###########################");
   console.log(username, typeof username);
   console.log(email, typeof email);
@@ -250,6 +288,8 @@ const SignUpScreen: React.FC = () => {
               error={errorPassword ? true : false}
               onChangeText={setPassword}
               outlineColor={errorPassword ? colors.error : colors.tertiary}
+              onFocus={() => handleIconColor("focus")}
+              onBlur={() => handleIconColor("blur")}
               activeOutlineColor={
                 errorPassword ? colors.error : colors.tertiary2
               }
@@ -259,7 +299,7 @@ const SignUpScreen: React.FC = () => {
                     <IconMCI
                       name={securePassword ? "eye-off" : "eye"}
                       size={25}
-                      color={colors.tertiary2}
+                      color={!errorPassword ? iconColor : colors.error}
                     />
                   )}
                   onPress={() => {
@@ -372,7 +412,7 @@ const SignUpScreen: React.FC = () => {
             </View>
             <Spacer height={15} />
             <Shadow
-              distance={4}
+              distance={shadowButton ? 4 : 0}
               offset={[0, 0]}
               paintInside={false}
               sides={{ top: true, bottom: true, start: true, end: true }}
@@ -383,21 +423,36 @@ const SignUpScreen: React.FC = () => {
                 bottomEnd: true,
               }}
               startColor={colors.gainsboro}
+              style={{ borderRadius: 50 }}
             >
               <Pressable
                 onPress={() => {
                   handleSubmit();
                   setCounterPressed(counterPressed + 1);
                 }}
-                style={[buttons.primary, { backgroundColor: colors.secondary }]}
+                onPressIn={handlePressIn}
+                onPressOut={handlePressOut}
+                style={({ pressed }) => [
+                  buttons.primary,
+                  {
+                    backgroundColor:
+                      pressed || isButtonEnabled
+                        ? colors.secondary
+                        : colors.white,
+                  },
+                ]}
               >
                 <Text
-                  style={{ color: colors.white, textTransform: "uppercase" }}
+                  style={{
+                    color: isButtonEnabled ? colors.white : textColor,
+                    textTransform: "uppercase",
+                  }}
                 >
                   S'INSCRIRE
                 </Text>
               </Pressable>
             </Shadow>
+            <Spacer height={15} />
           </View>
         </SafeAreaView>
       </SafeAreaProvider>
