@@ -72,6 +72,7 @@ const SplashScreen = () => {
               style={{
                 color: colors.white,
                 textTransform: "uppercase",
+                letterSpacing: 0.4,
               }}
             >
               DÉMARRER

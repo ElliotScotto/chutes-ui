@@ -141,6 +141,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
           style={{
             color: isButtonEnabled ? colors.white : textColor,
             textTransform: "uppercase",
+            letterSpacing: 0.4,
           }}
         >
           PUBLIER

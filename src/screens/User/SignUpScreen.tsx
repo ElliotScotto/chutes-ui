@@ -25,6 +25,7 @@ import displays from "../../styles/display";
 import signup from "../../styles/signup";
 import fonts from "../../styles/fonts";
 import { handleErrorsAccount } from "./functions/handleErrorsAccount";
+import { handleFocusOnNextInput } from "./functions/handleFocusOnNextInput";
 
 type MyStackParamList = {
   Profil: undefined;
@@ -126,25 +127,7 @@ const SignUpScreen: React.FC = () => {
       }
     }, [])
   );
-
-  const handleFocusOnNextInput = (value: string) => {
-    if (value === "email") {
-      emailRef.current?.focus();
-    }
-    if (value === "password") {
-      passwordRef.current?.focus();
-    }
-    if (value === "phoneNumber") {
-      phoneNumberRef.current?.focus();
-    }
-    if (value === "address") {
-      addressRef.current?.focus();
-    }
-    if (value === "city") {
-      cityRef.current?.focus();
-    }
-  };
-  //Style Publish Button
+  //Signup Button
   const handlePressIn = () => {
     setShadowButton(false);
     setTextColor(colors.white);
@@ -243,7 +226,14 @@ const SignUpScreen: React.FC = () => {
                 },
               }}
               onSubmitEditing={() => {
-                handleFocusOnNextInput("email");
+                handleFocusOnNextInput(
+                  emailRef,
+                  passwordRef,
+                  phoneNumberRef,
+                  addressRef,
+                  cityRef,
+                  "email"
+                );
               }}
             />
             <View style={signup.errors}>
@@ -271,7 +261,14 @@ const SignUpScreen: React.FC = () => {
                 },
               }}
               onSubmitEditing={() => {
-                handleFocusOnNextInput("password");
+                handleFocusOnNextInput(
+                  emailRef,
+                  passwordRef,
+                  phoneNumberRef,
+                  addressRef,
+                  cityRef,
+                  "password"
+                );
               }}
             />
             <View style={signup.errors}>
@@ -317,7 +314,14 @@ const SignUpScreen: React.FC = () => {
                 },
               }}
               onSubmitEditing={() => {
-                handleFocusOnNextInput("phoneNumber");
+                handleFocusOnNextInput(
+                  emailRef,
+                  passwordRef,
+                  phoneNumberRef,
+                  addressRef,
+                  cityRef,
+                  "phoneNumber"
+                );
               }}
             />
             <View style={signup.errors}>
@@ -349,7 +353,14 @@ const SignUpScreen: React.FC = () => {
                 },
               }}
               onSubmitEditing={() => {
-                handleFocusOnNextInput("address");
+                handleFocusOnNextInput(
+                  emailRef,
+                  passwordRef,
+                  phoneNumberRef,
+                  addressRef,
+                  cityRef,
+                  "address"
+                );
               }}
             />
             <View style={signup.errors}>
@@ -378,7 +389,14 @@ const SignUpScreen: React.FC = () => {
                 },
               }}
               onSubmitEditing={() => {
-                handleFocusOnNextInput("city");
+                handleFocusOnNextInput(
+                  emailRef,
+                  passwordRef,
+                  phoneNumberRef,
+                  addressRef,
+                  cityRef,
+                  "city"
+                );
               }}
             />
             <View style={signup.errors}>
@@ -422,7 +440,8 @@ const SignUpScreen: React.FC = () => {
                 bottomStart: true,
                 bottomEnd: true,
               }}
-              startColor={colors.gainsboro}
+              startColor={colors.lightAccent2}
+              endColor={colors.white}
               style={{ borderRadius: 50 }}
             >
               <Pressable
@@ -435,17 +454,19 @@ const SignUpScreen: React.FC = () => {
                 style={({ pressed }) => [
                   buttons.primary,
                   {
-                    backgroundColor:
-                      pressed || isButtonEnabled
-                        ? colors.secondary
-                        : colors.white,
+                    backgroundColor: pressed
+                      ? isButtonEnabled
+                        ? colors.tertiary2
+                        : colors.white
+                      : colors.white,
                   },
                 ]}
               >
                 <Text
                   style={{
-                    color: isButtonEnabled ? colors.white : textColor,
+                    color: isButtonEnabled ? colors.white : colors.secondary,
                     textTransform: "uppercase",
+                    letterSpacing: 0.4,
                   }}
                 >
                   S'INSCRIRE

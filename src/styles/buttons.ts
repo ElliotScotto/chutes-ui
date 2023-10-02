@@ -14,6 +14,15 @@ const buttons = StyleSheet.create({
     borderColor: colors.secondary,
     borderWidth: 1,
   },
+  secondary: {
+    width: widthScreen * 0.8,
+    justifyContent: "center",
+    borderRadius: 50,
+    alignItems: "center",
+    paddingVertical: 10,
+    borderColor: colors.lightAccent2,
+    borderWidth: 1,
+  },
   primaryDisabled: {
     width: widthScreen * 0.8,
     justifyContent: "center",
