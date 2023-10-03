@@ -87,6 +87,7 @@ const SignUpScreen: React.FC = () => {
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [shadowButton, setShadowButton] = useState<boolean>(true);
   const [iconColor, setIconColor] = useState<string>(colors.disabledDark);
+  const [icon2Color, setIcon2Color] = useState<string>(colors.disabledDark);
 
   const register = async () => {
     try {
@@ -213,6 +214,13 @@ const SignUpScreen: React.FC = () => {
       setIconColor(colors.tertiary2);
     } else {
       setIconColor(colors.disabledDark);
+    }
+  };
+  const handleIcon2Color = (status: string) => {
+    if (status === "focus") {
+      setIcon2Color(colors.tertiary2);
+    } else {
+      setIcon2Color(colors.disabledDark);
     }
   };
   useEffect(() => {
@@ -467,8 +475,8 @@ const SignUpScreen: React.FC = () => {
                   ? colors.error
                   : colors.tertiary2
               }
-              onFocus={() => handleIconColor("focus")}
-              onBlur={() => handleIconColor("blur")}
+              onFocus={() => handleIcon2Color("focus")}
+              onBlur={() => handleIcon2Color("blur")}
               right={
                 <TextInput.Icon
                   icon={() => (
@@ -478,7 +486,7 @@ const SignUpScreen: React.FC = () => {
                       color={
                         errorPassword2 && counterPressed !== 0
                           ? colors.error
-                          : iconColor
+                          : icon2Color
                       }
                     />
                   )}
