@@ -8,7 +8,6 @@ const isValidEmail = (email: string): boolean => {
   const forbiddenOrangeDomainRegex = /@orange\.(?!fr\b).+$/i;
   const forbiddenFreeDomainRegex = /@free\.(?!fr\b).+$/i;
   const forbiddenSFRDomainRegex = /@sfr\.(?!fr\b).+$/i;
-  const forbiddenYahooDomainRegex = /@yahoo\.(?!fr\b).+$/i;
   const forbiddenAppleDomainRegex = /@icloud\.(?!com\b).+$/i;
   const forbiddenOutlookDomainRegex = /@outlook\.(?!fr\b).+$/i;
   const forbiddenLaPosteDomainRegex = /@laposte\.(?!net\b).+$/i;
@@ -21,7 +20,6 @@ const isValidEmail = (email: string): boolean => {
     !forbiddenOrangeDomainRegex.test(email) &&
     !forbiddenFreeDomainRegex.test(email) &&
     !forbiddenSFRDomainRegex.test(email) &&
-    !forbiddenYahooDomainRegex.test(email) &&
     !forbiddenAppleDomainRegex.test(email) &&
     !forbiddenOutlookDomainRegex.test(email) &&
     !forbiddenLaPosteDomainRegex.test(email)

@@ -7,13 +7,15 @@ import { isValidPhoneNumber } from "./validatePhoneNumber";
 const setInputFocusErrors = (
   username: string,
   email: string,
-  password: string,
+  password1: string,
+  password2: string,
   phoneNumber: string,
   address: string,
   city: string,
   usernameRef: React.RefObject<RNTextInput | null>,
   emailRef: React.RefObject<RNTextInput | null>,
-  passwordRef: React.RefObject<RNTextInput | null>,
+  password1Ref: React.RefObject<RNTextInput | null>,
+  password2Ref: React.RefObject<RNTextInput | null>,
   phoneNumberRef: React.RefObject<RNTextInput | null>,
   addressRef: React.RefObject<RNTextInput | null>,
   cityRef: React.RefObject<RNTextInput | null>
@@ -26,10 +28,10 @@ const setInputFocusErrors = (
     emailRef.current?.focus();
   } else if (email && !isValidEmail(email)) {
     emailRef.current?.focus();
-  } else if (!password) {
-    passwordRef.current?.focus();
-  } else if (password && password.length < 12) {
-    passwordRef.current?.focus();
+  } else if (!password1) {
+    password1Ref.current?.focus();
+  } else if (password1 && password1.length < 12) {
+    password1Ref.current?.focus();
   } else if (!phoneNumber) {
     phoneNumberRef.current?.focus();
   } else if (phoneNumber && !isValidPhoneNumber(phoneNumber)) {

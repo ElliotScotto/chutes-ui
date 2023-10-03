@@ -119,7 +119,8 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         bottomStart: true,
         bottomEnd: true,
       }}
-      startColor={colors.gainsboro}
+      startColor={colors.lightAccent2}
+      endColor={colors.white}
       style={{ borderRadius: 50 }}
     >
       <Pressable

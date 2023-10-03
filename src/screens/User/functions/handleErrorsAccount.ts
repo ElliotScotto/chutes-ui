@@ -4,13 +4,15 @@ import { isValidPhoneNumber } from "./validatePhoneNumber";
 const handleErrorsAccount = (
   username: string,
   email: string,
-  password: string,
+  password1: string,
+  password2: string,
   phoneNumber: string,
   address: string,
   city: string,
   setErrorUsername: React.Dispatch<React.SetStateAction<string>>,
   setErrorEmail: React.Dispatch<React.SetStateAction<string>>,
-  setErrorPassword: React.Dispatch<React.SetStateAction<string>>,
+  setErrorPassword1: React.Dispatch<React.SetStateAction<string>>,
+  setErrorPassword2: React.Dispatch<React.SetStateAction<string>>,
   setErrorPhoneNumber: React.Dispatch<React.SetStateAction<string>>,
   setErrorAddress: React.Dispatch<React.SetStateAction<string>>,
   setErrorCity: React.Dispatch<React.SetStateAction<string>>
@@ -38,15 +40,24 @@ const handleErrorsAccount = (
   if (isValidEmail(email)) {
     setErrorEmail("");
   }
-  if (password) {
-    if (password.length < 12) {
-      setErrorPassword("12 caractères minimum");
+  if (password1) {
+    if (password1.length < 12) {
+      setErrorPassword1("12 caractères minimum");
       isValidForm = false;
     } else {
-      setErrorPassword("");
+      setErrorPassword1("");
     }
   } else {
-    setErrorPassword("Champs requis");
+    setErrorPassword1("Champs requis");
+    isValidForm = false;
+  }
+  if (password2) {
+    if (password2 !== password1) {
+      setErrorPassword2("Les mots de passe doivent être identiques");
+      isValidForm = false;
+    }
+  } else {
+    setErrorPassword2("Champs requis");
     isValidForm = false;
   }
   if (phoneNumber) {

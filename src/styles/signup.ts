@@ -7,9 +7,8 @@ const signup = StyleSheet.create({
   container: { backgroundColor: colors.white },
   //errors
   errors: {
-    height: 28,
+    height: 20,
     width: "100%",
-    marginTop: 2,
     paddingLeft: 8,
     alignSelf: "flex-start",
   },

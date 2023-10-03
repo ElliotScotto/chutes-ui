@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { View, Text, Pressable, TextInput as RNTextInput } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  TextInput as RNTextInput,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { TextInput } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -27,6 +34,15 @@ import fonts from "../../styles/fonts";
 type MyStackParamList = {
   Profil: undefined;
 };
+// type RefsObject = {
+//   usernameRef: React.RefObject<RNTextInput | null>;
+//   emailRef: React.RefObject<RNTextInput | null>;
+//   password1Ref: React.RefObject<RNTextInput | null>;
+//   password2Ref: React.RefObject<RNTextInput | null>;
+//   phoneNumberRef: React.RefObject<RNTextInput | null>;
+//   addressRef: React.RefObject<RNTextInput | null>;
+//   cityRef: React.RefObject<RNTextInput | null>;
+// };
 
 const SignUpScreen: React.FC = () => {
   //navigation
@@ -34,26 +50,39 @@ const SignUpScreen: React.FC = () => {
     useNavigation<NativeStackNavigationProp<MyStackParamList, "Profil">>();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   //Focus & ref
   const usernameRef = useRef<RNTextInput | null>(null);
   const emailRef = useRef<RNTextInput | null>(null);
-  const passwordRef = useRef<RNTextInput | null>(null);
+  const password1Ref = useRef<RNTextInput | null>(null);
+  const password2Ref = useRef<RNTextInput | null>(null);
   const phoneNumberRef = useRef<RNTextInput | null>(null);
   const addressRef = useRef<RNTextInput | null>(null);
   const cityRef = useRef<RNTextInput | null>(null);
+  // const refs: RefsObject = {
+  //   usernameRef: useRef(null),
+  //   emailRef: useRef(null),
+  //   password1Ref: useRef(null),
+  //   password2Ref: useRef(null),
+  //   phoneNumberRef: useRef(null),
+  //   addressRef: useRef(null),
+  //   cityRef: useRef(null),
+  // };
   //errors
   const [errorUsername, setErrorUsername] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
+  const [errorPassword1, setErrorPassword1] = useState("");
+  const [errorPassword2, setErrorPassword2] = useState("");
   const [errorPhoneNumber, setErrorPhoneNumber] = useState("");
   const [errorAddress, setErrorAddress] = useState("");
   const [errorCity, setErrorCity] = useState("");
   //Form
-  const [securePassword, setSecurePassword] = useState<boolean>(true);
+  const [securePassword1, setSecurePassword1] = useState<boolean>(true);
+  const [securePassword2, setSecurePassword2] = useState<boolean>(true);
   const [counterPressed, setCounterPressed] = useState<number>(0);
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [shadowButton, setShadowButton] = useState<boolean>(true);
@@ -61,11 +90,11 @@ const SignUpScreen: React.FC = () => {
 
   const register = async () => {
     try {
-      const response = await axios.post(`${HOST}/api/scraps/`, {
+      const response = await axios.post(`${HOST}/api/signup/`, {
         username: username,
         email: email,
-        password1: password,
-        password2: password,
+        password1: password1,
+        password2: password2,
         phone_number: phoneNumber,
         address: address,
         city: city,
@@ -75,6 +104,47 @@ const SignUpScreen: React.FC = () => {
       console.error("Erreur lors de l'envoi des données:", error);
       if ((error as any).response) {
         console.error("Détails de l’erreur:", (error as any).response.data);
+        // Message received from server
+        const errorDetails = (error as any).response.data;
+        if (typeof errorDetails === "object" && errorDetails !== null) {
+          let firstErrorKey = null;
+          let errorMessage = "";
+          for (const [key, value] of Object.entries(errorDetails)) {
+            if (Array.isArray(value)) {
+              errorMessage += `${value.join(", ")}\n`;
+              if (!firstErrorKey) {
+                firstErrorKey = key; // Stockage de la première clé d'erreur
+              }
+            }
+          }
+          const refName = firstErrorKey + "Ref";
+          const refs = {
+            usernameRef,
+            emailRef,
+            password1Ref,
+            password2Ref,
+            phoneNumberRef,
+            addressRef,
+            cityRef,
+          };
+          Alert.alert(
+            "Erreur durant l'inscription",
+            errorMessage,
+            [
+              {
+                text: "OK",
+                onPress: () => {
+                  if (refName in refs) {
+                    console.log("refName : ", refName);
+                    const ref = refs[refName as keyof typeof refs];
+                    ref.current?.focus();
+                  }
+                },
+              },
+            ],
+            { cancelable: false }
+          );
+        }
       }
     }
   };
@@ -82,13 +152,15 @@ const SignUpScreen: React.FC = () => {
     const isValidForm = handleErrorsAccount(
       username,
       email,
-      password,
+      password1,
+      password2,
       phoneNumber,
       address,
       city,
       setErrorUsername,
       setErrorEmail,
-      setErrorPassword,
+      setErrorPassword1,
+      setErrorPassword2,
       setErrorPhoneNumber,
       setErrorAddress,
       setErrorCity
@@ -96,19 +168,21 @@ const SignUpScreen: React.FC = () => {
     setInputFocusErrors(
       username,
       email,
-      password,
+      password1,
+      password2,
       phoneNumber,
       address,
       city,
       usernameRef,
       emailRef,
-      passwordRef,
+      password1Ref,
+      password2Ref,
       phoneNumberRef,
       addressRef,
       cityRef
     );
     if (isValidForm) {
-      register;
+      register();
     }
   };
   useFocusEffect(
@@ -117,7 +191,8 @@ const SignUpScreen: React.FC = () => {
         counterPressed === 0 &&
         !username &&
         !email &&
-        !password &&
+        !password1 &&
+        !password2 &&
         !phoneNumber &&
         !address &&
         !city
@@ -145,13 +220,15 @@ const SignUpScreen: React.FC = () => {
       handleErrorsAccount(
         username,
         email,
-        password,
+        password1,
+        password2,
         phoneNumber,
         address,
         city,
         setErrorUsername,
         setErrorEmail,
-        setErrorPassword,
+        setErrorPassword1,
+        setErrorPassword2,
         setErrorPhoneNumber,
         setErrorAddress,
         setErrorCity
@@ -161,7 +238,8 @@ const SignUpScreen: React.FC = () => {
   console.log("###########################");
   console.log(username, typeof username);
   console.log(email, typeof email);
-  console.log(password, typeof password);
+  console.log(password1, typeof password1);
+  console.log(password2, typeof password2);
   console.log(phoneNumber, typeof phoneNumber);
   console.log(address, typeof address);
   console.log(city, typeof city);
@@ -235,7 +313,8 @@ const SignUpScreen: React.FC = () => {
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
                   emailRef,
-                  passwordRef,
+                  password1Ref,
+                  password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
@@ -282,11 +361,12 @@ const SignUpScreen: React.FC = () => {
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
                   emailRef,
-                  passwordRef,
+                  password1Ref,
+                  password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
-                  "password"
+                  "password1"
                 );
               }}
             />
@@ -296,7 +376,7 @@ const SignUpScreen: React.FC = () => {
               )}
             </View>
             <TextInput
-              ref={passwordRef}
+              ref={password1Ref}
               mode="outlined"
               label="Mot de passe"
               textColor={colors.tertiary2}
@@ -304,17 +384,17 @@ const SignUpScreen: React.FC = () => {
               placeholder=" 12 caractères minimum"
               placeholderTextColor={colors.silver}
               autoCapitalize="none"
-              secureTextEntry={securePassword}
-              value={password}
+              secureTextEntry={securePassword1}
+              value={password1}
               // error={errorPassword ? true : false}
-              onChangeText={setPassword}
+              onChangeText={setPassword1}
               outlineColor={
-                errorPassword && counterPressed !== 0
+                errorPassword1 && counterPressed !== 0
                   ? colors.error
                   : colors.tertiary
               }
               activeOutlineColor={
-                errorPassword && counterPressed !== 0
+                errorPassword1 && counterPressed !== 0
                   ? colors.error
                   : colors.tertiary2
               }
@@ -324,17 +404,17 @@ const SignUpScreen: React.FC = () => {
                 <TextInput.Icon
                   icon={() => (
                     <IconMCI
-                      name={securePassword ? "eye-off" : "eye"}
+                      name={securePassword1 ? "eye-off" : "eye"}
                       size={25}
                       color={
-                        errorPassword && counterPressed !== 0
+                        errorPassword1 && counterPressed !== 0
                           ? colors.error
                           : iconColor
                       }
                     />
                   )}
                   onPress={() => {
-                    setSecurePassword(!securePassword);
+                    setSecurePassword1(!securePassword1);
                   }}
                 />
               }
@@ -344,13 +424,83 @@ const SignUpScreen: React.FC = () => {
               }}
               theme={{
                 colors: {
-                  primary: errorPassword ? colors.error : colors.tertiary,
+                  primary: errorPassword1 ? colors.error : colors.tertiary,
                 },
               }}
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
                   emailRef,
-                  passwordRef,
+                  password1Ref,
+                  password2Ref,
+                  phoneNumberRef,
+                  addressRef,
+                  cityRef,
+                  "password2"
+                );
+              }}
+            />
+            <View style={signup.errors}>
+              {errorPassword1 && counterPressed !== 0 && (
+                <Text style={fonts.errors}>{errorPassword1}</Text>
+              )}
+            </View>
+            <TextInput
+              ref={password2Ref}
+              mode="outlined"
+              label="Confirmation"
+              textColor={colors.tertiary2}
+              cursorColor={colors.tertiary2}
+              placeholder=" Confirmez votre mot de passe"
+              placeholderTextColor={colors.silver}
+              autoCapitalize="none"
+              secureTextEntry={securePassword2}
+              value={password2}
+              // error={errorPassword ? true : false}
+              onChangeText={setPassword2}
+              outlineColor={
+                errorPassword2 && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary
+              }
+              activeOutlineColor={
+                errorPassword2 && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2
+              }
+              onFocus={() => handleIconColor("focus")}
+              onBlur={() => handleIconColor("blur")}
+              right={
+                <TextInput.Icon
+                  icon={() => (
+                    <IconMCI
+                      name={securePassword2 ? "eye-off" : "eye"}
+                      size={25}
+                      color={
+                        errorPassword2 && counterPressed !== 0
+                          ? colors.error
+                          : iconColor
+                      }
+                    />
+                  )}
+                  onPress={() => {
+                    setSecurePassword2(!securePassword2);
+                  }}
+                />
+              }
+              style={{
+                width: "100%",
+                backgroundColor: colors.white,
+              }}
+              theme={{
+                colors: {
+                  primary: errorPassword2 ? colors.error : colors.tertiary,
+                },
+              }}
+              onSubmitEditing={() => {
+                handleFocusOnNextInput(
+                  emailRef,
+                  password1Ref,
+                  password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
@@ -359,8 +509,8 @@ const SignUpScreen: React.FC = () => {
               }}
             />
             <View style={signup.errors}>
-              {errorPassword && counterPressed !== 0 && (
-                <Text style={fonts.errors}>{errorPassword}</Text>
+              {errorPassword2 && counterPressed !== 0 && (
+                <Text style={fonts.errors}>{errorPassword2}</Text>
               )}
             </View>
             <TextInput
@@ -399,7 +549,8 @@ const SignUpScreen: React.FC = () => {
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
                   emailRef,
-                  passwordRef,
+                  password1Ref,
+                  password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
@@ -445,7 +596,8 @@ const SignUpScreen: React.FC = () => {
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
                   emailRef,
-                  passwordRef,
+                  password1Ref,
+                  password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
@@ -510,34 +662,32 @@ const SignUpScreen: React.FC = () => {
               endColor={colors.white}
               style={{ borderRadius: 50 }}
             >
-              <Pressable
+              <TouchableOpacity
                 onPress={() => {
                   handleSubmit();
                   setCounterPressed(counterPressed + 1);
                 }}
                 onPressIn={handlePressIn}
                 onPressOut={handlePressOut}
-                style={({ pressed }) => [
+                style={[
                   buttons.primary,
                   {
-                    backgroundColor: pressed
-                      ? isButtonEnabled
-                        ? colors.tertiary2
-                        : colors.white
+                    backgroundColor: isButtonEnabled
+                      ? colors.tertiary
                       : colors.white,
                   },
                 ]}
               >
                 <Text
                   style={{
-                    color: isButtonEnabled ? colors.white : colors.secondary,
+                    color: isButtonEnabled ? colors.white : colors.tertiary,
                     textTransform: "uppercase",
                     letterSpacing: 0.4,
                   }}
                 >
                   S'INSCRIRE
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
             </Shadow>
             <Spacer height={15} />
           </View>
