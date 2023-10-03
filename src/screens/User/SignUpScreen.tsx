@@ -94,14 +94,14 @@ const SignUpScreen: React.FC = () => {
       });
       console.log("response.data : ", response.data);
       Alert.alert(
-        "",
+        `Bravo ${username} !`,
         response.data.message,
         [
           {
             text: "OK",
-            // onPress: () => {
-            //   navigation.navigate("Home");
-            // },
+            onPress: () => {
+              navigation.navigate("Home");
+            },
           },
         ],
         { cancelable: false }
@@ -284,7 +284,6 @@ const SignUpScreen: React.FC = () => {
               placeholder=" ex: Cédric89"
               placeholderTextColor={colors.silver}
               value={username}
-              // error={errorUsername && counterPressed !== 0 ? true : false}
               onChangeText={setUsername}
               outlineColor={
                 errorUsername && counterPressed !== 0
@@ -343,7 +342,6 @@ const SignUpScreen: React.FC = () => {
               placeholderTextColor={colors.silver}
               autoCapitalize="none"
               value={email}
-              // error={errorEmail ? true : false}
               onChangeText={setEmail}
               outlineColor={
                 errorEmail && counterPressed !== 0
@@ -400,7 +398,6 @@ const SignUpScreen: React.FC = () => {
               autoCapitalize="none"
               secureTextEntry={securePassword1}
               value={password1}
-              // error={errorPassword ? true : false}
               onChangeText={setPassword1}
               outlineColor={
                 errorPassword1 && counterPressed !== 0
@@ -490,7 +487,6 @@ const SignUpScreen: React.FC = () => {
               autoCapitalize="none"
               secureTextEntry={securePassword2}
               value={password2}
-              // error={errorPassword ? true : false}
               onChangeText={setPassword2}
               outlineColor={
                 errorPassword2 && counterPressed !== 0
@@ -582,7 +578,6 @@ const SignUpScreen: React.FC = () => {
               value={phoneNumber}
               multiline={false}
               maxLength={10}
-              // error={errorPhoneNumber ? true : false}
               onChangeText={setPhoneNumber}
               outlineColor={
                 errorPhoneNumber && counterPressed !== 0
@@ -637,7 +632,6 @@ const SignUpScreen: React.FC = () => {
               placeholder=" ex: 10 Rue Léon Blum"
               placeholderTextColor={colors.silver}
               value={address}
-              // error={errorAddress ? true : false}
               onChangeText={setAddress}
               outlineColor={
                 errorAddress && counterPressed !== 0
@@ -692,7 +686,6 @@ const SignUpScreen: React.FC = () => {
               placeholder=" ex: Rosny-sur-Seine"
               placeholderTextColor={colors.silver}
               value={city}
-              // error={errorCity ? true : false}
               onChangeText={setCity}
               outlineColor={
                 errorCity && counterPressed !== 0
