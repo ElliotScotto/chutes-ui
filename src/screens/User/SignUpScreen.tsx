@@ -203,12 +203,22 @@ const SignUpScreen: React.FC = () => {
               ref={usernameRef}
               mode="outlined"
               label="Nom d'utilisateur"
+              textColor={colors.tertiary2}
+              cursorColor={colors.tertiary2}
+              placeholder=" ex: Cédric89"
+              placeholderTextColor={colors.silver}
               value={username}
-              error={errorUsername ? true : false}
+              // error={errorUsername && counterPressed !== 0 ? true : false}
               onChangeText={setUsername}
-              outlineColor={errorUsername ? colors.error : colors.tertiary}
+              outlineColor={
+                errorUsername && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary
+              }
               activeOutlineColor={
-                errorUsername ? colors.error : colors.tertiary2
+                errorUsername && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2
               }
               multiline={false}
               maxLength={25}
@@ -242,12 +252,24 @@ const SignUpScreen: React.FC = () => {
               ref={emailRef}
               mode="outlined"
               label="Email"
+              textColor={colors.tertiary2}
+              cursorColor={colors.tertiary2}
+              placeholder=" ex: cedric.dupont@gmail.com"
+              placeholderTextColor={colors.silver}
               autoCapitalize="none"
               value={email}
-              error={errorEmail ? true : false}
+              // error={errorEmail ? true : false}
               onChangeText={setEmail}
-              outlineColor={errorEmail ? colors.error : colors.tertiary}
-              activeOutlineColor={errorEmail ? colors.error : colors.tertiary2}
+              outlineColor={
+                errorEmail && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary
+              }
+              activeOutlineColor={
+                errorEmail && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2
+              }
               style={{
                 width: "100%",
                 backgroundColor: colors.white,
@@ -277,23 +299,38 @@ const SignUpScreen: React.FC = () => {
               ref={passwordRef}
               mode="outlined"
               label="Mot de passe"
+              textColor={colors.tertiary2}
+              cursorColor={colors.tertiary2}
+              placeholder=" 12 caractères minimum"
+              placeholderTextColor={colors.silver}
+              autoCapitalize="none"
               secureTextEntry={securePassword}
               value={password}
-              error={errorPassword ? true : false}
+              // error={errorPassword ? true : false}
               onChangeText={setPassword}
-              outlineColor={errorPassword ? colors.error : colors.tertiary}
+              outlineColor={
+                errorPassword && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary
+              }
+              activeOutlineColor={
+                errorPassword && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2
+              }
               onFocus={() => handleIconColor("focus")}
               onBlur={() => handleIconColor("blur")}
-              activeOutlineColor={
-                errorPassword ? colors.error : colors.tertiary2
-              }
               right={
                 <TextInput.Icon
                   icon={() => (
                     <IconMCI
                       name={securePassword ? "eye-off" : "eye"}
                       size={25}
-                      color={!errorPassword ? iconColor : colors.error}
+                      color={
+                        errorPassword && counterPressed !== 0
+                          ? colors.error
+                          : iconColor
+                      }
                     />
                   )}
                   onPress={() => {
@@ -330,15 +367,25 @@ const SignUpScreen: React.FC = () => {
               ref={phoneNumberRef}
               mode="outlined"
               label="Numéro de téléphone"
+              textColor={colors.tertiary2}
+              cursorColor={colors.tertiary2}
+              placeholder=" ex: 0753122743"
+              placeholderTextColor={colors.silver}
               keyboardType="phone-pad"
               value={phoneNumber}
               multiline={false}
               maxLength={10}
-              error={errorPhoneNumber ? true : false}
+              // error={errorPhoneNumber ? true : false}
               onChangeText={setPhoneNumber}
-              outlineColor={errorPhoneNumber ? colors.error : colors.tertiary}
+              outlineColor={
+                errorPhoneNumber && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary
+              }
               activeOutlineColor={
-                errorPhoneNumber ? colors.error : colors.tertiary2
+                errorPhoneNumber && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2
               }
               style={{
                 width: "100%",
@@ -369,12 +416,22 @@ const SignUpScreen: React.FC = () => {
               ref={addressRef}
               mode="outlined"
               label="Adresse"
+              textColor={colors.tertiary2}
+              cursorColor={colors.tertiary2}
+              placeholder=" ex: 10 Rue Léon Blum"
+              placeholderTextColor={colors.silver}
               value={address}
-              error={errorAddress ? true : false}
+              // error={errorAddress ? true : false}
               onChangeText={setAddress}
-              outlineColor={errorAddress ? colors.error : colors.tertiary}
+              outlineColor={
+                errorAddress && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary
+              }
               activeOutlineColor={
-                errorAddress ? colors.error : colors.tertiary2
+                errorAddress && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2
               }
               style={{
                 width: "100%",
@@ -405,11 +462,23 @@ const SignUpScreen: React.FC = () => {
               ref={cityRef}
               mode="outlined"
               label="Ville"
+              textColor={colors.tertiary2}
+              cursorColor={colors.tertiary2}
+              placeholder=" ex: Rosny-sur-Seine"
+              placeholderTextColor={colors.silver}
               value={city}
-              error={errorCity ? true : false}
+              // error={errorCity ? true : false}
               onChangeText={setCity}
-              outlineColor={errorCity ? colors.error : colors.tertiary}
-              activeOutlineColor={errorCity ? colors.error : colors.tertiary2}
+              outlineColor={
+                errorCity && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary
+              }
+              activeOutlineColor={
+                errorCity && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2
+              }
               style={{
                 width: "100%",
                 backgroundColor: colors.white,

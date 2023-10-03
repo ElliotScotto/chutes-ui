@@ -28,7 +28,7 @@ const handleErrorsAccount = (
     isValidForm = false;
   }
   if (!email) {
-    setErrorEmail("Saisissez une adresse email");
+    setErrorEmail("Saisissez votre adresse email");
     isValidForm = false;
   }
   if (email && !isValidEmail(email)) {
