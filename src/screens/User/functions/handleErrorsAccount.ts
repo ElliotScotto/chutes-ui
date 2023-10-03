@@ -55,6 +55,8 @@ const handleErrorsAccount = (
     if (password2 !== password1) {
       setErrorPassword2("Les mots de passe doivent être identiques");
       isValidForm = false;
+    } else {
+      setErrorPassword2("");
     }
   } else {
     setErrorPassword2("Champs requis");

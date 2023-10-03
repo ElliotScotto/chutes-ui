@@ -23,6 +23,7 @@ import Spacer from "../../utils/Spacer";
 import { setInputFocusErrors } from "./functions/setInputFocusErrors";
 import { handleErrorsAccount } from "./functions/handleErrorsAccount";
 import { handleFocusOnNextInput } from "./functions/handleFocusOnNextInput";
+import { handleIconColor } from "./functions/handleIconColor";
 //styles
 import ChutesColors from "../../styles/colors";
 const colors = ChutesColors();
@@ -30,24 +31,17 @@ import buttons from "../../styles/buttons";
 import displays from "../../styles/display";
 import signup from "../../styles/signup";
 import fonts from "../../styles/fonts";
+import ModalErrorSignUp from "./components/ModalErrorSignUp";
 
 type MyStackParamList = {
   Profil: undefined;
+  Home: undefined;
 };
-// type RefsObject = {
-//   usernameRef: React.RefObject<RNTextInput | null>;
-//   emailRef: React.RefObject<RNTextInput | null>;
-//   password1Ref: React.RefObject<RNTextInput | null>;
-//   password2Ref: React.RefObject<RNTextInput | null>;
-//   phoneNumberRef: React.RefObject<RNTextInput | null>;
-//   addressRef: React.RefObject<RNTextInput | null>;
-//   cityRef: React.RefObject<RNTextInput | null>;
-// };
 
 const SignUpScreen: React.FC = () => {
   //navigation
   const navigation =
-    useNavigation<NativeStackNavigationProp<MyStackParamList, "Profil">>();
+    useNavigation<NativeStackNavigationProp<MyStackParamList>>();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
@@ -63,15 +57,7 @@ const SignUpScreen: React.FC = () => {
   const phoneNumberRef = useRef<RNTextInput | null>(null);
   const addressRef = useRef<RNTextInput | null>(null);
   const cityRef = useRef<RNTextInput | null>(null);
-  // const refs: RefsObject = {
-  //   usernameRef: useRef(null),
-  //   emailRef: useRef(null),
-  //   password1Ref: useRef(null),
-  //   password2Ref: useRef(null),
-  //   phoneNumberRef: useRef(null),
-  //   addressRef: useRef(null),
-  //   cityRef: useRef(null),
-  // };
+  const signupButtonRef = useRef<TouchableOpacity>(null);
   //errors
   const [errorUsername, setErrorUsername] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
@@ -86,8 +72,14 @@ const SignUpScreen: React.FC = () => {
   const [counterPressed, setCounterPressed] = useState<number>(0);
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [shadowButton, setShadowButton] = useState<boolean>(true);
-  const [iconColor, setIconColor] = useState<string>(colors.disabledDark);
-  const [icon2Color, setIcon2Color] = useState<string>(colors.disabledDark);
+  const [firstEyeColor, setFirstEyeColor] = useState<string>(
+    colors.disabledDark
+  );
+  const [secondEyeColor, setSecondEyeColor] = useState<string>(
+    colors.disabledDark
+  );
+  const [modalErrorsVisibility, setModalErrorsVisibility] =
+    useState<boolean>(false);
 
   const register = async () => {
     try {
@@ -101,20 +93,34 @@ const SignUpScreen: React.FC = () => {
         city: city,
       });
       console.log("response.data : ", response.data);
+      Alert.alert(
+        "",
+        response.data.message,
+        [
+          {
+            text: "OK",
+            // onPress: () => {
+            //   navigation.navigate("Home");
+            // },
+          },
+        ],
+        { cancelable: false }
+      );
     } catch (error) {
-      console.error("Erreur lors de l'envoi des données:", error);
       if ((error as any).response) {
-        console.error("Détails de l’erreur:", (error as any).response.data);
+        console.info("Détails de l’erreur:", (error as any).response.data);
         // Message received from server
         const errorDetails = (error as any).response.data;
         if (typeof errorDetails === "object" && errorDetails !== null) {
           let firstErrorKey = null;
           let errorMessage = "";
+          let errorCount = 0;
           for (const [key, value] of Object.entries(errorDetails)) {
             if (Array.isArray(value)) {
-              errorMessage += `${value.join(", ")}\n`;
+              errorMessage += `${value.join("\n")}\n`;
+              errorCount += value.length;
               if (!firstErrorKey) {
-                firstErrorKey = key; // Stockage de la première clé d'erreur
+                firstErrorKey = key;
               }
             }
           }
@@ -128,8 +134,11 @@ const SignUpScreen: React.FC = () => {
             addressRef,
             cityRef,
           };
+          const errorCountMessage = `${errorCount} ${
+            errorCount === 1 ? "erreur" : "erreurs"
+          } à corriger`;
           Alert.alert(
-            "Erreur durant l'inscription",
+            errorCountMessage,
             errorMessage,
             [
               {
@@ -209,20 +218,6 @@ const SignUpScreen: React.FC = () => {
   const handlePressOut = () => {
     setShadowButton(true);
   };
-  const handleIconColor = (status: string) => {
-    if (status === "focus") {
-      setIconColor(colors.tertiary2);
-    } else {
-      setIconColor(colors.disabledDark);
-    }
-  };
-  const handleIcon2Color = (status: string) => {
-    if (status === "focus") {
-      setIcon2Color(colors.tertiary2);
-    } else {
-      setIcon2Color(colors.disabledDark);
-    }
-  };
   useEffect(() => {
     setIsButtonEnabled(
       handleErrorsAccount(
@@ -243,20 +238,15 @@ const SignUpScreen: React.FC = () => {
       )
     );
   });
-  console.log("###########################");
-  console.log(username, typeof username);
-  console.log(email, typeof email);
-  console.log(password1, typeof password1);
-  console.log(password2, typeof password2);
-  console.log(phoneNumber, typeof phoneNumber);
-  console.log(address, typeof address);
-  console.log(city, typeof city);
-  console.log(counterPressed);
-  console.log("###########################");
   return (
     <KeyboardAwareScrollView style={[displays.white]}>
       <SafeAreaProvider>
         <SafeAreaView style={[displays.w100, displays.aliC]}>
+          <ModalErrorSignUp
+            message={"coucou"}
+            modalErrorsVisibility={modalErrorsVisibility}
+            setModalErrorsVisibility={setModalErrorsVisibility}
+          />
           <View style={[displays.w90, displays.flex, displays.aliC]}>
             <View
               style={{
@@ -282,7 +272,7 @@ const SignUpScreen: React.FC = () => {
                 </Pressable>
               </View>
             </View>
-            <Spacer height={5} />
+
             <Text style={fonts.createTitle}>Crée un compte</Text>
             <Spacer height={15} />
             <TextInput
@@ -320,12 +310,20 @@ const SignUpScreen: React.FC = () => {
               }}
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
+                  username,
+                  email,
+                  password1,
+                  password2,
+                  phoneNumber,
+                  address,
+                  city,
                   emailRef,
                   password1Ref,
                   password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
+                  signupButtonRef,
                   "email"
                 );
               }}
@@ -368,12 +366,20 @@ const SignUpScreen: React.FC = () => {
               }}
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
+                  username,
+                  email,
+                  password1,
+                  password2,
+                  phoneNumber,
+                  address,
+                  city,
                   emailRef,
                   password1Ref,
                   password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
+                  signupButtonRef,
                   "password1"
                 );
               }}
@@ -406,8 +412,21 @@ const SignUpScreen: React.FC = () => {
                   ? colors.error
                   : colors.tertiary2
               }
-              onFocus={() => handleIconColor("focus")}
-              onBlur={() => handleIconColor("blur")}
+              onFocus={() => {
+                handleIconColor(
+                  1,
+                  "focus",
+                  setFirstEyeColor,
+                  setSecondEyeColor
+                );
+              }}
+              onBlur={() => {
+                handleIconColor(1, "blur", setFirstEyeColor, setSecondEyeColor);
+                if (!securePassword1 && !securePassword2) {
+                  setSecurePassword1(true);
+                  setSecurePassword2(true);
+                }
+              }}
               right={
                 <TextInput.Icon
                   icon={() => (
@@ -417,7 +436,7 @@ const SignUpScreen: React.FC = () => {
                       color={
                         errorPassword1 && counterPressed !== 0
                           ? colors.error
-                          : iconColor
+                          : firstEyeColor
                       }
                     />
                   )}
@@ -437,12 +456,20 @@ const SignUpScreen: React.FC = () => {
               }}
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
+                  username,
+                  email,
+                  password1,
+                  password2,
+                  phoneNumber,
+                  address,
+                  city,
                   emailRef,
                   password1Ref,
                   password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
+                  signupButtonRef,
                   "password2"
                 );
               }}
@@ -475,8 +502,21 @@ const SignUpScreen: React.FC = () => {
                   ? colors.error
                   : colors.tertiary2
               }
-              onFocus={() => handleIcon2Color("focus")}
-              onBlur={() => handleIcon2Color("blur")}
+              onFocus={() => {
+                handleIconColor(
+                  2,
+                  "focus",
+                  setFirstEyeColor,
+                  setSecondEyeColor
+                );
+              }}
+              onBlur={() => {
+                handleIconColor(2, "blur", setFirstEyeColor, setSecondEyeColor);
+                if (!securePassword1 && !securePassword2) {
+                  setSecurePassword1(true);
+                  setSecurePassword2(true);
+                }
+              }}
               right={
                 <TextInput.Icon
                   icon={() => (
@@ -486,7 +526,7 @@ const SignUpScreen: React.FC = () => {
                       color={
                         errorPassword2 && counterPressed !== 0
                           ? colors.error
-                          : icon2Color
+                          : secondEyeColor
                       }
                     />
                   )}
@@ -506,12 +546,20 @@ const SignUpScreen: React.FC = () => {
               }}
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
+                  username,
+                  email,
+                  password1,
+                  password2,
+                  phoneNumber,
+                  address,
+                  city,
                   emailRef,
                   password1Ref,
                   password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
+                  signupButtonRef,
                   "phoneNumber"
                 );
               }}
@@ -525,11 +573,12 @@ const SignUpScreen: React.FC = () => {
               ref={phoneNumberRef}
               mode="outlined"
               label="Numéro de téléphone"
+              keyboardType="phone-pad"
+              inputMode="tel"
               textColor={colors.tertiary2}
               cursorColor={colors.tertiary2}
               placeholder=" ex: 0753122743"
               placeholderTextColor={colors.silver}
-              keyboardType="phone-pad"
               value={phoneNumber}
               multiline={false}
               maxLength={10}
@@ -556,12 +605,20 @@ const SignUpScreen: React.FC = () => {
               }}
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
+                  username,
+                  email,
+                  password1,
+                  password2,
+                  phoneNumber,
+                  address,
+                  city,
                   emailRef,
                   password1Ref,
                   password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
+                  signupButtonRef,
                   "address"
                 );
               }}
@@ -603,12 +660,20 @@ const SignUpScreen: React.FC = () => {
               }}
               onSubmitEditing={() => {
                 handleFocusOnNextInput(
+                  username,
+                  email,
+                  password1,
+                  password2,
+                  phoneNumber,
+                  address,
+                  city,
                   emailRef,
                   password1Ref,
                   password2Ref,
                   phoneNumberRef,
                   addressRef,
                   cityRef,
+                  signupButtonRef,
                   "city"
                 );
               }}
@@ -671,6 +736,7 @@ const SignUpScreen: React.FC = () => {
               style={{ borderRadius: 50 }}
             >
               <TouchableOpacity
+                ref={signupButtonRef}
                 onPress={() => {
                   handleSubmit();
                   setCounterPressed(counterPressed + 1);

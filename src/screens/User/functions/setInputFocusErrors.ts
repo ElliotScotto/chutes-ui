@@ -32,6 +32,10 @@ const setInputFocusErrors = (
     password1Ref.current?.focus();
   } else if (password1 && password1.length < 12) {
     password1Ref.current?.focus();
+  } else if (!password2) {
+    password2Ref.current?.focus();
+  } else if (password2 !== password1) {
+    password2Ref.current?.focus();
   } else if (!phoneNumber) {
     phoneNumberRef.current?.focus();
   } else if (phoneNumber && !isValidPhoneNumber(phoneNumber)) {
