@@ -13,8 +13,10 @@ const displays = StyleSheet.create({
   w95: { width: widthScreen * 0.95 },
   w90: { width: widthScreen * 0.9 },
   w80: { width: widthScreen * 0.8 },
+  w75: { width: widthScreen * 0.75 },
   white: { backgroundColor: colors.white },
   bot100: { position: "absolute", bottom: 100 },
+  bot20: { position: "absolute", bottom: 20 },
   searchBar: {
     height: 60,
     width: "100%",

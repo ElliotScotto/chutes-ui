@@ -20,7 +20,7 @@ const buttons = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     paddingVertical: 10,
-    borderColor: colors.lightAccent2,
+    borderColor: colors.secondary,
     borderWidth: 1,
   },
   primaryDisabled: {

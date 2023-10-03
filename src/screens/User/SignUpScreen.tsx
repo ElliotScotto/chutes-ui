@@ -64,8 +64,9 @@ const SignUpScreen: React.FC = () => {
       const response = await axios.post(`${HOST}/api/scraps/`, {
         username: username,
         email: email,
-        password: password,
-        phoneNumber: phoneNumber,
+        password1: password,
+        password2: password,
+        phone_number: phoneNumber,
         address: address,
         city: city,
       });
