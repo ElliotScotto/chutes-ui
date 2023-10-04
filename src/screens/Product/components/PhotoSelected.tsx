@@ -1,9 +1,14 @@
 import React, { FC } from "react";
-import { Button, Image, View, Text } from "react-native";
+import { Button, Image, View, Text, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
+import displays from "../../../styles/display";
 const colors = ChutesColors();
+import AddIcon from "react-native-vector-icons/Ionicons";
+import CheckIcon from "react-native-vector-icons/AntDesign";
+
+import Spacer from "../../../utils/Spacer";
 
 type PhotoSelectedProps = {
   photo1: ImageInfo | null;
@@ -78,10 +83,68 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
   };
 
   return (
-    <View
-      ref={photoRef}
-      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-    >
+    <View ref={photoRef} style={[displays.flex, displays.center, displays.w90]}>
+      <View style={[displays.flex, displays.w90, { borderRadius: 5 }]}>
+        <Text
+          style={{
+            fontSize: 16,
+            color: colors.tertiary,
+            paddingLeft: 15,
+            paddingBottom: 10,
+          }}
+        >
+          Photo 1*
+        </Text>
+        <View
+          style={[
+            displays.row,
+            displays.aliC,
+            { justifyContent: "space-between" },
+          ]}
+        >
+          <TouchableOpacity
+            style={[
+              displays.flex,
+              displays.center,
+              displays.row,
+              {
+                paddingVertical: 8,
+                paddingHorizontal: 1,
+                backgroundColor: colors.white,
+                borderColor: colors.disabledDark,
+                borderWidth: 1,
+                borderRadius: 4,
+              },
+            ]}
+            onPress={() => pickImage(setPhoto1)}
+          >
+            <AddIcon name="add" size={25} color={colors.tertiary2} />
+            <Text style={{ color: colors.tertiary }}>Depuis la galerie</Text>
+          </TouchableOpacity>
+          <Spacer width={10} />
+          <TouchableOpacity
+            style={[
+              displays.flex,
+              displays.center,
+              displays.row,
+              {
+                paddingVertical: 8,
+                paddingHorizontal: 1,
+                backgroundColor: colors.white,
+                borderColor: colors.disabledDark,
+                borderWidth: 1,
+                borderRadius: 4,
+              },
+            ]}
+            onPress={() => captureImage(setPhoto1)}
+          >
+            <AddIcon name="add" size={25} color={colors.tertiary2} />
+
+            <Text style={{ color: colors.tertiary }}>Prendre une photo</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* 
       <Button
         title="Sélectionnez une photo 1"
         onPress={() => pickImage(setPhoto1)}
@@ -91,51 +154,51 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
           source={{ uri: photo1.uri }}
           style={{ width: 200, height: 200 }}
         />
-      )}
+      )} 
 
       <Button
         title="Sélectionnez une photo 2"
         onPress={() => pickImage(setPhoto2)}
       />
-      {photo2 && (
+      {/* {photo2 && (
         <Image
           source={{ uri: photo2.uri }}
           style={{ width: 200, height: 200 }}
         />
-      )}
+      )} 
 
       <Button
         title="Sélectionnez une photo 3"
         onPress={() => pickImage(setPhoto3)}
       />
-      {photo3 && (
+       {photo3 && (
         <Image
           source={{ uri: photo3.uri }}
           style={{ width: 200, height: 200 }}
         />
-      )}
+      )} 
 
       <Button
         title="Sélectionnez une photo 4"
         onPress={() => pickImage(setPhoto4)}
       />
-      {photo4 && (
+      {/* {photo4 && (
         <Image
           source={{ uri: photo4.uri }}
           style={{ width: 200, height: 200 }}
         />
-      )}
+      )} 
 
       <Button
         title="Sélectionnez une photo 5"
         onPress={() => pickImage(setPhoto5)}
       />
-      {photo5 && (
+      {/* {photo5 && (
         <Image
           source={{ uri: photo5.uri }}
           style={{ width: 200, height: 200 }}
         />
-      )}
+      )} 
 
       <Button
         title="Prendre une photo 1"
@@ -156,7 +219,7 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
       <Button
         title="Prendre une photo 5"
         onPress={() => captureImage(setPhoto5)}
-      />
+      />*/}
       <View style={scrapCreation.errors}>
         {errorPhoto && !photo1 && counterPressed !== 0 && (
           <Text

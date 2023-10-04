@@ -8,6 +8,7 @@ const displays = StyleSheet.create({
   aliC: { alignItems: "center" },
   flex: { flex: 1 },
   row: { flexDirection: "row" },
+  col: { flexDirection: "column" },
   w100: { width: widthScreen * 1 },
   w95L: { width: widthScreen * 0.95 + 1.5 },
   w95: { width: widthScreen * 0.95 },
