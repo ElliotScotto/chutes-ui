@@ -31,7 +31,7 @@ import buttons from "../../styles/buttons";
 import displays from "../../styles/display";
 import signup from "../../styles/signup";
 import fonts from "../../styles/fonts";
-import ModalErrorSignUp from "./components/ModalErrorSignUp";
+import ModalSignUp from "./components/ModalErrorSignUp";
 
 type MyStackParamList = {
   Profil: undefined;
@@ -78,8 +78,11 @@ const SignUpScreen: React.FC = () => {
   const [secondEyeColor, setSecondEyeColor] = useState<string>(
     colors.disabledDark
   );
+  //Modal
   const [modalErrorsVisibility, setModalErrorsVisibility] =
     useState<boolean>(false);
+  const [modalTitle, setModalTitle] = useState<string>("");
+  const [modalMessage, setModalMessage] = useState<string>("");
 
   const register = async () => {
     try {
@@ -92,23 +95,24 @@ const SignUpScreen: React.FC = () => {
         address: address,
         city: city,
       });
-      console.log("response.data : ", response.data);
-      Alert.alert(
-        `Bravo ${username} !`,
-        response.data.message,
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              navigation.navigate("Home");
-            },
-          },
-        ],
-        { cancelable: false }
-      );
+      // Alert.alert(
+      //   `Bravo ${username} !`,
+      //   response.data.message,
+      //   [
+      //     {
+      //       text: "OK",
+      //       onPress: () => {
+      //         navigation.navigate("Home");
+      //       },
+      //     },
+      //   ],
+      //   { cancelable: false }
+      // );
+      setModalTitle(`Bravo ${username} !`);
+      setModalMessage(`${response.data.message}`);
+      setModalErrorsVisibility(true);
     } catch (error) {
       if ((error as any).response) {
-        console.info("Détails de l’erreur:", (error as any).response.data);
         // Message received from server
         const errorDetails = (error as any).response.data;
         if (typeof errorDetails === "object" && errorDetails !== null) {
@@ -117,7 +121,7 @@ const SignUpScreen: React.FC = () => {
           let errorCount = 0;
           for (const [key, value] of Object.entries(errorDetails)) {
             if (Array.isArray(value)) {
-              errorMessage += `${value.join("\n")}\n`;
+              errorMessage += `⟿ ${value.join("\n")}\n`;
               errorCount += value.length;
               if (!firstErrorKey) {
                 firstErrorKey = key;
@@ -137,23 +141,26 @@ const SignUpScreen: React.FC = () => {
           const errorCountMessage = `${errorCount} ${
             errorCount === 1 ? "erreur" : "erreurs"
           } à corriger`;
-          Alert.alert(
-            errorCountMessage,
-            errorMessage,
-            [
-              {
-                text: "OK",
-                onPress: () => {
-                  if (refName in refs) {
-                    console.log("refName : ", refName);
-                    const ref = refs[refName as keyof typeof refs];
-                    ref.current?.focus();
-                  }
-                },
-              },
-            ],
-            { cancelable: false }
-          );
+          // Alert.alert(
+          //   errorCountMessage,
+          //   errorMessage,
+          //   [
+          //     {
+          //       text: "OK",
+          //       onPress: () => {
+          //         if (refName in refs) {
+          //           console.log("refName : ", refName);
+          //           const ref = refs[refName as keyof typeof refs];
+          //           ref.current?.focus();
+          //         }
+          //       },
+          //     },
+          //   ],
+          //   { cancelable: false }
+          // );
+          setModalTitle(errorCountMessage);
+          setModalMessage(errorMessage);
+          setModalErrorsVisibility(true);
         }
       }
     }
@@ -242,8 +249,9 @@ const SignUpScreen: React.FC = () => {
     <KeyboardAwareScrollView style={[displays.white]}>
       <SafeAreaProvider>
         <SafeAreaView style={[displays.w100, displays.aliC]}>
-          <ModalErrorSignUp
-            message={"coucou"}
+          <ModalSignUp
+            title={modalTitle}
+            message={modalMessage}
             modalErrorsVisibility={modalErrorsVisibility}
             setModalErrorsVisibility={setModalErrorsVisibility}
           />

@@ -1,41 +1,68 @@
-import React, { FC, SetStateAction, useState } from "react";
-import {
-  Modal,
-  Text,
-  TouchableHighlight,
-  View,
-  StyleSheet,
-} from "react-native";
+import React from "react";
+import { Modal, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import ChutesColors from "../../../styles/colors";
+import Spacer from "../../../utils/Spacer";
+const colors = ChutesColors();
+import displays from "../../../styles/display";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface SignUpErrorsPropsType {
+  title: string;
   message: string;
   modalErrorsVisibility: boolean;
   setModalErrorsVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalErrorSignUp: FC<SignUpErrorsPropsType> = ({
+const ModalSignUp: React.FC<SignUpErrorsPropsType> = ({
+  title,
   message,
   modalErrorsVisibility,
   setModalErrorsVisibility,
 }) => {
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       visible={modalErrorsVisibility}
       onRequestClose={() => {
         setModalErrorsVisibility(!modalErrorsVisibility);
       }}
     >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text>{message}</Text>
-          <TouchableHighlight
-            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-            onPress={() => setModalErrorsVisibility(false)}
+      <LinearGradient
+        colors={[colors.white, colors.lightAccent, colors.white]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        locations={[0, 0.5, 1]}
+        style={displays.linearModal}
+      />
+      <View style={[displays.w100, styles.centeredView]}>
+        <View style={[displays.w80, styles.modalView]}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "500",
+              letterSpacing: 0.3,
+              color: colors.tertiary,
+              textTransform: "uppercase",
+            }}
           >
-            <Text style={styles.textStyle}>OK</Text>
-          </TouchableHighlight>
+            {title}
+          </Text>
+          <Spacer height={15} />
+          <Text
+            style={{ fontSize: 14, color: colors.tertiary, lineHeight: 20 }}
+          >
+            {message}
+          </Text>
+          <Spacer height={20} />
+          <View style={[{ width: "100%", alignItems: "flex-end" }]}>
+            <TouchableOpacity
+              style={[styles.openButton]}
+              onPress={() => setModalErrorsVisibility(false)}
+            >
+              <Text style={styles.textStyle}>OK</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -47,15 +74,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22,
+    // backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+    backgroundColor: colors.white,
+    borderColor: colors.lightAccent2,
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 15,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: colors.tertiary2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -65,15 +94,18 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   openButton: {
-    backgroundColor: "#F194FF",
-    borderRadius: 20,
+    backgroundColor: colors.white,
+    borderRadius: 3,
     padding: 10,
     elevation: 2,
+    borderColor: colors.lightAccent,
+    borderWidth: 1,
   },
   textStyle: {
-    color: "white",
+    fontSize: 14,
+    color: colors.tertiary2,
     fontWeight: "bold",
     textAlign: "center",
   },
 });
-export default ModalErrorSignUp;
+export default ModalSignUp;
