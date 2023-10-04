@@ -31,7 +31,7 @@ import buttons from "../../styles/buttons";
 import displays from "../../styles/display";
 import signup from "../../styles/signup";
 import fonts from "../../styles/fonts";
-import ModalSignUp from "./components/ModalErrorSignUp";
+import ModalSignUp from "./components/ModalSignUp";
 
 type MyStackParamList = {
   Profil: undefined;
