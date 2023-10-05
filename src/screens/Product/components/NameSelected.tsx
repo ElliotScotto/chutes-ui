@@ -6,13 +6,8 @@ import { TextInput } from "react-native-paper";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
 import scrapCreation from "../../../styles/scrapCreation";
-interface NameSelectedProps {
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  errorName: string;
-  counterPressed: number;
-  nameRef: React.RefObject<any>;
-}
+//types
+import { NameSelectedProps } from "../../../types/inputProps";
 
 const NameSelected: FC<NameSelectedProps> = ({
   name,
@@ -31,11 +26,7 @@ const NameSelected: FC<NameSelectedProps> = ({
         textAlignVertical="top"
         textAlign="left"
         value={name}
-        style={{
-          width: "100%",
-          height: 80,
-          backgroundColor: color.white,
-        }}
+        style={scrapCreation.inputs.name}
         theme={{
           colors: {
             primary: name

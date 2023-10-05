@@ -1,15 +1,29 @@
-import { StyleSheet, Dimensions } from "react-native";
-const widthScreen = Dimensions.get("window").width;
-const heightScreen = Dimensions.get("window").height;
+import { ViewStyle, TextStyle } from "react-native";
+//styles
 import ChutesColors from "../styles/colors";
 const colors = ChutesColors();
-const scrapCreation = StyleSheet.create({
+//types
+import { TextInputStyles } from "../types/inputProps";
+
+const scrapCreation = {
+  inputs: {
+    name: {
+      width: "100%",
+      backgroundColor: colors.white,
+    },
+    description: {
+      width: "100%",
+      height: 150,
+      backgroundColor: colors.white,
+    },
+    price: { width: "100%", backgroundColor: colors.white },
+  } as TextInputStyles,
   //Condition
   conditionTitle: { alignSelf: "flex-start" },
   conditionTitleFont: {
     fontSize: 16,
     color: colors.secondary,
-  },
+  } as TextStyle,
   modalConditions: {
     alignItems: "center",
     justifyContent: "space-between",
@@ -25,7 +39,7 @@ const scrapCreation = StyleSheet.create({
   weightTitleFont: {
     fontSize: 16,
     color: colors.secondary,
-  },
+  } as TextStyle,
   modalWeights: {
     alignItems: "center",
     justifyContent: "space-between",
@@ -43,7 +57,7 @@ const scrapCreation = StyleSheet.create({
   materialTitle: {},
   materialTitleFont: {
     fontSize: 16,
-  },
+  } as TextStyle,
   materialItemContainer: {
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -69,7 +83,7 @@ const scrapCreation = StyleSheet.create({
   categoryTitle: {},
   categoryTitleFont: {
     fontSize: 16,
-  },
+  } as TextStyle,
   categoryItemContainer: {
     justifyContent: "space-evenly",
     alignItems: "center",
@@ -97,6 +111,6 @@ const scrapCreation = StyleSheet.create({
     marginTop: 2,
     paddingLeft: 8,
     alignSelf: "flex-start",
-  },
-});
+  } as ViewStyle,
+};
 export default scrapCreation;

@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { TextInput } from "react-native-paper";
+//styles
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
 import scrapCreation from "../../../styles/scrapCreation";
-
-export interface PriceSelectedProps {
-  price: number | undefined;
-  setPrice: React.Dispatch<React.SetStateAction<number | undefined>>;
-  errorPrice: string;
-  counterPressed: number;
-  priceRef: React.RefObject<any>;
-}
+//types
+import { PriceSelectedProps } from "../../../types/inputProps";
 
 const PriceSelected: React.FC<PriceSelectedProps> = ({
   price,
@@ -63,7 +58,7 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
         value={inputValue}
         onChangeText={handleValueChange}
         keyboardType="number-pad"
-        style={{ width: "100%", backgroundColor: color.white }}
+        style={scrapCreation.inputs.price}
         theme={{
           colors: {
             primary: price

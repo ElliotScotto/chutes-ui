@@ -45,7 +45,6 @@ export type ScrapDataCreation = {
   productLocation: string;
   sending: boolean;
 };
-export type ImageInfo = { uri: string };
 export interface Conditions {
   commeNeuf: string;
   TresBonEtat: string;

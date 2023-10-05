@@ -8,15 +8,8 @@ const color = ChutesColors();
 import scrapCreation from "../../../styles/scrapCreation";
 import Spacer from "../../../utils/Spacer";
 import fonts from "../../../styles/fonts";
-
-interface ProductLocationSelectedProps {
-  homePickup: boolean;
-  sending: boolean;
-  productLocation: string;
-  setProductLocation: React.Dispatch<React.SetStateAction<string>>;
-  errorProductLocation: string;
-  counterPressed: number;
-}
+//types
+import { ProductLocationSelectedProps } from "../../../types/inputProps";
 
 const ProductLocationSelected: FC<ProductLocationSelectedProps> = ({
   homePickup,

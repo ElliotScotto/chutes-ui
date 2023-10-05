@@ -1,9 +1,12 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { Dimensions, ViewStyle, TextStyle } from "react-native";
 const widthScreen = Dimensions.get("window").width;
 const heightScreen = Dimensions.get("window").height;
 import ChutesColors from "./colors";
 const colors = ChutesColors();
-const displays = StyleSheet.create({
+type StyleDictionary = {
+  [key: string]: ViewStyle | TextStyle;
+};
+const displays: StyleDictionary = {
   center: { alignItems: "center", justifyContent: "center" },
   aliC: { alignItems: "center" },
   flex: { flex: 1 },
@@ -247,5 +250,5 @@ const displays = StyleSheet.create({
     height: "100%",
     opacity: 0.7,
   },
-});
+};
 export default displays;

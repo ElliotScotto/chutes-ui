@@ -1,27 +1,18 @@
 import React, { FC } from "react";
 import { View, Text, Pressable } from "react-native";
-//packages
-import { TextInput } from "react-native-paper";
 //styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
 import fonts from "../../../styles/fonts";
+//icons
+import ChevronDown from "react-native-vector-icons/MaterialCommunityIcons";
 //utils
 import Spacer from "../../../utils/Spacer";
 //components
 import ModalWeightPicker from "./ModalWeightPicker";
-//icons
-import ChevronDown from "react-native-vector-icons/MaterialCommunityIcons";
-interface WeightSelectedProps {
-  weight: string;
-  setWeight: React.Dispatch<React.SetStateAction<string>>;
-  isModalWeightsVisible: boolean;
-  setIsModalWeightsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  errorWeight: string;
-  counterPressed: number;
-  weightRef: React.RefObject<any>;
-}
+//types
+import { WeightSelectedProps } from "../../../types/inputProps";
 
 const WeightSelected: FC<WeightSelectedProps> = ({
   weight,

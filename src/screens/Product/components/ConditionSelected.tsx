@@ -5,21 +5,14 @@ import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
 import fonts from "../../../styles/fonts";
+//icons
+import ChevronDown from "react-native-vector-icons/MaterialCommunityIcons";
 //utils
 import Spacer from "../../../utils/Spacer";
 //components
 import ModalConditionPicker from "./ModalConditionPicker";
-//icons
-import ChevronDown from "react-native-vector-icons/MaterialCommunityIcons";
-interface ConditionSelectedProps {
-  condition: string;
-  setCondition: React.Dispatch<React.SetStateAction<string>>;
-  isModalConditionsVisible: boolean;
-  setIsModalConditionsVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  errorCondition: string;
-  counterPressed: number;
-  conditionRef: React.RefObject<any>;
-}
+//types
+import { ConditionSelectedProps } from "../../../types/inputProps";
 
 const ConditionSelected: FC<ConditionSelectedProps> = ({
   condition,

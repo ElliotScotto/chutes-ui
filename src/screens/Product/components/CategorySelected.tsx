@@ -5,15 +5,9 @@ import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
 import Spacer from "../../../utils/Spacer";
+//types
 import { CATEGORIES } from "../../../types/dataTypes";
-
-interface CategorySelectedProps {
-  category: string[];
-  setCategory: React.Dispatch<React.SetStateAction<string[]>>;
-  errorCategory: string;
-  counterPressed: number;
-  categoryRef: React.RefObject<any>;
-}
+import { CategorySelectedProps } from "../../../types/inputProps";
 
 const CategorySelected: FC<CategorySelectedProps> = ({
   category,

@@ -6,14 +6,8 @@ import { TextInput } from "react-native-paper";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
 import scrapCreation from "../../../styles/scrapCreation";
-
-interface DescriptionSelectedProps {
-  description: string;
-  setDescription: React.Dispatch<React.SetStateAction<string>>;
-  errorDescription: string;
-  counterPressed: number;
-  descriptionRef: React.RefObject<any>;
-}
+//types
+import { DescriptionSelectedProps } from "../../../types/inputProps";
 
 const DescriptionSelected: FC<DescriptionSelectedProps> = ({
   description,
@@ -31,7 +25,7 @@ const DescriptionSelected: FC<DescriptionSelectedProps> = ({
         multiline={true}
         textAlignVertical="top"
         value={description}
-        style={{ width: "100%", height: 150, backgroundColor: color.white }}
+        style={scrapCreation.inputs.description}
         theme={{
           colors: {
             primary: description

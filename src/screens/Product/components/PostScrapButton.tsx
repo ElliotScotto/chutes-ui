@@ -1,42 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Text, Pressable } from "react-native";
 import { Shadow } from "react-native-shadow-2";
+//styles
 import buttons from "../../../styles/buttons";
 import ChutesColors from "../../../styles/colors";
 const colors = ChutesColors();
+//functions
 import { handleErrorsScrap } from "../functions/validateForm";
-import { ImageInfo } from "../../../types/dataTypes";
-
-export interface PostScrapButtonProps {
-  shadowButton: boolean;
-  setShadowButton: React.Dispatch<React.SetStateAction<boolean>>;
-  isButtonEnabled: boolean;
-  setIsButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSubmit: () => void;
-  photo1: ImageInfo | null;
-  name: string;
-  description: string;
-  condition: string;
-  price: number | undefined;
-  weight: string;
-  material: string[];
-  category: string[];
-  productLocation: string;
-  homePickup: boolean;
-  sending: boolean;
-  counterPressed: number;
-  setErrorPhoto: React.Dispatch<React.SetStateAction<string>>;
-  setErrorName: React.Dispatch<React.SetStateAction<string>>;
-  setErrorDescription: React.Dispatch<React.SetStateAction<string>>;
-  setErrorCondition: React.Dispatch<React.SetStateAction<string>>;
-  setErrorPrice: React.Dispatch<React.SetStateAction<string>>;
-  setErrorWeight: React.Dispatch<React.SetStateAction<string>>;
-  setErrorMaterial: React.Dispatch<React.SetStateAction<string>>;
-  setErrorCategory: React.Dispatch<React.SetStateAction<string>>;
-  setErrorProductLocation: React.Dispatch<React.SetStateAction<string>>;
-  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
-  setCounterPressed: React.Dispatch<React.SetStateAction<number>>;
-}
+//types
+import { PostScrapButtonProps } from "../../../types/inputProps";
+import fonts from "../../../styles/fonts";
 
 const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   shadowButton,
@@ -139,11 +112,10 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         onPressOut={handlePressOut}
       >
         <Text
-          style={{
-            color: isButtonEnabled ? colors.white : textColor,
-            textTransform: "uppercase",
-            letterSpacing: 0.4,
-          }}
+          style={[
+            fonts.postButton,
+            { color: isButtonEnabled ? colors.white : textColor },
+          ]}
         >
           PUBLIER
         </Text>

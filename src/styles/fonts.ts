@@ -98,6 +98,10 @@ const fonts = StyleSheet.create({
     color: colors.lightAccent,
     letterSpacing: 0.3,
   },
+  postButton: {
+    textTransform: "uppercase",
+    letterSpacing: 0.4,
+  },
   //signup
   errors: { color: colors.error, fontSize: 12, letterSpacing: 0.4 },
 });

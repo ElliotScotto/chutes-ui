@@ -1,20 +1,15 @@
 import React, { FC } from "react";
 import { View, Text, Pressable } from "react-native";
 import { Checkbox } from "react-native-paper";
+//styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
+//utils
 import Spacer from "../../../utils/Spacer";
+//types
 import { MATERIALS } from "../../../types/dataTypes";
-import displays from "../../../styles/display";
-
-interface MaterialSelectedProps {
-  material: string[];
-  setMaterial: React.Dispatch<React.SetStateAction<string[]>>;
-  errorMaterial: string;
-  counterPressed: number;
-  materialRef: React.RefObject<any>;
-}
+import { MaterialSelectedProps } from "../../../types/inputProps";
 
 const MaterialSelected: FC<MaterialSelectedProps> = ({
   material,

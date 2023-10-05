@@ -6,13 +6,7 @@ const color = ChutesColors();
 import Spacer from "../../../utils/Spacer";
 import displays from "../../../styles/display";
 import fonts from "../../../styles/fonts";
-
-interface DeliverySelectedProps {
-  homePickup: boolean;
-  setHomePickup: React.Dispatch<React.SetStateAction<boolean>>;
-  sending: boolean;
-  setSending: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { DeliverySelectedProps } from "../../../types/inputProps";
 
 const DeliverySelected: React.FC<DeliverySelectedProps> = ({
   homePickup,

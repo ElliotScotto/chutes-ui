@@ -1,32 +1,19 @@
 import React, { FC } from "react";
-import { Button, Image, View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+//packages
 import * as ImagePicker from "expo-image-picker";
+//styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
 import displays from "../../../styles/display";
 const colors = ChutesColors();
+//icons
 import AddIcon from "react-native-vector-icons/Ionicons";
 import CheckIcon from "react-native-vector-icons/AntDesign";
-
+//utils
 import Spacer from "../../../utils/Spacer";
-
-type PhotoSelectedProps = {
-  photo1: ImageInfo | null;
-  setPhoto1: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  photo2: ImageInfo | null;
-  setPhoto2: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  photo3: ImageInfo | null;
-  setPhoto3: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  photo4: ImageInfo | null;
-  setPhoto4: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  photo5: ImageInfo | null;
-  setPhoto5: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  errorPhoto: string;
-  counterPressed: number;
-  photoRef: React.RefObject<any>;
-};
-
-type ImageInfo = { uri: string };
+//types
+import { ImageInfo, PhotoSelectedProps } from "../../../types/inputProps";
 
 const PhotoSelected: FC<PhotoSelectedProps> = ({
   photo1,
