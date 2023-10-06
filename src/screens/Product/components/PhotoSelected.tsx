@@ -1,11 +1,12 @@
-import React, { FC } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { FC, useState } from "react";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 //packages
 import * as ImagePicker from "expo-image-picker";
 //styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
 import displays from "../../../styles/display";
+import fonts from "../../../styles/fonts";
 const colors = ChutesColors();
 //icons
 import AddIcon from "react-native-vector-icons/Ionicons";
@@ -13,8 +14,15 @@ import CheckIcon from "react-native-vector-icons/AntDesign";
 //utils
 import Spacer from "../../../utils/Spacer";
 //types
-import { ImageInfo, PhotoSelectedProps } from "../../../types/inputProps";
-
+import {
+  ImageInfo,
+  PhotoSelectedProps,
+  PhotosType,
+  AddPhotoProps,
+} from "../../../types/inputProps";
+//components
+import PhotoCard1 from "./components/PhotoCard1";
+import PhotoCard from "./components/PhotoCard";
 const PhotoSelected: FC<PhotoSelectedProps> = ({
   photo1,
   setPhoto1,
@@ -30,6 +38,9 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
   counterPressed,
   photoRef,
 }) => {
+  const [photos, setPhotos] = useState<PhotosType[]>([]);
+  const [photoCount, setPhotoCount] = useState<number>(2); //total of photos
+  const [photoNumber, setPhotoNumber] = useState<number>(2); //number of a new photo
   const pickImage = async (
     setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
   ) => {
@@ -68,81 +79,65 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
       setPhoto({ uri: result.assets[0].uri });
     }
   };
-
+  const addPhoto = () => {
+    const newPhotos = { id: photoCount, title: `Photo ${photoNumber}` };
+    setPhotos([...photos, newPhotos]);
+    setPhotoCount(photoCount + 1);
+    setPhotoNumber(photoCount + 1);
+  };
+  const deletePhoto = (id: number) => {
+    setPhotoCount(photoCount - 1);
+    setPhotoNumber(photoCount - 1);
+    const newPhotos = photos.filter((elem) => elem.id !== id);
+    setPhotos(newPhotos);
+    setPhotoCount(photoCount - 1);
+    setPhotoNumber(photoCount - 1);
+  };
+  console.log("photos : ", photos);
   return (
     <View ref={photoRef} style={[displays.flex, displays.center, displays.w90]}>
-      <View style={[displays.flex, displays.w90, { borderRadius: 5 }]}>
-        <Text
+      <PhotoCard1
+        pickImage={pickImage}
+        captureImage={captureImage}
+        setPhoto1={setPhoto1}
+      />
+      {photos.map((item, index) => (
+        <PhotoCard
+          key={index}
+          id={item.id}
+          pickImage={pickImage}
+          captureImage={captureImage}
+          deletePhoto={deletePhoto}
+          photoNumber={photoNumber}
+          photos={photos}
+        />
+      ))}
+      {photos[3] ? null : (
+        <TouchableOpacity
           style={{
-            fontSize: 16,
-            color: colors.tertiary,
-            paddingLeft: 15,
-            paddingBottom: 10,
+            paddingVertical: 10,
+            paddingHorizontal: 6,
+            marginTop: 24,
+            alignSelf: "flex-start",
+          }}
+          onPress={() => {
+            addPhoto();
           }}
         >
-          Photo 1*
-        </Text>
-        <View
-          style={[
-            displays.row,
-            displays.aliC,
-            { justifyContent: "space-between" },
-          ]}
-        >
-          <TouchableOpacity
-            style={[
-              displays.flex,
-              displays.center,
-              displays.row,
-              {
-                paddingVertical: 8,
-                paddingHorizontal: 1,
-                backgroundColor: colors.white,
-                borderColor: colors.disabledDark,
-                borderWidth: 1,
-                borderRadius: 4,
-              },
-            ]}
-            onPress={() => pickImage(setPhoto1)}
+          <Text
+            style={{
+              textDecorationLine: "underline",
+              color: colors.tertiary,
+              fontSize: 14,
+              fontWeight: "500",
+            }}
           >
-            <AddIcon name="add" size={25} color={colors.tertiary2} />
-            <Text style={{ color: colors.tertiary }}>Depuis la galerie</Text>
-          </TouchableOpacity>
-          <Spacer width={10} />
-          <TouchableOpacity
-            style={[
-              displays.flex,
-              displays.center,
-              displays.row,
-              {
-                paddingVertical: 8,
-                paddingHorizontal: 1,
-                backgroundColor: colors.white,
-                borderColor: colors.disabledDark,
-                borderWidth: 1,
-                borderRadius: 4,
-              },
-            ]}
-            onPress={() => captureImage(setPhoto1)}
-          >
-            <AddIcon name="add" size={25} color={colors.tertiary2} />
+            Ajouter une photo
+          </Text>
+        </TouchableOpacity>
+      )}
 
-            <Text style={{ color: colors.tertiary }}>Prendre une photo</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
       {/* 
-      <Button
-        title="Sélectionnez une photo 1"
-        onPress={() => pickImage(setPhoto1)}
-      />
-      {photo1 && (
-        <Image
-          source={{ uri: photo1.uri }}
-          style={{ width: 200, height: 200 }}
-        />
-      )} 
-
       <Button
         title="Sélectionnez une photo 2"
         onPress={() => pickImage(setPhoto2)}
@@ -164,49 +159,8 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
           style={{ width: 200, height: 200 }}
         />
       )} 
-
-      <Button
-        title="Sélectionnez une photo 4"
-        onPress={() => pickImage(setPhoto4)}
-      />
-      {/* {photo4 && (
-        <Image
-          source={{ uri: photo4.uri }}
-          style={{ width: 200, height: 200 }}
-        />
-      )} 
-
-      <Button
-        title="Sélectionnez une photo 5"
-        onPress={() => pickImage(setPhoto5)}
-      />
-      {/* {photo5 && (
-        <Image
-          source={{ uri: photo5.uri }}
-          style={{ width: 200, height: 200 }}
-        />
-      )} 
-
-      <Button
-        title="Prendre une photo 1"
-        onPress={() => captureImage(setPhoto1)}
-      />
-      <Button
-        title="Prendre une photo 2"
-        onPress={() => captureImage(setPhoto2)}
-      />
-      <Button
-        title="Prendre une photo 3"
-        onPress={() => captureImage(setPhoto3)}
-      />
-      <Button
-        title="Prendre une photo 4"
-        onPress={() => captureImage(setPhoto4)}
-      />
-      <Button
-        title="Prendre une photo 5"
-        onPress={() => captureImage(setPhoto5)}
-      />*/}
+...
+      */}
       <View style={scrapCreation.errors}>
         {errorPhoto && !photo1 && counterPressed !== 0 && (
           <Text

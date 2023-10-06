@@ -1,5 +1,22 @@
-import { ViewStyle } from "react-native";
+import { TextStyle, ViewStyle } from "react-native";
 //CREATESCREEN
+export type PhotoStyles = {
+  main: ViewStyle;
+  secondary: ViewStyle;
+  container: ViewStyle;
+  buttons: ViewStyle;
+  label: TextStyle;
+  item: TextStyle;
+  removeButton: ViewStyle;
+};
+export interface PhotosType {
+  id: number;
+  title: string;
+}
+export interface AddPhotoProps {
+  photos: PhotosType[];
+  setPhotos: React.Dispatch<React.SetStateAction<PhotosType[]>>;
+}
 export type TextInputStyles = {
   name: ViewStyle;
   description: ViewStyle;
@@ -20,6 +37,28 @@ export interface PhotoSelectedProps {
   errorPhoto: string;
   counterPressed: number;
   photoRef: React.RefObject<any>;
+}
+export interface PhotoCard1Props {
+  setPhoto1: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
+  pickImage: (
+    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
+  ) => void;
+  captureImage: (
+    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
+  ) => void;
+}
+export interface PhotoCardProps {
+  // setPhoto1: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
+  id: number;
+  pickImage: (
+    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
+  ) => void;
+  captureImage: (
+    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
+  ) => void;
+  deletePhoto: (id: number) => void;
+  photoNumber: number;
+  photos: PhotosType[];
 }
 export interface NameSelectedProps {
   name: string;

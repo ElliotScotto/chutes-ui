@@ -1,7 +1,10 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { ViewStyle, TextStyle } from "react-native";
+//styles
 import ChutesColors from "../styles/colors";
 const colors = ChutesColors();
-const fonts = StyleSheet.create({
+//types
+import { PhotoStyles } from "../types/inputProps";
+const fonts = {
   //BUTTONS : "démarrer", "publier"
   primary: {
     // color: colors.white,
@@ -82,7 +85,16 @@ const fonts = StyleSheet.create({
     color: colors.tertiary,
     textTransform: "uppercase",
     fontWeight: "500",
-  },
+  } as TextStyle,
+  photo: {
+    label: {
+      fontSize: 16,
+      color: colors.tertiary,
+      paddingLeft: 15,
+      paddingBottom: 10,
+    },
+    item: { fontSize: 14, color: colors.tertiary },
+  } as PhotoStyles,
   conditions: { marginVertical: 10, fontSize: 16, color: colors.secondary },
   weights: { marginVertical: 10, fontSize: 16, color: colors.secondary },
   categories: { marginVertical: 10, fontSize: 16, color: colors.secondary },
@@ -104,5 +116,5 @@ const fonts = StyleSheet.create({
   },
   //signup
   errors: { color: colors.error, fontSize: 12, letterSpacing: 0.4 },
-});
+};
 export default fonts;

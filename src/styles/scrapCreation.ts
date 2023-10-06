@@ -1,11 +1,43 @@
-import { ViewStyle, TextStyle } from "react-native";
+import { ViewStyle, TextStyle, Dimensions, DimensionValue } from "react-native";
+const widthScreen = Dimensions.get("window").height;
 //styles
 import ChutesColors from "../styles/colors";
 const colors = ChutesColors();
 //types
-import { TextInputStyles } from "../types/inputProps";
+import { TextInputStyles, PhotoStyles } from "../types/inputProps";
 
 const scrapCreation = {
+  photo: {
+    main: { flex: 1, width: "100%" as DimensionValue },
+    secondary: { flex: 1, width: "100%" as DimensionValue, marginTop: 12 },
+    container: {
+      alignItems: "center",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    buttons: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "row",
+      paddingVertical: 8,
+      paddingHorizontal: 4,
+      backgroundColor: colors.white,
+      borderColor: colors.disabledDark,
+      borderWidth: 1,
+      borderRadius: 4,
+      overflow: "hidden",
+    },
+    removeButton: {
+      height: "100%" as DimensionValue,
+      width: 40 as DimensionValue,
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "row",
+      marginLeft: 5,
+      backgroundColor: colors.white,
+    },
+  } as PhotoStyles,
   inputs: {
     name: {
       width: "100%",
