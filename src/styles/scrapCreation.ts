@@ -23,7 +23,6 @@ const scrapCreation = {
       paddingVertical: 8,
       paddingHorizontal: 4,
       backgroundColor: colors.white,
-      borderColor: colors.disabledDark,
       borderWidth: 1,
       borderRadius: 4,
       overflow: "hidden",
@@ -51,7 +50,7 @@ const scrapCreation = {
     price: { width: "100%", backgroundColor: colors.white },
   } as TextInputStyles,
   //Condition
-  conditionTitle: { alignSelf: "flex-start" },
+  conditionTitle: { alignSelf: "flex-start" } as ViewStyle,
   conditionTitleFont: {
     fontSize: 16,
     color: colors.secondary,
@@ -65,9 +64,9 @@ const scrapCreation = {
     borderWidth: 1,
     borderRadius: 2,
     flexDirection: "row",
-  },
+  } as ViewStyle,
   //Weight
-  weightTitle: { alignSelf: "flex-start" },
+  weightTitle: { alignSelf: "flex-start" } as ViewStyle,
   weightTitleFont: {
     fontSize: 16,
     color: colors.secondary,
@@ -80,12 +79,11 @@ const scrapCreation = {
     borderWidth: 1,
     borderRadius: 2,
     flexDirection: "row",
-  },
+  } as ViewStyle,
   //Materials
   materialContainer: {
     flexDirection: "column",
-    height: 230,
-  },
+  } as ViewStyle,
   materialTitle: {},
   materialTitleFont: {
     fontSize: 16,
@@ -95,10 +93,10 @@ const scrapCreation = {
     alignItems: "center",
     flexDirection: "row",
     flexWrap: "wrap",
-  },
+  } as ViewStyle,
   materialCheckButton: {
     flexDirection: "row",
-  },
+  } as ViewStyle,
   itemMaterial: {
     flexDirection: "row",
     alignItems: "center",
@@ -107,11 +105,11 @@ const scrapCreation = {
     borderRadius: 20,
     margin: 5,
     paddingHorizontal: 8,
-  },
+  } as ViewStyle,
   //Categories
   categoryContainer: {
     flexDirection: "column",
-  },
+  } as ViewStyle,
   categoryTitle: {},
   categoryTitleFont: {
     fontSize: 16,
@@ -121,10 +119,10 @@ const scrapCreation = {
     alignItems: "center",
     flexDirection: "row",
     flexWrap: "wrap",
-  },
+  } as ViewStyle,
   categoryCheckButton: {
     flexDirection: "row",
-  },
+  } as ViewStyle,
   itemCategory: {
     flexDirection: "row",
     alignItems: "center",
@@ -133,7 +131,7 @@ const scrapCreation = {
     borderRadius: 5,
     margin: 5,
     paddingHorizontal: 8,
-  },
+  } as ViewStyle,
   //Product Location
   productLocationTitle: { alignSelf: "flex-start" },
   //errors

@@ -16,13 +16,23 @@ const PhotoCard1: FC<PhotoCard1Props> = ({
   pickImage,
   captureImage,
   setPhoto1,
+  errorPhoto,
+  counterPressed,
 }) => {
   return (
     <View style={scrapCreation.photo.main}>
       <Text style={fonts.photo.label}>Photo 1*</Text>
       <View style={scrapCreation.photo.container}>
         <TouchableOpacity
-          style={scrapCreation.photo.buttons}
+          style={[
+            scrapCreation.photo.buttons,
+            {
+              borderColor:
+                errorPhoto && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2,
+            },
+          ]}
           onPress={() => pickImage(setPhoto1)}
         >
           <AddIcon name="add" size={25} color={colors.tertiary2} />
@@ -30,7 +40,15 @@ const PhotoCard1: FC<PhotoCard1Props> = ({
         </TouchableOpacity>
         <Spacer width={10} />
         <TouchableOpacity
-          style={scrapCreation.photo.buttons}
+          style={[
+            scrapCreation.photo.buttons,
+            {
+              borderColor:
+                errorPhoto && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2,
+            },
+          ]}
           onPress={() => captureImage(setPhoto1)}
         >
           <AddIcon name="add" size={25} color={colors.tertiary2} />

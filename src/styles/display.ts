@@ -1,4 +1,4 @@
-import { Dimensions, ViewStyle, TextStyle } from "react-native";
+import { Dimensions, ViewStyle, TextStyle, DimensionValue } from "react-native";
 const widthScreen = Dimensions.get("window").width;
 const heightScreen = Dimensions.get("window").height;
 import ChutesColors from "./colors";
@@ -6,9 +6,9 @@ const colors = ChutesColors();
 type StyleDictionary = {
   [key: string]: ViewStyle | TextStyle;
 };
-const displays: StyleDictionary = {
-  center: { alignItems: "center", justifyContent: "center" },
-  aliC: { alignItems: "center" },
+const displays = {
+  center: { alignItems: "center", justifyContent: "center" } as ViewStyle,
+  aliC: { alignItems: "center" } as ViewStyle,
   flex: { flex: 1 },
   row: { flexDirection: "row" },
   col: { flexDirection: "column" },
@@ -17,10 +17,11 @@ const displays: StyleDictionary = {
   w95: { width: widthScreen * 0.95 },
   w90: { width: widthScreen * 0.9 },
   w80: { width: widthScreen * 0.8 },
-  w75: { width: widthScreen * 0.75 },
+  w75: { width: widthScreen * 0.75 } as ViewStyle,
   white: { backgroundColor: colors.white },
-  bot100: { position: "absolute", bottom: 100 },
-  bot20: { position: "absolute", bottom: 20 },
+  peru: { backgroundColor: colors.peru },
+  bot100: { position: "absolute", bottom: 100 } as ViewStyle,
+  bot20: { position: "absolute", bottom: 20 } as ViewStyle,
   searchBar: {
     height: 60,
     width: "100%",

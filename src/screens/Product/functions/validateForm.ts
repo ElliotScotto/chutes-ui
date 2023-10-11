@@ -1,4 +1,4 @@
-import { ImageInfo } from "../../../types/dataTypes";
+import { ImageInfo } from "../../../types/inputProps";
 
 export const handleErrorsScrap = (
   photo1: ImageInfo | null,
@@ -26,7 +26,7 @@ export const handleErrorsScrap = (
   let isValid = true;
   //Photo errors
   if (!photo1) {
-    setErrorPhoto("Ajouter 1 photo minimum");
+    setErrorPhoto("Ajoutez au moins 1 photo");
     isValid = false;
   } else {
     setErrorPhoto("");

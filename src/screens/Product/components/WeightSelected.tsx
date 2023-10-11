@@ -23,10 +23,11 @@ const WeightSelected: FC<WeightSelectedProps> = ({
   counterPressed,
   weightRef,
 }) => {
+  let title = "Quel est le poids ?";
   return (
     <View ref={weightRef} style={{ width: "100%" }}>
       <View style={scrapCreation.weightTitle}>
-        <Text style={scrapCreation.weightTitleFont}>Quel est son poids ?*</Text>
+        <Text style={scrapCreation.weightTitleFont}>{title}*</Text>
       </View>
       <Spacer height={10} />
       <Pressable
@@ -51,6 +52,7 @@ const WeightSelected: FC<WeightSelectedProps> = ({
         isModalWeightsVisible={isModalWeightsVisible}
         setIsModalWeightsVisible={setIsModalWeightsVisible}
         setData={setWeight}
+        title={title}
       />
       <View style={scrapCreation.errors}>
         {errorWeight && !weight && counterPressed !== 0 && (

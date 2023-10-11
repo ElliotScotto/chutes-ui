@@ -4,10 +4,12 @@ import { View, Text } from "react-native";
 import { TextInput } from "react-native-paper";
 //styles
 import ChutesColors from "../../../styles/colors";
-const color = ChutesColors();
+const colors = ChutesColors();
 import scrapCreation from "../../../styles/scrapCreation";
 //types
 import { DescriptionSelectedProps } from "../../../types/inputProps";
+//functions
+import { CreateFocusNextInput } from "../functions/CreateFocusNextInput";
 
 const DescriptionSelected: FC<DescriptionSelectedProps> = ({
   description,
@@ -15,35 +17,80 @@ const DescriptionSelected: FC<DescriptionSelectedProps> = ({
   errorDescription,
   counterPressed,
   descriptionRef,
+  descriptionFocusRef,
+  isDescriptionFocused,
+  setIsDescriptionFocused,
+  price,
+  priceRef,
+  condition,
+  setIsModalConditionsVisible,
+  weight,
+  setIsModalWeightsVisible,
+  material,
+  materialRef,
+  category,
+  categoryRef,
+  publishButtonRef,
+  scrollViewRef,
 }) => {
   return (
-    <View ref={descriptionRef} style={{ width: "100%" }}>
+    <View ref={descriptionFocusRef} style={{ width: "100%" }}>
       <TextInput
+        ref={descriptionRef}
         mode="outlined"
         label="Description*"
-        placeholder="Ecrivez une description : quantité, dimensions, couleurs, usage..."
-        multiline={true}
+        placeholder="Renseignez la quantité, dimensions, couleurs, usage..."
+        placeholderTextColor={colors.silver}
+        multiline={false}
         textAlignVertical="top"
         value={description}
-        style={scrapCreation.inputs.description}
+        textColor={colors.tertiary2}
+        cursorColor={colors.tertiary2}
+        returnKeyType="next"
+        outlineColor={
+          errorDescription && counterPressed !== 0
+            ? colors.error
+            : colors.tertiary
+        }
+        activeOutlineColor={
+          errorDescription && counterPressed !== 0
+            ? colors.error
+            : colors.tertiary2
+        }
         theme={{
           colors: {
-            primary: description
-              ? description.length <= 300
-                ? color.tertiary
-                : color.error
-              : errorDescription && counterPressed !== 0
-              ? color.error
-              : color.tertiary,
+            primary: errorDescription ? colors.error : colors.tertiary,
           },
         }}
+        style={[scrapCreation.inputs.description]}
+        onFocus={() => setIsDescriptionFocused(true)}
+        onBlur={() => setIsDescriptionFocused(false)}
         onChangeText={setDescription}
+        onSubmitEditing={() => {
+          CreateFocusNextInput(
+            description,
+            descriptionRef,
+            price,
+            priceRef,
+            condition,
+            setIsModalConditionsVisible,
+            weight,
+            setIsModalWeightsVisible,
+            material,
+            materialRef,
+            category,
+            categoryRef,
+            publishButtonRef,
+            scrollViewRef,
+            "price"
+          );
+        }}
       />
       <View style={scrapCreation.errors}>
         {errorDescription && !description && counterPressed !== 0 && (
           <Text
             style={{
-              color: color.error,
+              color: colors.error,
             }}
           >
             {errorDescription}

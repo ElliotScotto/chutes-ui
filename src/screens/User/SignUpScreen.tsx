@@ -5,7 +5,6 @@ import {
   Pressable,
   TextInput as RNTextInput,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { TextInput } from "react-native-paper";
@@ -95,19 +94,6 @@ const SignUpScreen: React.FC = () => {
         address: address,
         city: city,
       });
-      // Alert.alert(
-      //   `Bravo ${username} !`,
-      //   response.data.message,
-      //   [
-      //     {
-      //       text: "OK",
-      //       onPress: () => {
-      //         navigation.navigate("Home");
-      //       },
-      //     },
-      //   ],
-      //   { cancelable: false }
-      // );
       setModalTitle(`Bravo ${username} !`);
       setModalMessage(`${response.data.message}`);
       setModalErrorsVisibility(true);
@@ -128,36 +114,9 @@ const SignUpScreen: React.FC = () => {
               }
             }
           }
-          const refName = firstErrorKey + "Ref";
-          const refs = {
-            usernameRef,
-            emailRef,
-            password1Ref,
-            password2Ref,
-            phoneNumberRef,
-            addressRef,
-            cityRef,
-          };
           const errorCountMessage = `${errorCount} ${
             errorCount === 1 ? "erreur" : "erreurs"
           } à corriger`;
-          // Alert.alert(
-          //   errorCountMessage,
-          //   errorMessage,
-          //   [
-          //     {
-          //       text: "OK",
-          //       onPress: () => {
-          //         if (refName in refs) {
-          //           console.log("refName : ", refName);
-          //           const ref = refs[refName as keyof typeof refs];
-          //           ref.current?.focus();
-          //         }
-          //       },
-          //     },
-          //   ],
-          //   { cancelable: false }
-          // );
           setModalTitle(errorCountMessage);
           setModalMessage(errorMessage);
           setModalErrorsVisibility(true);

@@ -10,6 +10,7 @@ import Spacer from "../../../utils/Spacer";
 //types
 import { MATERIALS } from "../../../types/dataTypes";
 import { MaterialSelectedProps } from "../../../types/inputProps";
+import displays from "../../../styles/display";
 
 const MaterialSelected: FC<MaterialSelectedProps> = ({
   material,

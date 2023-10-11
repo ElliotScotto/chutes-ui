@@ -38,7 +38,7 @@ const SplashScreen = () => {
         <View style={[displays.w90, displays.flex, displays.center]}>
           <Image
             source={logo}
-            style={[displays.w75, { height: 200, opacity: 0.8 }]}
+            style={[displays.w80, { height: 200, opacity: 0.8 }]}
             resizeMode="contain"
           />
         </View>

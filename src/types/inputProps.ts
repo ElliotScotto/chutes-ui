@@ -1,4 +1,12 @@
-import { TextStyle, ViewStyle } from "react-native";
+import React from "react";
+import {
+  View,
+  TextStyle,
+  ViewStyle,
+  TouchableOpacity,
+  TextInput as RNTextInput,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 //CREATESCREEN
 export type PhotoStyles = {
   main: ViewStyle;
@@ -36,7 +44,7 @@ export interface PhotoSelectedProps {
   setPhoto5: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
   errorPhoto: string;
   counterPressed: number;
-  photoRef: React.RefObject<any>;
+  photoRef: React.RefObject<View>;
 }
 export interface PhotoCard1Props {
   setPhoto1: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
@@ -46,6 +54,8 @@ export interface PhotoCard1Props {
   captureImage: (
     setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
   ) => void;
+  errorPhoto: string;
+  counterPressed: number;
 }
 export interface PhotoCardProps {
   // setPhoto1: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
@@ -65,21 +75,68 @@ export interface NameSelectedProps {
   setName: React.Dispatch<React.SetStateAction<string>>;
   errorName: string;
   counterPressed: number;
-  nameRef: React.RefObject<any>;
+  nameRef: React.RefObject<RNTextInput>;
+  nameFocusRef: React.RefObject<View>;
+  isNameFocused: boolean;
+  setIsNameFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  description: string;
+  descriptionRef: React.RefObject<RNTextInput>;
+  price: number | undefined;
+  priceRef: React.RefObject<RNTextInput>;
+  condition: string;
+  setIsModalConditionsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  weight: string;
+  setIsModalWeightsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  material: string[];
+  materialRef: React.RefObject<View>;
+  category: string[];
+  categoryRef: React.RefObject<View>;
+  publishButtonRef: React.RefObject<TouchableOpacity>;
+  scrollViewRef: React.RefObject<KeyboardAwareScrollView>;
 }
 export interface DescriptionSelectedProps {
   description: string;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
   errorDescription: string;
   counterPressed: number;
-  descriptionRef: React.RefObject<any>;
+  descriptionRef: React.RefObject<RNTextInput>;
+  descriptionFocusRef: React.RefObject<View>;
+  isDescriptionFocused: boolean;
+  setIsDescriptionFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  price: number | undefined;
+  priceRef: React.RefObject<RNTextInput>;
+  condition: string;
+  setIsModalConditionsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  weight: string;
+  setIsModalWeightsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  material: string[];
+  materialRef: React.RefObject<View>;
+  category: string[];
+  categoryRef: React.RefObject<View>;
+  publishButtonRef: React.RefObject<TouchableOpacity>;
+  scrollViewRef: React.RefObject<KeyboardAwareScrollView>;
 }
 export interface PriceSelectedProps {
   price: number | undefined;
   setPrice: React.Dispatch<React.SetStateAction<number | undefined>>;
   errorPrice: string;
   counterPressed: number;
-  priceRef: React.RefObject<any>;
+  priceRef: React.RefObject<RNTextInput>;
+  priceFocusRef: React.RefObject<View>;
+  isPriceFocused: boolean;
+  setIsPriceFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  description: string;
+  descriptionRef: React.RefObject<RNTextInput>;
+  condition: string;
+  setIsModalConditionsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  weight: string;
+  setIsModalWeightsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  material: string[];
+  materialRef: React.RefObject<View>;
+  category: string[];
+  categoryRef: React.RefObject<View>;
+  publishButtonRef: React.RefObject<TouchableOpacity>;
+  scrollViewRef: React.RefObject<KeyboardAwareScrollView>;
 }
 export interface ConditionSelectedProps {
   condition: string;
@@ -104,14 +161,14 @@ export interface MaterialSelectedProps {
   setMaterial: React.Dispatch<React.SetStateAction<string[]>>;
   errorMaterial: string;
   counterPressed: number;
-  materialRef: React.RefObject<any>;
+  materialRef: React.RefObject<View>;
 }
 export interface CategorySelectedProps {
   category: string[];
   setCategory: React.Dispatch<React.SetStateAction<string[]>>;
   errorCategory: string;
   counterPressed: number;
-  categoryRef: React.RefObject<any>;
+  categoryRef: React.RefObject<View>;
 }
 export interface DeliverySelectedProps {
   homePickup: boolean;
@@ -128,6 +185,7 @@ export interface ProductLocationSelectedProps {
   counterPressed: number;
 }
 export interface PostScrapButtonProps {
+  publishButtonRef: React.RefObject<TouchableOpacity>;
   shadowButton: boolean;
   setShadowButton: React.Dispatch<React.SetStateAction<boolean>>;
   isButtonEnabled: boolean;

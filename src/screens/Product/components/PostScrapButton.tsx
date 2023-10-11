@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, Pressable } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import { Shadow } from "react-native-shadow-2";
 //styles
 import buttons from "../../../styles/buttons";
@@ -12,6 +12,7 @@ import { PostScrapButtonProps } from "../../../types/inputProps";
 import fonts from "../../../styles/fonts";
 
 const PostScrapButton: React.FC<PostScrapButtonProps> = ({
+  publishButtonRef,
   shadowButton,
   setShadowButton,
   isButtonEnabled,
@@ -43,7 +44,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
 }) => {
   const [textColor, setTextColor] = useState<string>(`${colors.secondary}`);
 
-  console.log("counterPressed : ", counterPressed);
+  // console.log("counterPressed : ", counterPressed);
   //Style Publish Button
   const handlePressIn = () => {
     setShadowButton(false);
@@ -96,30 +97,31 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
       endColor={colors.white}
       style={{ borderRadius: 50 }}
     >
-      <Pressable
+      <TouchableOpacity
+        ref={publishButtonRef}
         onPress={() => {
           handleSubmit();
           setCounterPressed(counterPressed + 1);
         }}
-        style={({ pressed }) => [
-          buttons.primary,
-          {
-            backgroundColor:
-              pressed || isButtonEnabled ? colors.secondary : colors.white,
-          },
-        ]}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
+        style={[
+          buttons.primary,
+          {
+            backgroundColor: isButtonEnabled ? colors.tertiary : colors.white,
+          },
+        ]}
       >
         <Text
-          style={[
-            fonts.postButton,
-            { color: isButtonEnabled ? colors.white : textColor },
-          ]}
+          style={{
+            color: isButtonEnabled ? colors.white : colors.tertiary,
+            textTransform: "uppercase",
+            letterSpacing: 0.4,
+          }}
         >
           PUBLIER
         </Text>
-      </Pressable>
+      </TouchableOpacity>
     </Shadow>
   );
 };

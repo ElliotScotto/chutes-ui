@@ -93,14 +93,30 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
     setPhotoCount(photoCount - 1);
     setPhotoNumber(photoCount - 1);
   };
-  console.log("photos : ", photos);
+  // console.log("photos : ", photos);
   return (
-    <View ref={photoRef} style={[displays.flex, displays.center, displays.w90]}>
+    <View
+      ref={photoRef}
+      style={[displays.flex, displays.center, { width: "100%" }]}
+    >
       <PhotoCard1
         pickImage={pickImage}
         captureImage={captureImage}
         setPhoto1={setPhoto1}
+        errorPhoto={errorPhoto}
+        counterPressed={counterPressed}
       />
+      <View style={scrapCreation.errors}>
+        {errorPhoto && !photo1 && counterPressed !== 0 && (
+          <Text
+            style={{
+              color: colors.error,
+            }}
+          >
+            {errorPhoto}
+          </Text>
+        )}
+      </View>
       {photos.map((item, index) => (
         <PhotoCard
           key={index}
@@ -112,12 +128,11 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
           photos={photos}
         />
       ))}
-      {photos[3] ? null : (
+      {photos[3] || !photo1 ? null : (
         <TouchableOpacity
           style={{
             paddingVertical: 10,
             paddingHorizontal: 6,
-            marginTop: 24,
             alignSelf: "flex-start",
           }}
           onPress={() => {
@@ -132,7 +147,7 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
               fontWeight: "500",
             }}
           >
-            Ajouter une photo
+            Ajouter une photo (5 max.)
           </Text>
         </TouchableOpacity>
       )}
@@ -161,17 +176,6 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
       )} 
 ...
       */}
-      <View style={scrapCreation.errors}>
-        {errorPhoto && !photo1 && counterPressed !== 0 && (
-          <Text
-            style={{
-              color: colors.error,
-            }}
-          >
-            {errorPhoto}
-          </Text>
-        )}
-      </View>
     </View>
   );
 };

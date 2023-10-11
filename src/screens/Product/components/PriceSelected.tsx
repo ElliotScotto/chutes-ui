@@ -3,17 +3,34 @@ import { View, Text } from "react-native";
 import { TextInput } from "react-native-paper";
 //styles
 import ChutesColors from "../../../styles/colors";
-const color = ChutesColors();
+const colors = ChutesColors();
 import scrapCreation from "../../../styles/scrapCreation";
 //types
 import { PriceSelectedProps } from "../../../types/inputProps";
+//functions
+import { CreateFocusNextInput } from "../functions/CreateFocusNextInput";
 
 const PriceSelected: React.FC<PriceSelectedProps> = ({
+  description,
+  descriptionRef,
   price,
   setPrice,
   errorPrice,
   counterPressed,
   priceRef,
+  priceFocusRef,
+  isPriceFocused,
+  setIsPriceFocused,
+  condition,
+  setIsModalConditionsVisible,
+  weight,
+  setIsModalWeightsVisible,
+  material,
+  materialRef,
+  category,
+  categoryRef,
+  publishButtonRef,
+  scrollViewRef,
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const handleValueChange = (text: string) => {
@@ -42,40 +59,66 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
         setInputValue(normalizedValue);
         setPrice(numericValue);
       } else {
-        // Alert.alert(
-        //   "Vous ne pouvez pas vendre un produit à un prix inférieur à 1€ ou supérieur à 14000€."
-        // );
         setPrice(undefined);
       }
     }
   };
 
   return (
-    <View ref={priceRef} style={{ width: "100%" }}>
+    <View ref={priceFocusRef} style={{ width: "100%" }}>
       <TextInput
+        ref={priceRef}
         mode="outlined"
         label="Prix*"
         value={inputValue}
-        onChangeText={handleValueChange}
+        placeholder="Saisissez le prix"
+        placeholderTextColor={colors.silver}
         keyboardType="number-pad"
+        returnKeyType="next"
         style={scrapCreation.inputs.price}
+        right={
+          <TextInput.Affix
+            text="€"
+            textStyle={{ color: colors.tertiary, fontSize: 20 }}
+          />
+        }
+        outlineColor={
+          errorPrice && counterPressed !== 0 ? colors.error : colors.tertiary
+        }
+        activeOutlineColor={
+          errorPrice && counterPressed !== 0 ? colors.error : colors.tertiary2
+        }
         theme={{
           colors: {
-            primary: price
-              ? color.tertiary
-              : errorPrice && counterPressed !== 0
-              ? color.error
-              : color.tertiary,
+            primary: errorPrice ? colors.error : colors.tertiary,
           },
         }}
-        right={
-          <TextInput.Affix text="€" textStyle={{ color: color.tertiary }} />
-        }
-        placeholder="Saisissez le prix"
+        onFocus={() => setIsPriceFocused(true)}
+        onBlur={() => setIsPriceFocused(false)}
+        onChangeText={handleValueChange}
+        onSubmitEditing={() => {
+          CreateFocusNextInput(
+            description,
+            descriptionRef,
+            price,
+            priceRef,
+            condition,
+            setIsModalConditionsVisible,
+            weight,
+            setIsModalWeightsVisible,
+            material,
+            materialRef,
+            category,
+            categoryRef,
+            publishButtonRef,
+            scrollViewRef,
+            "condition"
+          );
+        }}
       />
       <View style={scrapCreation.errors}>
         {errorPrice && !price && counterPressed !== 0 && (
-          <Text style={{ color: color.error }}>{errorPrice}</Text>
+          <Text style={{ color: colors.error }}>{errorPrice}</Text>
         )}
       </View>
     </View>

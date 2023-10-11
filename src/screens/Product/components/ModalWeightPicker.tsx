@@ -9,6 +9,8 @@ import {
 } from "react-native";
 //styles
 import modals from "../../../styles/modals";
+import ChutesColors from "../../../styles/colors";
+const colors = ChutesColors();
 //types
 import { WEIGHTS } from "../../../types/dataTypes";
 
@@ -19,12 +21,14 @@ interface ModalWeightPickerProps {
   isModalWeightsVisible: boolean;
   setIsModalWeightsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setData: (option: string) => void;
+  title: string;
 }
 
 const ModalWeightPicker: FC<ModalWeightPickerProps> = ({
   isModalWeightsVisible,
   setIsModalWeightsVisible,
   setData,
+  title,
 }) => {
   const handlePick = (option: string) => {
     setIsModalWeightsVisible(false);
@@ -53,14 +57,20 @@ const ModalWeightPicker: FC<ModalWeightPickerProps> = ({
         setIsModalWeightsVisible(false);
       }}
     >
-      <TouchableOpacity
-        onPress={() => setIsModalWeightsVisible(false)}
-        style={modals.container}
-      >
-        <View style={[modals.modal, { width: WIDTH - 20, height: "auto" }]}>
-          <ScrollView>{option}</ScrollView>
+      <View style={modals.container}>
+        <View style={{ alignSelf: "flex-start", margin: 20 }}>
+          <Text
+            style={{ fontSize: 18, color: colors.tertiary, fontWeight: "500" }}
+          >
+            {title}
+          </Text>
         </View>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => setIsModalWeightsVisible(false)}>
+          <View style={[modals.modal, { width: WIDTH - 20, height: "auto" }]}>
+            <ScrollView>{option}</ScrollView>
+          </View>
+        </TouchableOpacity>
+      </View>
     </Modal>
   );
 };

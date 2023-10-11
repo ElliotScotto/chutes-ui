@@ -23,12 +23,11 @@ const ConditionSelected: FC<ConditionSelectedProps> = ({
   counterPressed,
   conditionRef,
 }) => {
+  let title = "Quel est l'état de votre chute ?";
   return (
     <View ref={conditionRef} style={{ width: "100%" }}>
       <View style={scrapCreation.conditionTitle}>
-        <Text style={scrapCreation.conditionTitleFont}>
-          Quel est l'état de votre chute ?*
-        </Text>
+        <Text style={scrapCreation.conditionTitleFont}>{title}*</Text>
       </View>
       <Spacer height={10} />
       <Pressable
@@ -52,6 +51,7 @@ const ConditionSelected: FC<ConditionSelectedProps> = ({
         isModalConditionsVisible={isModalConditionsVisible}
         setIsModalConditionsVisible={setIsModalConditionsVisible}
         setData={setCondition}
+        title={title}
       />
       <View style={scrapCreation.errors}>
         {errorCondition && !condition && counterPressed !== 0 && (
