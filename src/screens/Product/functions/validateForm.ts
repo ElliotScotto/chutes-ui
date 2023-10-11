@@ -61,8 +61,8 @@ export const handleErrorsScrap = (
   //Price errors
   if (price !== undefined) {
     // Vérifiez d'abord si price a une valeur
-    if (price < 1) {
-      setErrorPrice("Le prix ne peut pas être inférieur à 1€");
+    if (price < 0) {
+      setErrorPrice("Le prix ne peut pas être inférieur à 0€");
       isValid = false;
     } else if (price > 14000) {
       setErrorPrice("Le prix ne peut pas être supérieur à 14000€");

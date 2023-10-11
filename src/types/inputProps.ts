@@ -119,6 +119,8 @@ export interface DescriptionSelectedProps {
 export interface PriceSelectedProps {
   price: number | undefined;
   setPrice: React.Dispatch<React.SetStateAction<number | undefined>>;
+  free: boolean;
+  setFree: React.Dispatch<React.SetStateAction<boolean>>;
   errorPrice: string;
   counterPressed: number;
   priceRef: React.RefObject<RNTextInput>;

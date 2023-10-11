@@ -49,6 +49,7 @@ const CreateScreen = () => {
   const [description, setDescription] = useState<string>("");
   const [condition, setCondition] = useState<string>("");
   const [price, setPrice] = useState<number | undefined>();
+  const [free, setFree] = useState<boolean>(false);
   const [weight, setWeight] = useState<string>("");
   const [material, setMaterial] = useState<string[]>([]);
   const [category, setCategory] = useState<string[]>([]);
@@ -93,6 +94,57 @@ const CreateScreen = () => {
   const [counterPressed, setCounterPressed] = useState<number>(0);
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [shadowButton, setShadowButton] = useState<boolean>(true);
+  //Request
+  const postScrapData = async (currentHost: string) => {
+    try {
+      // 1. Préparez les données du formulaire
+      if (!photo1 || !photo1.uri) {
+        console.error("photo1 n'est pas défini");
+        return;
+      }
+      let photo = {
+        uri:
+          Platform.OS === "android"
+            ? photo1.uri
+            : photo1.uri.replace("file://", ""),
+        name: "photo1.jpg",
+        type: "image/jpeg",
+      };
+      let type = photo1.uri.substring(photo1.uri.lastIndexOf(".") + 1);
+      const formData = new FormData();
+      formData.append("owner", String(owner));
+      formData.append("photo1", {
+        uri: photo.uri,
+        name: photo.name,
+        type: `image/${type}`,
+      } as any);
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("condition", condition);
+      formData.append("price", String(price));
+      formData.append("weight", weight);
+      material.forEach((m) => formData.append("material", m));
+      category.forEach((c) => formData.append("category", c));
+      formData.append("homePickup", homePickup ? "true" : "false");
+      formData.append("productLocation", productLocation);
+      // 2. Effectuez la requête avec axios
+      const response = await axios.post(
+        `http://${currentHost}:8000/api/scraps/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("response.data : ", response.data);
+    } catch (error) {
+      console.error("Erreur lors de l'envoi des données:", error);
+      if ((error as any).response) {
+        console.error("Détails de l’erreur:", (error as any).response.data);
+      }
+    }
+  };
   //Form validation
   const handleSubmit = () => {
     const isValidForm = handleErrorsScrap(
@@ -161,73 +213,8 @@ const CreateScreen = () => {
       }
     }
   };
-  const postScrapData = async (currentHost: string) => {
-    try {
-      // 1. Préparez les données du formulaire
-      if (!photo1 || !photo1.uri) {
-        console.error("photo1 n'est pas défini");
-        return;
-      }
-      let photo = {
-        uri:
-          Platform.OS === "android"
-            ? photo1.uri
-            : photo1.uri.replace("file://", ""),
-        name: "photo1.jpg",
-        type: "image/jpeg",
-      };
-      let type = photo1.uri.substring(photo1.uri.lastIndexOf(".") + 1);
-      const formData = new FormData();
-      formData.append("owner", String(owner));
-      formData.append("photo1", {
-        uri: photo.uri,
-        name: photo.name,
-        type: `image/${type}`,
-      } as any);
-      formData.append("name", name);
-      formData.append("description", description);
-      formData.append("condition", condition);
-      formData.append("price", String(price));
-      formData.append("weight", weight);
-      material.forEach((m) => formData.append("material", m));
-      category.forEach((c) => formData.append("category", c));
-      formData.append("homePickup", homePickup ? "true" : "false");
-      formData.append("productLocation", productLocation);
-      // 2. Effectuez la requête avec axios
-      const response = await axios.post(
-        `http://${currentHost}:8000/api/scraps/`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log("response.data : ", response.data);
-    } catch (error) {
-      console.error("Erreur lors de l'envoi des données:", error);
-      if ((error as any).response) {
-        console.error("Détails de l’erreur:", (error as any).response.data);
-      }
-    }
-  };
-  // console.log("######################################");
-  // console.log("photo1 : ", photo1);
-  // console.log("name : ", name);
-  // console.log("description : ", description);
-  //console.log("condition : ", condition);
-  // console.log("price :", price);
-  // console.log("material : ", material);
-  // console.log("weight : ", weight);
-  // console.log("category : ", category);
-  // console.log("productLocation : ", productLocation);
-  // console.log("homePickup : ", homePickup);
-  // console.log("isButtonEnabled : ", isButtonEnabled);
-  // console.log("isNameFocused :", isNameFocused);
-  // console.log("isDescriptionFocused :", isDescriptionFocused);
-  // console.log("isPriceFocused :", isPriceFocused);
+  console.log(price);
 
-  // console.log("######################################");
   return (
     <SafeAreaProvider style={[displays.w100]}>
       <KeyboardAwareScrollView ref={scrollViewRef}>
@@ -310,6 +297,8 @@ const CreateScreen = () => {
                 descriptionRef={descriptionRef}
                 price={price}
                 setPrice={setPrice}
+                free={free}
+                setFree={setFree}
                 errorPrice={errorPrice}
                 counterPressed={counterPressed}
                 priceRef={priceRef}
