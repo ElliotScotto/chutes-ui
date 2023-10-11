@@ -50,7 +50,6 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
       aspect: [4, 3],
       quality: 1,
     });
-
     if (
       !result.canceled &&
       result.assets &&
@@ -93,7 +92,7 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
     setPhotoCount(photoCount - 1);
     setPhotoNumber(photoCount - 1);
   };
-  // console.log("photos : ", photos);
+  console.log("photoNumber : ", photoNumber);
   return (
     <View
       ref={photoRef}
@@ -123,6 +122,14 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
           id={item.id}
           pickImage={pickImage}
           captureImage={captureImage}
+          photo2={photo2}
+          setPhoto2={setPhoto2}
+          photo3={photo3}
+          setPhoto3={setPhoto3}
+          photo4={photo4}
+          setPhoto4={setPhoto4}
+          photo5={photo5}
+          setPhoto5={setPhoto5}
           deletePhoto={deletePhoto}
           photoNumber={photoNumber}
           photos={photos}

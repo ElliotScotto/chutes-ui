@@ -207,8 +207,11 @@ const CreateScreen = () => {
       }
     }
   };
-  console.log(price);
-
+  console.log(photo1);
+  console.log(photo2);
+  console.log(photo3);
+  console.log(photo4);
+  console.log(photo5);
   return (
     <SafeAreaProvider style={[displays.w100]}>
       <KeyboardAwareScrollView ref={scrollViewRef}>

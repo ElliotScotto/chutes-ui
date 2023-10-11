@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 //utils
 import Spacer from "../../../../utils/Spacer";
@@ -17,10 +17,54 @@ const PhotoCard: FC<PhotoCardProps> = ({
   id,
   pickImage,
   captureImage,
+  photo2,
+  setPhoto2,
+  photo3,
+  setPhoto3,
+  photo4,
+  setPhoto4,
+  photo5,
+  setPhoto5,
   deletePhoto,
   photoNumber,
   photos,
 }) => {
+  const handlePickImage = () => {
+    if (!photo2) {
+      pickImage(setPhoto2);
+      return;
+    }
+    if (!photo3) {
+      pickImage(setPhoto3);
+      return;
+    }
+    if (!photo4) {
+      pickImage(setPhoto4);
+      return;
+    }
+    if (!photo5) {
+      pickImage(setPhoto5);
+      return;
+    }
+  };
+  const handleCaptureImage = () => {
+    if (!photo2) {
+      captureImage(setPhoto2);
+      return;
+    }
+    if (!photo3) {
+      captureImage(setPhoto3);
+      return;
+    }
+    if (!photo4) {
+      captureImage(setPhoto4);
+      return;
+    }
+    if (!photo5) {
+      captureImage(setPhoto5);
+      return;
+    }
+  };
   return (
     <View
       style={[
@@ -32,7 +76,7 @@ const PhotoCard: FC<PhotoCardProps> = ({
       <View style={scrapCreation.photo.container}>
         <TouchableOpacity
           style={scrapCreation.photo.buttons}
-          //   onPress={() => pickImage(setPhoto1)}
+          onPress={() => handlePickImage()}
         >
           <AddIcon name="add" size={25} color={colors.tertiary2} />
           <Text style={fonts.photo.item}>Galerie</Text>
@@ -40,7 +84,7 @@ const PhotoCard: FC<PhotoCardProps> = ({
         <Spacer width={10} />
         <TouchableOpacity
           style={scrapCreation.photo.buttons}
-          //   onPress={() => captureImage(setPhoto1)}
+          onPress={() => handleCaptureImage()}
         >
           <AddIcon name="add" size={25} color={colors.tertiary2} />
           <Text style={fonts.photo.item}>Photo</Text>

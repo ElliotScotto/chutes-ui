@@ -66,6 +66,14 @@ export interface PhotoCardProps {
   captureImage: (
     setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
   ) => void;
+  photo2: ImageInfo | null;
+  setPhoto2: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
+  photo3: ImageInfo | null;
+  setPhoto3: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
+  photo4: ImageInfo | null;
+  setPhoto4: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
+  photo5: ImageInfo | null;
+  setPhoto5: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
   deletePhoto: (id: number) => void;
   photoNumber: number;
   photos: PhotosType[];
