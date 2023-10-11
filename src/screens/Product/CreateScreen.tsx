@@ -55,7 +55,6 @@ const CreateScreen = () => {
   const [category, setCategory] = useState<string[]>([]);
   const [homePickup, setHomePickup] = useState<boolean>(true);
   const [sending, setSending] = useState<boolean>(false);
-  const [productLocation, setProductLocation] = useState<string>("");
   //Focus & ref
   const scrollViewRef = useRef<KeyboardAwareScrollView>(null);
   const photoRef = useRef<View>(null);
@@ -73,7 +72,6 @@ const CreateScreen = () => {
   const weightRef = useRef<View>(null);
   const materialRef = useRef<View>(null);
   const categoryRef = useRef<View>(null);
-  const productLocationRef = useRef<View>(null);
   const publishButtonRef = useRef<TouchableOpacity>(null);
   //Modal visibility
   const [isModalConditionsVisible, setIsModalConditionsVisible] =
@@ -88,7 +86,6 @@ const CreateScreen = () => {
   const [errorWeight, setErrorWeight] = useState("");
   const [errorMaterial, setErrorMaterial] = useState("");
   const [errorCategory, setErrorCategory] = useState("");
-  const [errorProductLocation, setErrorProductLocation] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   //Button
   const [counterPressed, setCounterPressed] = useState<number>(0);
@@ -97,7 +94,6 @@ const CreateScreen = () => {
   //Request
   const postScrapData = async (currentHost: string) => {
     try {
-      // 1. Préparez les données du formulaire
       if (!photo1 || !photo1.uri) {
         console.error("photo1 n'est pas défini");
         return;
@@ -122,12 +118,12 @@ const CreateScreen = () => {
       formData.append("description", description);
       formData.append("condition", condition);
       formData.append("price", String(price));
+      formData.append("free", free ? "true" : "false");
       formData.append("weight", weight);
       material.forEach((m) => formData.append("material", m));
       category.forEach((c) => formData.append("category", c));
       formData.append("homePickup", homePickup ? "true" : "false");
-      formData.append("productLocation", productLocation);
-      // 2. Effectuez la requête avec axios
+      formData.append("sending", sending ? "true" : "false");
       const response = await axios.post(
         `http://${currentHost}:8000/api/scraps/`,
         formData,
@@ -158,7 +154,6 @@ const CreateScreen = () => {
       category,
       homePickup,
       sending,
-      productLocation,
       setErrorPhoto,
       setErrorName,
       setErrorDescription,
@@ -167,7 +162,6 @@ const CreateScreen = () => {
       setErrorWeight,
       setErrorMaterial,
       setErrorCategory,
-      setErrorProductLocation,
       setErrorMessage
     );
     if (isValidForm) {
@@ -375,7 +369,6 @@ const CreateScreen = () => {
                 weight={weight}
                 material={material}
                 category={category}
-                productLocation={productLocation}
                 homePickup={homePickup}
                 sending={sending}
                 setErrorPhoto={setErrorPhoto}
@@ -386,7 +379,6 @@ const CreateScreen = () => {
                 setErrorWeight={setErrorWeight}
                 setErrorMaterial={setErrorMaterial}
                 setErrorCategory={setErrorCategory}
-                setErrorProductLocation={setErrorProductLocation}
                 setErrorMessage={setErrorMessage}
                 counterPressed={counterPressed}
                 setCounterPressed={setCounterPressed}

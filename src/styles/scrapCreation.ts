@@ -50,10 +50,11 @@ const scrapCreation = {
     price: { width: "100%", backgroundColor: colors.white },
   } as TextInputStyles,
   //Condition
-  conditionTitle: { alignSelf: "flex-start" } as ViewStyle,
+  conditionTitle: { alignSelf: "flex-start", paddingLeft: 15 } as ViewStyle,
   conditionTitleFont: {
     fontSize: 16,
-    color: colors.secondary,
+    color: colors.tertiary,
+    fontWeight: "500",
   } as TextStyle,
   modalConditions: {
     alignItems: "center",
@@ -66,10 +67,15 @@ const scrapCreation = {
     flexDirection: "row",
   } as ViewStyle,
   //Weight
-  weightTitle: { alignSelf: "flex-start" } as ViewStyle,
+  weightTitle: {
+    alignSelf: "flex-start",
+    paddingLeft: 15,
+    fontWeight: "500",
+  } as ViewStyle,
   weightTitleFont: {
+    color: colors.tertiary,
     fontSize: 16,
-    color: colors.secondary,
+    fontWeight: "500",
   } as TextStyle,
   modalWeights: {
     alignItems: "center",
@@ -84,9 +90,11 @@ const scrapCreation = {
   materialContainer: {
     flexDirection: "column",
   } as ViewStyle,
-  materialTitle: {},
+  materialTitle: { paddingLeft: 15 },
   materialTitleFont: {
+    color: colors.tertiary,
     fontSize: 16,
+    fontWeight: "500",
   } as TextStyle,
   materialItemContainer: {
     justifyContent: "space-evenly",
@@ -94,6 +102,9 @@ const scrapCreation = {
     flexDirection: "row",
     flexWrap: "wrap",
   } as ViewStyle,
+  materialItemFont: {
+    fontSize: 16,
+  } as TextStyle,
   materialCheckButton: {
     flexDirection: "row",
   } as ViewStyle,
@@ -110,9 +121,11 @@ const scrapCreation = {
   categoryContainer: {
     flexDirection: "column",
   } as ViewStyle,
-  categoryTitle: {},
+  categoryTitle: { paddingLeft: 15 },
   categoryTitleFont: {
+    color: colors.tertiary,
     fontSize: 16,
+    fontWeight: "500",
   } as TextStyle,
   categoryItemContainer: {
     justifyContent: "space-evenly",
@@ -120,6 +133,9 @@ const scrapCreation = {
     flexDirection: "row",
     flexWrap: "wrap",
   } as ViewStyle,
+  categoryItemFont: {
+    fontSize: 16,
+  } as TextStyle,
   categoryCheckButton: {
     flexDirection: "row",
   } as ViewStyle,

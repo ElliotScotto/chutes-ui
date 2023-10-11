@@ -201,7 +201,6 @@ export interface PostScrapButtonProps {
   weight: string;
   material: string[];
   category: string[];
-  productLocation: string;
   homePickup: boolean;
   sending: boolean;
   counterPressed: number;
@@ -213,7 +212,6 @@ export interface PostScrapButtonProps {
   setErrorWeight: React.Dispatch<React.SetStateAction<string>>;
   setErrorMaterial: React.Dispatch<React.SetStateAction<string>>;
   setErrorCategory: React.Dispatch<React.SetStateAction<string>>;
-  setErrorProductLocation: React.Dispatch<React.SetStateAction<string>>;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
   setCounterPressed: React.Dispatch<React.SetStateAction<number>>;
 }

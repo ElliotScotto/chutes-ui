@@ -26,7 +26,6 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   weight,
   material,
   category,
-  productLocation,
   homePickup,
   sending,
   counterPressed,
@@ -38,7 +37,6 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   setErrorWeight,
   setErrorMaterial,
   setErrorCategory,
-  setErrorProductLocation,
   setErrorMessage,
   setCounterPressed,
 }) => {
@@ -67,7 +65,6 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         category,
         homePickup,
         sending,
-        productLocation,
         setErrorPhoto,
         setErrorName,
         setErrorDescription,
@@ -76,7 +73,6 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         setErrorWeight,
         setErrorMaterial,
         setErrorCategory,
-        setErrorProductLocation,
         setErrorMessage
       )
     );

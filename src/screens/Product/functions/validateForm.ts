@@ -11,7 +11,6 @@ export const handleErrorsScrap = (
   category: string[],
   homePickup: boolean,
   sending: boolean,
-  productLocation: string,
   setErrorPhoto: React.Dispatch<React.SetStateAction<string>>,
   setErrorName: React.Dispatch<React.SetStateAction<string>>,
   setErrorDescription: React.Dispatch<React.SetStateAction<string>>,
@@ -20,7 +19,6 @@ export const handleErrorsScrap = (
   setErrorWeight: React.Dispatch<React.SetStateAction<string>>,
   setErrorMaterial: React.Dispatch<React.SetStateAction<string>>,
   setErrorCategory: React.Dispatch<React.SetStateAction<string>>,
-  setErrorProductLocation: React.Dispatch<React.SetStateAction<string>>,
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>
 ): boolean => {
   let isValid = true;
@@ -94,18 +92,6 @@ export const handleErrorsScrap = (
     isValid = false;
   } else {
     setErrorCategory("");
-  }
-  //HomePickup errors And ProductLocation errors
-  if (homePickup === false && sending === false) {
-    if (!productLocation) {
-      setErrorProductLocation("Champs requis");
-      isValid = false;
-    } else if (productLocation.length > 40) {
-      setErrorProductLocation("40 caractères maximum");
-      isValid = false;
-    } else {
-      setErrorProductLocation("");
-    }
   }
   // ... Add vérifications here
   if (isValid === false) {

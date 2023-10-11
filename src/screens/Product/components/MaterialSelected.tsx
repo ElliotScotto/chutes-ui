@@ -32,7 +32,7 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
       <View style={scrapCreation.materialContainer}>
         <View style={scrapCreation.materialTitle}>
           <Text style={scrapCreation.materialTitleFont}>
-            Matière(s) principale(s)... (2 max.)
+            Matière(s) principale(s)
           </Text>
         </View>
         <Spacer height={10} />
@@ -58,7 +58,7 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
               >
                 <Text
                   style={[
-                    scrapCreation.materialTitleFont,
+                    scrapCreation.materialItemFont,
                     {
                       color: !material.includes(key)
                         ? color.tertiary2

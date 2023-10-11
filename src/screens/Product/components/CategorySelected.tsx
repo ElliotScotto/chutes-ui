@@ -29,7 +29,7 @@ const CategorySelected: FC<CategorySelectedProps> = ({
       <View style={scrapCreation.categoryContainer}>
         <View style={scrapCreation.categoryTitle}>
           <Text style={scrapCreation.categoryTitleFont}>
-            Catégorie(s) principale(s)... (2 max.)
+            Catégorie(s) principale(s)
           </Text>
         </View>
         <Spacer height={10} />
@@ -57,7 +57,7 @@ const CategorySelected: FC<CategorySelectedProps> = ({
                 <View>
                   <Text
                     style={[
-                      scrapCreation.categoryTitleFont,
+                      scrapCreation.categoryItemFont,
                       {
                         color: !category.includes(key)
                           ? color.orange2
