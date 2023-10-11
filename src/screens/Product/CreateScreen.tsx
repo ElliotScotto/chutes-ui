@@ -229,7 +229,7 @@ const CreateScreen = () => {
 
   // console.log("######################################");
   return (
-    <SafeAreaProvider style={[displays.w100, displays.bord3, displays.peru]}>
+    <SafeAreaProvider style={[displays.w100]}>
       <KeyboardAwareScrollView ref={scrollViewRef}>
         <>
           <StatusBar style="auto" />
@@ -336,8 +336,6 @@ const CreateScreen = () => {
                 errorCondition={errorCondition}
                 counterPressed={counterPressed}
                 conditionRef={conditionRef}
-                publishButtonRef={publishButtonRef}
-                scrollViewRef={scrollViewRef}
               />
               <Spacer height={10} />
               <WeightSelected
@@ -348,8 +346,6 @@ const CreateScreen = () => {
                 errorWeight={errorWeight}
                 counterPressed={counterPressed}
                 weightRef={weightRef}
-                publishButtonRef={publishButtonRef}
-                scrollViewRef={scrollViewRef}
               />
               <Spacer height={10} />
               <MaterialSelected
@@ -358,8 +354,6 @@ const CreateScreen = () => {
                 errorMaterial={errorMaterial}
                 counterPressed={counterPressed}
                 materialRef={materialRef}
-                publishButtonRef={publishButtonRef}
-                scrollViewRef={scrollViewRef}
               />
               <Spacer height={10} />
               <CategorySelected
@@ -368,8 +362,6 @@ const CreateScreen = () => {
                 errorCategory={errorCategory}
                 counterPressed={counterPressed}
                 categoryRef={categoryRef}
-                publishButtonRef={publishButtonRef}
-                scrollViewRef={scrollViewRef}
               />
               <Spacer height={10} />
               <DeliverySelected

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { View, Text, Pressable } from "react-native";
 //styles
 import scrapCreation from "../../../styles/scrapCreation";

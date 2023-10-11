@@ -29,7 +29,6 @@ export const scrollToRef = (
           scrollViewRef.current?.scrollToPosition(0, offset, false);
         },
         (error: any) => {
-          // Gérer les erreurs
           console.error("Failed to measure layout:", error);
         }
       );
@@ -39,7 +38,4 @@ export const scrollToRef = (
   } else {
     console.warn("Ref is not defined");
   }
-  // if ((value === "name" || "description" || "price") && focusOnTextInput) {
-  //   ref.current?.focus();
-  // }
 };
