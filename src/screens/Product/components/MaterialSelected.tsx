@@ -4,14 +4,15 @@ import { Checkbox } from "react-native-paper";
 //styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
-const color = ChutesColors();
+const colors = ChutesColors();
 //utils
 import Spacer from "../../../utils/Spacer";
 //types
 import { MATERIALS } from "../../../types/dataTypes";
 import { MaterialSelectedProps } from "../../../types/inputProps";
 import displays from "../../../styles/display";
-
+//packages
+import { Shadow } from "react-native-shadow-2";
 const MaterialSelected: FC<MaterialSelectedProps> = ({
   material,
   setMaterial,
@@ -44,44 +45,62 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
               onPress={() => toggleMaterial(key)}
               disabled={material.length >= 2 && !material.includes(key)}
             >
-              <View
-                style={[
-                  scrapCreation.itemMaterial,
-                  {
-                    backgroundColor: material.includes(key)
-                      ? color.tertiary2
-                      : color.white,
-                    opacity:
-                      material.length >= 2 && !material.includes(key) ? 0.3 : 1,
-                  },
-                ]}
+              <Shadow
+                distance={material.includes(key) ? 2 : 0}
+                offset={[0, 0]}
+                paintInside={false}
+                sides={{ top: true, bottom: true, start: true, end: true }}
+                corners={{
+                  topStart: true,
+                  topEnd: true,
+                  bottomStart: true,
+                  bottomEnd: true,
+                }}
+                startColor={colors.lightAccent2}
+                endColor={colors.white}
+                style={{ borderRadius: 50 }}
               >
-                <Text
+                <View
                   style={[
-                    scrapCreation.materialItemFont,
+                    scrapCreation.itemMaterial,
                     {
-                      color: !material.includes(key)
-                        ? color.tertiary2
-                        : color.white,
+                      backgroundColor: material.includes(key)
+                        ? colors.tertiary2
+                        : colors.white,
+                      opacity:
+                        material.length >= 2 && !material.includes(key)
+                          ? 0.3
+                          : 1,
                     },
                   ]}
                 >
-                  {key}
-                </Text>
-                <Checkbox.IOS
-                  color={color.white}
-                  status={material.includes(key) ? "checked" : "unchecked"}
-                  onPress={() => toggleMaterial(key)}
-                  disabled={material.length >= 2 && !material.includes(key)}
-                />
-              </View>
+                  <Text
+                    style={[
+                      scrapCreation.materialItemFont,
+                      {
+                        color: !material.includes(key)
+                          ? colors.tertiary2
+                          : colors.white,
+                      },
+                    ]}
+                  >
+                    {key}
+                  </Text>
+                  <Checkbox.IOS
+                    color={colors.white}
+                    status={material.includes(key) ? "checked" : "unchecked"}
+                    onPress={() => toggleMaterial(key)}
+                    disabled={material.length >= 2 && !material.includes(key)}
+                  />
+                </View>
+              </Shadow>
             </Pressable>
           ))}
         </View>
       </View>
       <View style={scrapCreation.errors}>
         {errorMaterial && material.length < 1 && counterPressed !== 0 && (
-          <Text style={{ color: color.error }}>{errorMaterial}</Text>
+          <Text style={{ color: colors.error }}>{errorMaterial}</Text>
         )}
       </View>
     </View>

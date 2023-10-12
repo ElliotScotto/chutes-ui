@@ -130,6 +130,7 @@ const scrapCreation = {
   } as TextStyle,
   materialCheckButton: {
     flexDirection: "row",
+    margin: 5,
   } as ViewStyle,
   itemMaterial: {
     flexDirection: "row",
@@ -137,7 +138,7 @@ const scrapCreation = {
     borderColor: colors.tertiary2,
     borderWidth: 1,
     borderRadius: 20,
-    margin: 5,
+
     paddingHorizontal: 8,
   } as ViewStyle,
   //Categories
