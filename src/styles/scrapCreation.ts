@@ -4,10 +4,20 @@ const widthScreen = Dimensions.get("window").height;
 import ChutesColors from "../styles/colors";
 const colors = ChutesColors();
 //types
-import { TextInputStyles, PhotoStyles } from "../types/inputProps";
+import {
+  TextInputStyles,
+  PhotoStyles,
+  ThumbnailStyles,
+} from "../types/inputProps";
 
 const scrapCreation = {
   photo: {
+    primary: {
+      alignItems: "center",
+      justifyContent: "center",
+      flex: 1,
+      width: "100%" as DimensionValue,
+    },
     main: { flex: 1, width: "100%" as DimensionValue },
     secondary: { flex: 1, width: "100%" as DimensionValue, marginTop: 12 },
     container: {
@@ -33,9 +43,20 @@ const scrapCreation = {
       justifyContent: "center",
       flexDirection: "row",
       backgroundColor: colors.white,
-      // borderWidth: 1,
-      // borderRadius: 4,
       overflow: "hidden",
+      height: "100%" as DimensionValue,
+    },
+    image: { width: 50, height: "100%" as DimensionValue, borderRadius: 3 },
+    addButton: {
+      paddingVertical: 10,
+      paddingHorizontal: 6,
+      alignSelf: "flex-start",
+      flexDirection: "row",
+    },
+    addButtonFont: {
+      color: colors.tertiary,
+      fontSize: 16,
+      fontWeight: "500",
     },
     removeButton: {
       height: "100%" as DimensionValue,

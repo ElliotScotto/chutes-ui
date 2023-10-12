@@ -223,7 +223,6 @@ const CreateScreen = () => {
                 counterPressed={counterPressed}
                 photoRef={photoRef}
               />
-              <Spacer height={20} />
               <NameSelected
                 name={name}
                 setName={setName}

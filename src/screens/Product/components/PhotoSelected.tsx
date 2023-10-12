@@ -1,25 +1,17 @@
 import React, { FC, useState } from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 //packages
 import * as ImagePicker from "expo-image-picker";
 //styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
-import displays from "../../../styles/display";
-import fonts from "../../../styles/fonts";
 const colors = ChutesColors();
 //icons
 import AddIcon from "react-native-vector-icons/Ionicons";
-import CheckIcon from "react-native-vector-icons/AntDesign";
 //utils
 import Spacer from "../../../utils/Spacer";
 //types
-import {
-  ImageInfo,
-  PhotoSelectedProps,
-  PhotosType,
-  AddPhotoProps,
-} from "../../../types/inputProps";
+import { PhotoSelectedProps } from "../../../types/inputProps";
 //components
 import PhotoCard1 from "./components/PhotoCard1";
 import PhotoCard from "./components/PhotoCard";
@@ -48,7 +40,6 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
       const updatedPhotos = [...photos];
       updatedPhotos[index] = { uri: result.assets[0].uri };
       setPhotos(updatedPhotos);
-      //setPhoto({ uri: result.assets[0].uri });
     }
   };
   const captureImage = async (index: number) => {
@@ -83,10 +74,7 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
     setPhotoNumber(photoCount - 1);
   };
   return (
-    <View
-      ref={photoRef}
-      style={[displays.flex, displays.center, { width: "100%" }]}
-    >
+    <View ref={photoRef} style={scrapCreation.photo.primary}>
       <PhotoCard1
         pickImage={() => pickImage(0)}
         captureImage={() => captureImage(0)}
@@ -121,27 +109,21 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
         />
       ))}
       {photos[0] && photos.length < 5 ? (
-        <TouchableOpacity
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 6,
-            alignSelf: "flex-start",
-            flexDirection: "row",
-          }}
-          onPress={addPhoto}
-        >
-          <AddIcon name="add" size={25} color={colors.tertiary} />
-          <Text
-            style={{
-              color: colors.tertiary,
-              fontSize: 16,
-              fontWeight: "500",
-            }}
+        <>
+          <Spacer height={10} />
+          <TouchableOpacity
+            style={scrapCreation.photo.addButton}
+            onPress={addPhoto}
           >
-            Ajouter une photo
-          </Text>
-        </TouchableOpacity>
-      ) : null}
+            <AddIcon name="add" size={25} color={colors.tertiary} />
+            <Text style={scrapCreation.photo.addButtonFont}>
+              Ajouter une photo
+            </Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <Spacer height={10} />
+      )}
       <View style={scrapCreation.errors}>
         {errorPhoto && !photos[0] && counterPressed !== 0 && (
           <Text

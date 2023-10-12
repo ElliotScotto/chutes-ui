@@ -66,12 +66,12 @@ const PhotoCard1: FC<PhotoCard1Props> = ({
           <Text style={fonts.photo.item}>Photo</Text>
         </TouchableOpacity>
         <Spacer width={10} />
-
         {!photo ? null : (
           <View style={[scrapCreation.photo.thumbnail, displays.row]}>
             <Image
               source={{ uri: photo.uri }}
-              style={{ width: 40, height: 40 }}
+              style={scrapCreation.photo.image}
+              resizeMode="cover"
             />
             <TouchableOpacity
               style={scrapCreation.photo.removeButton}

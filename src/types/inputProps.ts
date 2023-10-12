@@ -3,21 +3,28 @@ import {
   View,
   TextStyle,
   ViewStyle,
+  ImageStyle,
   TouchableOpacity,
   TextInput as RNTextInput,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 //CREATESCREEN
+export type ThumbnailStyles = { item: ViewStyle };
 export type PhotoStyles = {
+  primary: ViewStyle;
   main: ViewStyle;
   secondary: ViewStyle;
   container: ViewStyle;
   buttons: ViewStyle;
   thumbnail: ViewStyle;
+  image: ImageStyle;
   label: TextStyle;
   item: TextStyle;
+  addButton: ViewStyle;
+  addButtonFont: TextStyle;
   removeButton: ViewStyle;
 };
+
 export interface PhotosType {
   id: number;
   title: string;
