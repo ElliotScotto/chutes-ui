@@ -24,29 +24,12 @@ import {
 import PhotoCard1 from "./components/PhotoCard1";
 import PhotoCard from "./components/PhotoCard";
 const PhotoSelected: FC<PhotoSelectedProps> = ({
-  photo1,
-  setPhoto1,
-  photo2,
-  setPhoto2,
-  photo3,
-  setPhoto3,
-  photo4,
-  setPhoto4,
-  photo5,
-  setPhoto5,
+  photos,
+  setPhotos,
   errorPhoto,
   counterPressed,
   photoRef,
 }) => {
-  // const [photos, setPhotos] = useState<PhotosType[]>([]);
-  const [photos, setPhotos] = useState<Array<ImageInfo | null>>([
-    null,
-    null,
-    null,
-    null,
-    null,
-  ]);
-
   const [photoCount, setPhotoCount] = useState<number>(2); //total of photos
   const [photoNumber, setPhotoNumber] = useState<number>(2); //number of a new photo
   const pickImage = async (index: number) => {
@@ -128,7 +111,7 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
         counterPressed={counterPressed}
       />
       <View style={scrapCreation.errors}>
-        {errorPhoto && !photo1 && counterPressed !== 0 && (
+        {errorPhoto && !photos[0] && counterPressed !== 0 && (
           <Text
             style={{
               color: colors.error,

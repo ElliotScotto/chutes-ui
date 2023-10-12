@@ -40,10 +40,13 @@ type ImageInfo = { uri: string };
 const CreateScreen = () => {
   //product states
   const [photo1, setPhoto1] = useState<ImageInfo | null>(null);
-  const [photo2, setPhoto2] = useState<ImageInfo | null>(null);
-  const [photo3, setPhoto3] = useState<ImageInfo | null>(null);
-  const [photo4, setPhoto4] = useState<ImageInfo | null>(null);
-  const [photo5, setPhoto5] = useState<ImageInfo | null>(null);
+  const [photos, setPhotos] = useState<Array<ImageInfo | null>>([
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]);
   const [owner, setOwner] = useState<number>(3);
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -94,19 +97,19 @@ const CreateScreen = () => {
   //Request
   const postScrapData = async (currentHost: string) => {
     try {
-      if (!photo1 || !photo1.uri) {
+      if (!photos[0] || !photos[0].uri) {
         console.error("photo1 n'est pas défini");
         return;
       }
       let photo = {
         uri:
           Platform.OS === "android"
-            ? photo1.uri
-            : photo1.uri.replace("file://", ""),
+            ? photos[0].uri
+            : photos[0].uri.replace("file://", ""),
         name: "photo1.jpg",
         type: "image/jpeg",
       };
-      let type = photo1.uri.substring(photo1.uri.lastIndexOf(".") + 1);
+      let type = photos[0].uri.substring(photos[0].uri.lastIndexOf(".") + 1);
       const formData = new FormData();
       formData.append("owner", String(owner));
       formData.append("photo1", {
@@ -144,7 +147,7 @@ const CreateScreen = () => {
   //Form validation
   const handleSubmit = () => {
     const isValidForm = handleErrorsScrap(
-      photo1,
+      photos[0],
       name,
       description,
       condition,
@@ -176,7 +179,7 @@ const CreateScreen = () => {
     } else {
       setIsButtonEnabled(false);
       //if multiple errors focus set on the first area from top to bottom
-      if (!photo1) {
+      if (!photos[0]) {
         scrollToRef(scrollViewRef, photoRef, -20, "photo1", false);
       } else if (!name || (name && name.length > 45)) {
         setIsNameFocused(true);
@@ -207,11 +210,6 @@ const CreateScreen = () => {
       }
     }
   };
-  console.log(photo1);
-  console.log(photo2);
-  console.log(photo3);
-  console.log(photo4);
-  console.log(photo5);
   return (
     <SafeAreaProvider style={[displays.w100]}>
       <KeyboardAwareScrollView ref={scrollViewRef}>
@@ -220,22 +218,13 @@ const CreateScreen = () => {
           <SafeAreaView style={[displays.white, displays.aliC]}>
             <View style={[displays.w95, displays.aliC]}>
               <Spacer height={20} />
-
               <View>
                 <Text style={fonts.createTitle}>Publie ta chute</Text>
               </View>
               <Spacer height={10} />
               <PhotoSelected
-                photo1={photo1}
-                setPhoto1={setPhoto1}
-                photo2={photo2}
-                setPhoto2={setPhoto2}
-                photo3={photo3}
-                setPhoto3={setPhoto3}
-                photo4={photo4}
-                setPhoto4={setPhoto4}
-                photo5={photo5}
-                setPhoto5={setPhoto5}
+                photos={photos}
+                setPhotos={setPhotos}
                 errorPhoto={errorPhoto}
                 counterPressed={counterPressed}
                 photoRef={photoRef}
@@ -364,7 +353,7 @@ const CreateScreen = () => {
                 isButtonEnabled={isButtonEnabled}
                 setIsButtonEnabled={setIsButtonEnabled}
                 handleSubmit={handleSubmit}
-                photo1={photo1}
+                photo1={photos[0]}
                 name={name}
                 description={description}
                 condition={condition}
