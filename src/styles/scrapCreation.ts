@@ -88,14 +88,14 @@ const scrapCreation = {
     color: colors.tertiary,
     fontWeight: "500",
   } as TextStyle,
-  modalConditions: {
+  modalPress: {
     alignItems: "center",
     justifyContent: "space-between",
     alignSelf: "stretch",
     paddingHorizontal: 20,
-    borderColor: colors.secondary,
     borderWidth: 1,
-    borderRadius: 2,
+    borderColor: colors.tertiary,
+    borderRadius: 4,
     flexDirection: "row",
   } as ViewStyle,
   //Weight
@@ -109,15 +109,6 @@ const scrapCreation = {
     fontSize: 16,
     fontWeight: "500",
   } as TextStyle,
-  modalWeights: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    alignSelf: "stretch",
-    paddingHorizontal: 20,
-    borderWidth: 1,
-    borderRadius: 2,
-    flexDirection: "row",
-  } as ViewStyle,
   //Materials
   materialContainer: {
     flexDirection: "column",

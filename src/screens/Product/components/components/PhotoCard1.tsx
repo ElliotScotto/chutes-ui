@@ -8,7 +8,6 @@ const colors = ChutesColors();
 import scrapCreation from "../../../../styles/scrapCreation";
 import fonts from "../../../../styles/fonts";
 //icons
-import AddIcon from "react-native-vector-icons/Ionicons";
 import PhotoIcon from "react-native-vector-icons/AntDesign";
 import TrashIcon from "react-native-vector-icons/Ionicons";
 

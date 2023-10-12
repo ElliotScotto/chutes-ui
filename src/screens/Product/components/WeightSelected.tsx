@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 //styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
-const color = ChutesColors();
+const colors = ChutesColors();
 import fonts from "../../../styles/fonts";
 //icons
 import ChevronDown from "react-native-vector-icons/MaterialCommunityIcons";
@@ -13,6 +13,8 @@ import Spacer from "../../../utils/Spacer";
 import ModalWeightPicker from "./ModalWeightPicker";
 //types
 import { WeightSelectedProps } from "../../../types/inputProps";
+//packages
+import { Shadow } from "react-native-shadow-2";
 
 const WeightSelected: FC<WeightSelectedProps> = ({
   weight,
@@ -23,40 +25,58 @@ const WeightSelected: FC<WeightSelectedProps> = ({
   counterPressed,
   weightRef,
 }) => {
-  let title = "Quel est le poids ?";
+  let weightDefaultValue = "Choisir dans la liste";
   return (
     <View ref={weightRef} style={{ width: "100%" }}>
       <View style={scrapCreation.weightTitle}>
-        <Text style={scrapCreation.weightTitleFont}>{title}*</Text>
+        <Text style={scrapCreation.weightTitleFont}>Poids*</Text>
       </View>
       <Spacer height={10} />
-      <Pressable
-        ref={weightRef}
-        style={[
-          scrapCreation.modalWeights,
-          {
-            borderColor:
-              errorWeight && !weight && counterPressed !== 0
-                ? color.error
-                : color.tertiary2,
-          },
-        ]}
-        onPress={() => {
-          setIsModalWeightsVisible(true);
+      <Shadow
+        distance={2}
+        offset={[0, 0]}
+        paintInside={false}
+        sides={{ top: true, bottom: true, start: true, end: true }}
+        corners={{
+          topStart: true,
+          topEnd: true,
+          bottomStart: true,
+          bottomEnd: true,
         }}
+        startColor={colors.lightAccent2}
+        endColor={colors.white}
+        style={{ width: "100%" }}
       >
-        <Text style={fonts.weights}>{weight}</Text>
-        <ChevronDown name="chevron-down" size={25} color={color.secondary} />
-      </Pressable>
+        <TouchableOpacity
+          ref={weightRef}
+          style={[
+            scrapCreation.modalPress,
+            {
+              borderColor:
+                errorWeight && !weight && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2,
+            },
+          ]}
+          onPress={() => {
+            setIsModalWeightsVisible(true);
+          }}
+        >
+          <Text style={fonts.weights}>
+            {weight ? weight : weightDefaultValue}
+          </Text>
+          <ChevronDown name="chevron-down" size={25} color={colors.secondary} />
+        </TouchableOpacity>
+      </Shadow>
       <ModalWeightPicker
         isModalWeightsVisible={isModalWeightsVisible}
         setIsModalWeightsVisible={setIsModalWeightsVisible}
         setData={setWeight}
-        title={title}
+        title={weightDefaultValue}
       />
       <View style={scrapCreation.errors}>
         {errorWeight && !weight && counterPressed !== 0 && (
-          <Text style={{ color: color.error }}>{errorWeight}</Text>
+          <Text style={{ color: colors.error }}>{errorWeight}</Text>
         )}
       </View>
     </View>

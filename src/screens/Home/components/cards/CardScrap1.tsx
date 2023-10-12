@@ -80,9 +80,19 @@ const CardScrap1: FC<CardScrap1Props> = ({ data }) => {
                       ))}
                     </View>
                     <View style={[displays.row, displays.aliC]}>
-                      <IconMCI name="tag" size={16} color={colors.tertiary2} />
+                      {data.free ? null : (
+                        <IconMCI
+                          name="tag"
+                          size={16}
+                          color={colors.tertiary2}
+                        />
+                      )}
                       <Spacer width={3} />
-                      <Text style={fonts.scrapDetails}>{data.price} €</Text>
+                      {data.free ? (
+                        <Text style={fonts.scrapDetails}>Gratuit</Text>
+                      ) : (
+                        <Text style={fonts.scrapDetails}>{data.price} €</Text>
+                      )}
                       <Spacer width={10} />
                       <Text style={fonts.scrapDetails}>|</Text>
                       <Spacer width={10} />
@@ -97,7 +107,7 @@ const CardScrap1: FC<CardScrap1Props> = ({ data }) => {
                         name="home-export-outline"
                         size={20}
                         color={colors.tertiary2}
-                        style={{ opacity: data.home_pickup === true ? 1 : 0.2 }}
+                        style={{ opacity: data.homePickup === true ? 1 : 0.2 }}
                       />
                     </View>
                   </View>

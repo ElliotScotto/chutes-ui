@@ -7,7 +7,6 @@ import {
   TextInput as RNTextInput,
 } from "react-native";
 //packages
-import { StatusBar } from "expo-status-bar";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -31,9 +30,11 @@ import MaterialSelected from "./components/MaterialSelected";
 import CategorySelected from "./components/CategorySelected";
 import DeliverySelected from "./components/DeliverySelected";
 import PostScrapButton from "./components/PostScrapButton";
+import ModalCreate from "./components/ModalCreate";
 //functions
 import { handleErrorsScrap } from "./functions/validateForm";
 import { scrollToRef } from "./functions/scrollToRef";
+import { StatusBar } from "expo-status-bar";
 
 //types
 type ImageInfo = { uri: string };
@@ -70,7 +71,7 @@ const CreateScreen = () => {
   const materialRef = useRef<View>(null);
   const categoryRef = useRef<View>(null);
   const publishButtonRef = useRef<TouchableOpacity>(null);
-  //Modal visibility
+  //Modal Item visibility
   const [isModalConditionsVisible, setIsModalConditionsVisible] =
     useState(false);
   const [isModalWeightsVisible, setIsModalWeightsVisible] = useState(false);
@@ -88,6 +89,11 @@ const CreateScreen = () => {
   const [counterPressed, setCounterPressed] = useState<number>(0);
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
   const [shadowButton, setShadowButton] = useState<boolean>(true);
+  //Modal
+  const [modalErrorsVisibility, setModalErrorsVisibility] =
+    useState<boolean>(false);
+  const [modalTitle, setModalTitle] = useState<string>("");
+  const [modalMessage, setModalMessage] = useState<string>("");
   //Request
   const postScrapData = async (currentHost: string) => {
     try {
@@ -130,11 +136,36 @@ const CreateScreen = () => {
           },
         }
       );
-      console.log("response.data : ", response.data);
+      //console.log("response.data : ", response.data);
+      // setModalTitle(`Bravo ${username} !`);
+      setModalTitle(`Bravo username !`);
+      setModalMessage(`${response.data.message}`);
+      setModalErrorsVisibility(true);
     } catch (error) {
       console.error("Erreur lors de l'envoi des données:", error);
       if ((error as any).response) {
-        console.error("Détails de l’erreur:", (error as any).response.data);
+        // Message received from server
+        const errorDetails = (error as any).response.data;
+        if (typeof errorDetails === "object" && errorDetails !== null) {
+          let firstErrorKey = null;
+          let errorMessage = "";
+          let errorCount = 0;
+          for (const [key, value] of Object.entries(errorDetails)) {
+            if (Array.isArray(value)) {
+              errorMessage += `⟿ ${value.join("\n")}\n`;
+              errorCount += value.length;
+              if (!firstErrorKey) {
+                firstErrorKey = key;
+              }
+            }
+          }
+          const errorCountMessage = `${errorCount} ${
+            errorCount === 1 ? "erreur" : "erreurs"
+          } à corriger`;
+          setModalTitle(errorCountMessage);
+          setModalMessage(errorMessage);
+          setModalErrorsVisibility(true);
+        }
       }
     }
   };
@@ -204,174 +235,181 @@ const CreateScreen = () => {
       }
     }
   };
+  console.log("homePickup : ", homePickup);
+  console.log("sending : ", sending);
+
   return (
     <SafeAreaProvider style={[displays.w100]}>
+      <StatusBar backgroundColor={colors.white} />
       <KeyboardAwareScrollView ref={scrollViewRef}>
-        <>
-          <StatusBar style="auto" />
-          <SafeAreaView style={[displays.white, displays.aliC]}>
-            <View style={[displays.w95, displays.aliC]}>
-              <Spacer height={25} />
-              <View>
-                <Text style={fonts.titleScreen}>Publie ta chute</Text>
-              </View>
-              <Spacer height={25} />
-              <PhotoSelected
-                photos={photos}
-                setPhotos={setPhotos}
-                errorPhoto={errorPhoto}
-                counterPressed={counterPressed}
-                photoRef={photoRef}
-              />
-              <NameSelected
-                name={name}
-                setName={setName}
-                errorName={errorName}
-                counterPressed={counterPressed}
-                nameFocusRef={nameFocusRef}
-                nameRef={nameRef}
-                isNameFocused={isNameFocused}
-                setIsNameFocused={setIsNameFocused}
-                description={description}
-                descriptionRef={descriptionRef}
-                price={price}
-                priceRef={priceRef}
-                condition={condition}
-                setIsModalConditionsVisible={setIsModalConditionsVisible}
-                weight={weight}
-                setIsModalWeightsVisible={setIsModalWeightsVisible}
-                material={material}
-                materialRef={materialRef}
-                category={category}
-                categoryRef={categoryRef}
-                publishButtonRef={publishButtonRef}
-                scrollViewRef={scrollViewRef}
-              />
-              <Spacer height={10} />
-              <DescriptionSelected
-                description={description}
-                setDescription={setDescription}
-                errorDescription={errorDescription}
-                counterPressed={counterPressed}
-                descriptionRef={descriptionRef}
-                descriptionFocusRef={descriptionFocusRef}
-                isDescriptionFocused={isDescriptionFocused}
-                setIsDescriptionFocused={setIsDescriptionFocused}
-                price={price}
-                priceRef={priceRef}
-                condition={condition}
-                setIsModalConditionsVisible={setIsModalConditionsVisible}
-                weight={weight}
-                setIsModalWeightsVisible={setIsModalWeightsVisible}
-                material={material}
-                materialRef={materialRef}
-                category={category}
-                categoryRef={categoryRef}
-                publishButtonRef={publishButtonRef}
-                scrollViewRef={scrollViewRef}
-              />
-              <Spacer height={10} />
-              <PriceSelected
-                description={description}
-                descriptionRef={descriptionRef}
-                price={price}
-                setPrice={setPrice}
-                free={free}
-                setFree={setFree}
-                errorPrice={errorPrice}
-                counterPressed={counterPressed}
-                priceRef={priceRef}
-                priceFocusRef={priceFocusRef}
-                isPriceFocused={isPriceFocused}
-                setIsPriceFocused={setIsPriceFocused}
-                condition={condition}
-                setIsModalConditionsVisible={setIsModalConditionsVisible}
-                weight={weight}
-                setIsModalWeightsVisible={setIsModalWeightsVisible}
-                material={material}
-                materialRef={materialRef}
-                category={category}
-                categoryRef={categoryRef}
-                publishButtonRef={publishButtonRef}
-                scrollViewRef={scrollViewRef}
-              />
-              <Spacer height={10} />
-              <ConditionSelected
-                condition={condition}
-                setCondition={setCondition}
-                isModalConditionsVisible={isModalConditionsVisible}
-                setIsModalConditionsVisible={setIsModalConditionsVisible}
-                errorCondition={errorCondition}
-                counterPressed={counterPressed}
-                conditionRef={conditionRef}
-              />
-              <Spacer height={10} />
-              <WeightSelected
-                weight={weight}
-                setWeight={setWeight}
-                isModalWeightsVisible={isModalWeightsVisible}
-                setIsModalWeightsVisible={setIsModalWeightsVisible}
-                errorWeight={errorWeight}
-                counterPressed={counterPressed}
-                weightRef={weightRef}
-              />
-              <Spacer height={10} />
-              <MaterialSelected
-                material={material}
-                setMaterial={setMaterial}
-                errorMaterial={errorMaterial}
-                counterPressed={counterPressed}
-                materialRef={materialRef}
-              />
-              <Spacer height={10} />
-              <CategorySelected
-                category={category}
-                setCategory={setCategory}
-                errorCategory={errorCategory}
-                counterPressed={counterPressed}
-                categoryRef={categoryRef}
-              />
-              <Spacer height={10} />
-              <DeliverySelected
-                homePickup={homePickup}
-                setHomePickup={setHomePickup}
-                sending={sending}
-                setSending={setSending}
-              />
-              <Spacer height={30} />
-              <PostScrapButton
-                publishButtonRef={publishButtonRef}
-                shadowButton={shadowButton}
-                setShadowButton={setShadowButton}
-                isButtonEnabled={isButtonEnabled}
-                setIsButtonEnabled={setIsButtonEnabled}
-                handleSubmit={handleSubmit}
-                photo1={photos[0]}
-                name={name}
-                description={description}
-                condition={condition}
-                price={price}
-                weight={weight}
-                material={material}
-                category={category}
-                homePickup={homePickup}
-                sending={sending}
-                setErrorPhoto={setErrorPhoto}
-                setErrorName={setErrorName}
-                setErrorDescription={setErrorDescription}
-                setErrorCondition={setErrorCondition}
-                setErrorPrice={setErrorPrice}
-                setErrorWeight={setErrorWeight}
-                setErrorMaterial={setErrorMaterial}
-                setErrorCategory={setErrorCategory}
-                setErrorMessage={setErrorMessage}
-                counterPressed={counterPressed}
-                setCounterPressed={setCounterPressed}
-              />
-              <Spacer height={50} />
+        <SafeAreaView style={[displays.white, displays.aliC]}>
+          <ModalCreate
+            title={modalTitle}
+            message={modalMessage}
+            modalErrorsVisibility={modalErrorsVisibility}
+            setModalErrorsVisibility={setModalErrorsVisibility}
+          />
+          <View style={[displays.w95, displays.aliC]}>
+            <Spacer height={25} />
+            <View>
+              <Text style={fonts.titleScreen}>Publie ta chute</Text>
             </View>
-          </SafeAreaView>
-        </>
+            <Spacer height={25} />
+            <PhotoSelected
+              photos={photos}
+              setPhotos={setPhotos}
+              errorPhoto={errorPhoto}
+              counterPressed={counterPressed}
+              photoRef={photoRef}
+            />
+            <NameSelected
+              name={name}
+              setName={setName}
+              errorName={errorName}
+              counterPressed={counterPressed}
+              nameFocusRef={nameFocusRef}
+              nameRef={nameRef}
+              isNameFocused={isNameFocused}
+              setIsNameFocused={setIsNameFocused}
+              description={description}
+              descriptionRef={descriptionRef}
+              price={price}
+              priceRef={priceRef}
+              condition={condition}
+              setIsModalConditionsVisible={setIsModalConditionsVisible}
+              weight={weight}
+              setIsModalWeightsVisible={setIsModalWeightsVisible}
+              material={material}
+              materialRef={materialRef}
+              category={category}
+              categoryRef={categoryRef}
+              publishButtonRef={publishButtonRef}
+              scrollViewRef={scrollViewRef}
+            />
+            <Spacer height={10} />
+            <DescriptionSelected
+              description={description}
+              setDescription={setDescription}
+              errorDescription={errorDescription}
+              counterPressed={counterPressed}
+              descriptionRef={descriptionRef}
+              descriptionFocusRef={descriptionFocusRef}
+              isDescriptionFocused={isDescriptionFocused}
+              setIsDescriptionFocused={setIsDescriptionFocused}
+              price={price}
+              priceRef={priceRef}
+              condition={condition}
+              setIsModalConditionsVisible={setIsModalConditionsVisible}
+              weight={weight}
+              setIsModalWeightsVisible={setIsModalWeightsVisible}
+              material={material}
+              materialRef={materialRef}
+              category={category}
+              categoryRef={categoryRef}
+              publishButtonRef={publishButtonRef}
+              scrollViewRef={scrollViewRef}
+            />
+            <Spacer height={10} />
+            <PriceSelected
+              description={description}
+              descriptionRef={descriptionRef}
+              price={price}
+              setPrice={setPrice}
+              free={free}
+              setFree={setFree}
+              errorPrice={errorPrice}
+              counterPressed={counterPressed}
+              priceRef={priceRef}
+              priceFocusRef={priceFocusRef}
+              isPriceFocused={isPriceFocused}
+              setIsPriceFocused={setIsPriceFocused}
+              condition={condition}
+              setIsModalConditionsVisible={setIsModalConditionsVisible}
+              weight={weight}
+              setIsModalWeightsVisible={setIsModalWeightsVisible}
+              material={material}
+              materialRef={materialRef}
+              category={category}
+              categoryRef={categoryRef}
+              publishButtonRef={publishButtonRef}
+              scrollViewRef={scrollViewRef}
+            />
+            <Spacer height={10} />
+            <ConditionSelected
+              condition={condition}
+              setCondition={setCondition}
+              isModalConditionsVisible={isModalConditionsVisible}
+              setIsModalConditionsVisible={setIsModalConditionsVisible}
+              errorCondition={errorCondition}
+              counterPressed={counterPressed}
+              conditionRef={conditionRef}
+            />
+            <Spacer height={10} />
+            <WeightSelected
+              weight={weight}
+              setWeight={setWeight}
+              isModalWeightsVisible={isModalWeightsVisible}
+              setIsModalWeightsVisible={setIsModalWeightsVisible}
+              errorWeight={errorWeight}
+              counterPressed={counterPressed}
+              weightRef={weightRef}
+            />
+            <Spacer height={10} />
+            <MaterialSelected
+              material={material}
+              setMaterial={setMaterial}
+              errorMaterial={errorMaterial}
+              counterPressed={counterPressed}
+              materialRef={materialRef}
+            />
+            <Spacer height={10} />
+            <CategorySelected
+              category={category}
+              setCategory={setCategory}
+              errorCategory={errorCategory}
+              counterPressed={counterPressed}
+              categoryRef={categoryRef}
+            />
+            <Spacer height={10} />
+            <DeliverySelected
+              homePickup={homePickup}
+              setHomePickup={setHomePickup}
+              sending={sending}
+              setSending={setSending}
+            />
+            <Spacer height={30} />
+            <PostScrapButton
+              publishButtonRef={publishButtonRef}
+              shadowButton={shadowButton}
+              setShadowButton={setShadowButton}
+              isButtonEnabled={isButtonEnabled}
+              setIsButtonEnabled={setIsButtonEnabled}
+              handleSubmit={handleSubmit}
+              photo1={photos[0]}
+              name={name}
+              description={description}
+              condition={condition}
+              price={price}
+              weight={weight}
+              material={material}
+              category={category}
+              homePickup={homePickup}
+              sending={sending}
+              setErrorPhoto={setErrorPhoto}
+              setErrorName={setErrorName}
+              setErrorDescription={setErrorDescription}
+              setErrorCondition={setErrorCondition}
+              setErrorPrice={setErrorPrice}
+              setErrorWeight={setErrorWeight}
+              setErrorMaterial={setErrorMaterial}
+              setErrorCategory={setErrorCategory}
+              setErrorMessage={setErrorMessage}
+              counterPressed={counterPressed}
+              setCounterPressed={setCounterPressed}
+            />
+            <Spacer height={50} />
+          </View>
+        </SafeAreaView>
       </KeyboardAwareScrollView>
     </SafeAreaProvider>
   );

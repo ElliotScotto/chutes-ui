@@ -23,11 +23,10 @@ export interface ScrapData {
   weight: number;
   material: string;
   category: string;
-  is_free: boolean;
+  free: boolean;
   is_for_sell: boolean;
   city: string;
-  home_pickup: boolean;
-  product_location: string;
+  homePickup: boolean;
   sending: boolean;
   owner: number;
   owner_detail: UserCustom;
@@ -42,7 +41,6 @@ export type ScrapDataCreation = {
   material: string[];
   category: string[];
   homePickup: boolean;
-  productLocation: string;
   sending: boolean;
 };
 export interface Conditions {

@@ -56,6 +56,11 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
         if (parseFloat(normalizedValue) > 0) {
           setLastNonFreePrice(normalizedValue);
         }
+        if (normalizedValue === "0") {
+          setFree(true);
+        } else {
+          setFree(false);
+        }
       } else {
         setPrice(undefined);
       }

@@ -9,7 +9,7 @@ import displays from "../../../../styles/display";
 import scrapCreation from "../../../../styles/scrapCreation";
 import fonts from "../../../../styles/fonts";
 //icons
-import AddIcon from "react-native-vector-icons/Ionicons";
+import PhotoIcon from "react-native-vector-icons/AntDesign";
 import TrashIcon from "react-native-vector-icons/Ionicons";
 //types
 import { PhotoCardProps } from "../../../../types/inputProps";
@@ -35,16 +35,19 @@ const PhotoCard: FC<PhotoCardProps> = ({
           style={scrapCreation.photo.buttons}
           onPress={() => handlePickOrCaptureImage("pick")}
         >
-          <AddIcon name="add" size={25} color={colors.tertiary2} />
-          <Text style={fonts.photo.item}>Galerie</Text>
+          <PhotoIcon name="picture" size={35} color={colors.tertiary} />
         </TouchableOpacity>
         <Spacer width={10} />
         <TouchableOpacity
           style={scrapCreation.photo.buttons}
           onPress={() => handlePickOrCaptureImage("capture")}
         >
-          <AddIcon name="add" size={25} color={colors.tertiary2} />
-          <Text style={fonts.photo.item}>Photo</Text>
+          <PhotoIcon
+            name="camerao"
+            size={35}
+            color={colors.tertiary}
+            style={{ position: "absolute" }}
+          />
         </TouchableOpacity>
         <Spacer width={10} />
         {photo ? (

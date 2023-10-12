@@ -1,18 +1,21 @@
-import React, { FC, useEffect } from "react";
-import { View, Text, Pressable } from "react-native";
+import React, { FC } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 //styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
-const color = ChutesColors();
+const colors = ChutesColors();
 import fonts from "../../../styles/fonts";
 //icons
 import ChevronDown from "react-native-vector-icons/MaterialCommunityIcons";
+
 //utils
 import Spacer from "../../../utils/Spacer";
 //components
 import ModalConditionPicker from "./ModalConditionPicker";
 //types
 import { ConditionSelectedProps } from "../../../types/inputProps";
+//packages
+import { Shadow } from "react-native-shadow-2";
 
 const ConditionSelected: FC<ConditionSelectedProps> = ({
   condition,
@@ -23,39 +26,57 @@ const ConditionSelected: FC<ConditionSelectedProps> = ({
   counterPressed,
   conditionRef,
 }) => {
-  let title = "Quel est l'état de votre chute ?";
+  let conditionDefaultValue = "Choisir dans la liste";
   return (
     <View ref={conditionRef} style={{ width: "100%" }}>
       <View style={scrapCreation.conditionTitle}>
-        <Text style={scrapCreation.conditionTitleFont}>{title}*</Text>
+        <Text style={scrapCreation.conditionTitleFont}>Etat*</Text>
       </View>
       <Spacer height={10} />
-      <Pressable
-        style={[
-          scrapCreation.modalConditions,
-          {
-            borderColor:
-              errorCondition && !condition && counterPressed !== 0
-                ? color.error
-                : color.tertiary2,
-          },
-        ]}
-        onPress={() => {
-          setIsModalConditionsVisible(true);
+      <Shadow
+        distance={2}
+        offset={[0, 0]}
+        paintInside={false}
+        sides={{ top: true, bottom: true, start: true, end: true }}
+        corners={{
+          topStart: true,
+          topEnd: true,
+          bottomStart: true,
+          bottomEnd: true,
         }}
+        startColor={colors.lightAccent2}
+        endColor={colors.white}
+        style={{ width: "100%" }}
       >
-        <Text style={fonts.conditions}>{condition}</Text>
-        <ChevronDown name="chevron-down" size={25} color={color.secondary} />
-      </Pressable>
+        <TouchableOpacity
+          style={[
+            scrapCreation.modalPress,
+            {
+              borderColor:
+                errorCondition && !condition && counterPressed !== 0
+                  ? colors.error
+                  : colors.tertiary2,
+            },
+          ]}
+          onPress={() => {
+            setIsModalConditionsVisible(true);
+          }}
+        >
+          <Text style={fonts.conditions}>
+            {condition ? condition : conditionDefaultValue}
+          </Text>
+          <ChevronDown name="chevron-down" size={25} color={colors.secondary} />
+        </TouchableOpacity>
+      </Shadow>
       <ModalConditionPicker
         isModalConditionsVisible={isModalConditionsVisible}
         setIsModalConditionsVisible={setIsModalConditionsVisible}
         setData={setCondition}
-        title={title}
+        title={conditionDefaultValue}
       />
       <View style={scrapCreation.errors}>
         {errorCondition && !condition && counterPressed !== 0 && (
-          <Text style={{ color: color.error }}>{errorCondition}</Text>
+          <Text style={{ color: colors.error }}>{errorCondition}</Text>
         )}
       </View>
     </View>

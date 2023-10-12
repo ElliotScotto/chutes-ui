@@ -13,7 +13,7 @@ interface ModalProps {
   setModalErrorsVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalSignUp: React.FC<ModalProps> = ({
+const ModalCreate: React.FC<ModalProps> = ({
   title,
   message,
   modalErrorsVisibility,
@@ -108,4 +108,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-export default ModalSignUp;
+export default ModalCreate;
