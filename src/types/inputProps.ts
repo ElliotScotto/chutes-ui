@@ -13,6 +13,7 @@ export type PhotoStyles = {
   secondary: ViewStyle;
   container: ViewStyle;
   buttons: ViewStyle;
+  thumbnail: ViewStyle;
   label: TextStyle;
   item: TextStyle;
   removeButton: ViewStyle;
@@ -43,6 +44,7 @@ export interface PhotoCard1Props {
   captureImage: () => void;
   photo: ImageInfo | null;
   setPhoto: (photo: ImageInfo | null) => void;
+  deletePhoto: (id: number) => void;
   errorPhoto: string;
   counterPressed: number;
 }

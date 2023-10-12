@@ -77,20 +77,18 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
     }
   };
   const deletePhoto = (id: number) => {
-    if (id === 0) return; // on ne supprime pas le premier élément
-
     const newPhotos = photos.filter((_, index) => index !== id);
     setPhotos(newPhotos);
     setPhotoCount(photoCount - 1);
     setPhotoNumber(photoCount - 1);
   };
   console.log("photoNumber : ", photoNumber);
-  console.log(photos.length);
-  console.log("photos[0]", photos[0]);
-  console.log("photos[1]", photos[1]);
-  console.log("photos[2]", photos[2]);
-  console.log("photos[3]", photos[3]);
-  console.log("photos[4]", photos[4]);
+  console.log("photos.length : ", photos.length);
+  console.log("photos[0] : ", photos[0]);
+  console.log("photos[1] : ", photos[1]);
+  console.log("photos[2] : ", photos[2]);
+  console.log("photos[3] : ", photos[3]);
+  console.log("photos[4] : ", photos[4]);
   return (
     <View
       ref={photoRef}
@@ -107,20 +105,10 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
             return updatedPhotos;
           });
         }}
+        deletePhoto={deletePhoto}
         errorPhoto={errorPhoto}
         counterPressed={counterPressed}
       />
-      <View style={scrapCreation.errors}>
-        {errorPhoto && !photos[0] && counterPressed !== 0 && (
-          <Text
-            style={{
-              color: colors.error,
-            }}
-          >
-            {errorPhoto}
-          </Text>
-        )}
-      </View>
       {photos.slice(1).map((item, index) => (
         <PhotoCard
           key={index + 1}
@@ -139,7 +127,7 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
           photoNumber={photoNumber}
         />
       ))}
-      {photos.length < 5 ? (
+      {1 <= photos.length && photos.length < 5 ? (
         <TouchableOpacity
           style={{
             paddingVertical: 10,
@@ -160,6 +148,17 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
           </Text>
         </TouchableOpacity>
       ) : null}
+      <View style={scrapCreation.errors}>
+        {errorPhoto && !photos[0] && counterPressed !== 0 && (
+          <Text
+            style={{
+              color: colors.error,
+            }}
+          >
+            {errorPhoto}
+          </Text>
+        )}
+      </View>
     </View>
   );
 };

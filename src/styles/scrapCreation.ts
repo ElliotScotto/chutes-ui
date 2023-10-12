@@ -27,6 +27,16 @@ const scrapCreation = {
       borderRadius: 4,
       overflow: "hidden",
     },
+    thumbnail: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "row",
+      backgroundColor: colors.white,
+      // borderWidth: 1,
+      // borderRadius: 4,
+      overflow: "hidden",
+    },
     removeButton: {
       height: "100%" as DimensionValue,
       width: 40 as DimensionValue,
