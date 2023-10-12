@@ -211,11 +211,11 @@ const CreateScreen = () => {
           <StatusBar style="auto" />
           <SafeAreaView style={[displays.white, displays.aliC]}>
             <View style={[displays.w95, displays.aliC]}>
-              <Spacer height={20} />
+              <Spacer height={25} />
               <View>
-                <Text style={fonts.createTitle}>Publie ta chute</Text>
+                <Text style={fonts.titleScreen}>Publie ta chute</Text>
               </View>
-              <Spacer height={10} />
+              <Spacer height={25} />
               <PhotoSelected
                 photos={photos}
                 setPhotos={setPhotos}

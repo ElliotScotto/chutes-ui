@@ -80,7 +80,7 @@ const fonts = {
     letterSpacing: 0.3,
   },
   //CreateScreen
-  createTitle: {
+  titleScreen: {
     fontSize: 20,
     color: colors.tertiary,
     textTransform: "uppercase",

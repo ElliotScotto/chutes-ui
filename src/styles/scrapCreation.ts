@@ -36,6 +36,7 @@ const scrapCreation = {
       borderWidth: 1,
       borderRadius: 4,
       overflow: "hidden",
+      height: 50,
     },
     thumbnail: {
       flex: 1,

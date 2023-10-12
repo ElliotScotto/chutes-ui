@@ -217,7 +217,7 @@ const SignUpScreen: React.FC = () => {
           <View style={[displays.w90, displays.flex, displays.aliC]}>
             <View
               style={{
-                height: 50,
+                height: 40,
                 width: "100%",
                 flexDirection: "row",
               }}
@@ -240,8 +240,8 @@ const SignUpScreen: React.FC = () => {
               </View>
             </View>
 
-            <Text style={fonts.createTitle}>Crée un compte</Text>
-            <Spacer height={15} />
+            <Text style={fonts.titleScreen}>Crée un compte</Text>
+            <Spacer height={25} />
             <TextInput
               ref={usernameRef}
               mode="outlined"
