@@ -82,13 +82,6 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
     setPhotoCount(photoCount - 1);
     setPhotoNumber(photoCount - 1);
   };
-  console.log("photoNumber : ", photoNumber);
-  console.log("photos.length : ", photos.length);
-  console.log("photos[0] : ", photos[0]);
-  console.log("photos[1] : ", photos[1]);
-  console.log("photos[2] : ", photos[2]);
-  console.log("photos[3] : ", photos[3]);
-  console.log("photos[4] : ", photos[4]);
   return (
     <View
       ref={photoRef}
@@ -127,24 +120,25 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
           photoNumber={photoNumber}
         />
       ))}
-      {1 <= photos.length && photos.length < 5 ? (
+      {photos[0] && photos.length < 5 ? (
         <TouchableOpacity
           style={{
             paddingVertical: 10,
             paddingHorizontal: 6,
             alignSelf: "flex-start",
+            flexDirection: "row",
           }}
           onPress={addPhoto}
         >
+          <AddIcon name="add" size={25} color={colors.tertiary} />
           <Text
             style={{
-              textDecorationLine: "underline",
               color: colors.tertiary,
-              fontSize: 14,
+              fontSize: 16,
               fontWeight: "500",
             }}
           >
-            Ajouter une photo (5 max.)
+            Ajouter une photo
           </Text>
         </TouchableOpacity>
       ) : null}

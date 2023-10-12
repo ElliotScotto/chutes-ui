@@ -99,7 +99,7 @@ const SplashScreen = () => {
             endColor={colors.white}
             style={{ borderRadius: 50 }}
           >
-            <Pressable
+            <TouchableOpacity
               onPress={() => {
                 navigation.navigate("Tabs");
               }}
@@ -116,7 +116,7 @@ const SplashScreen = () => {
               >
                 DÉMARRER
               </Text>
-            </Pressable>
+            </TouchableOpacity>
           </Shadow>
         </View>
         <View style={displays.center}>

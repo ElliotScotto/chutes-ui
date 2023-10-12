@@ -40,13 +40,7 @@ type ImageInfo = { uri: string };
 const CreateScreen = () => {
   //product states
   const [photo1, setPhoto1] = useState<ImageInfo | null>(null);
-  const [photos, setPhotos] = useState<Array<ImageInfo | null>>([
-    null,
-    null,
-    null,
-    null,
-    null,
-  ]);
+  const [photos, setPhotos] = useState<Array<ImageInfo | null>>([null]);
   const [owner, setOwner] = useState<number>(3);
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
