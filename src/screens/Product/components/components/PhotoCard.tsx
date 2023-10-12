@@ -14,69 +14,25 @@ import TrashIcon from "react-native-vector-icons/Ionicons";
 //types
 import { PhotoCardProps, PhotosType } from "../../../../types/inputProps";
 const PhotoCard: FC<PhotoCardProps> = ({
-  id,
+  index,
   pickImage,
   captureImage,
-  photo2,
-  setPhoto2,
-  photo3,
-  setPhoto3,
-  photo4,
-  setPhoto4,
-  photo5,
-  setPhoto5,
   deletePhoto,
-  photoNumber,
-  photos,
 }) => {
-  const handlePickImage = () => {
-    if (!photo2) {
-      pickImage(setPhoto2);
-      return;
-    }
-    if (!photo3) {
-      pickImage(setPhoto3);
-      return;
-    }
-    if (!photo4) {
-      pickImage(setPhoto4);
-      return;
-    }
-    if (!photo5) {
-      pickImage(setPhoto5);
-      return;
-    }
-  };
-  const handleCaptureImage = () => {
-    if (!photo2) {
-      captureImage(setPhoto2);
-      return;
-    }
-    if (!photo3) {
-      captureImage(setPhoto3);
-      return;
-    }
-    if (!photo4) {
-      captureImage(setPhoto4);
-      return;
-    }
-    if (!photo5) {
-      captureImage(setPhoto5);
-      return;
+  const handlePickOrCaptureImage = (action: "pick" | "capture") => {
+    if (action === "pick") {
+      pickImage();
+    } else {
+      captureImage();
     }
   };
   return (
-    <View
-      style={[
-        scrapCreation.photo.secondary,
-        // displays.bord2,
-      ]}
-    >
-      <Text style={fonts.photo.label}>Photo {id}</Text>
+    <View style={[scrapCreation.photo.secondary]}>
+      <Text style={fonts.photo.label}>Photo {index + 1}</Text>
       <View style={scrapCreation.photo.container}>
         <TouchableOpacity
           style={scrapCreation.photo.buttons}
-          onPress={() => handlePickImage()}
+          onPress={() => handlePickOrCaptureImage("pick")}
         >
           <AddIcon name="add" size={25} color={colors.tertiary2} />
           <Text style={fonts.photo.item}>Galerie</Text>
@@ -84,7 +40,7 @@ const PhotoCard: FC<PhotoCardProps> = ({
         <Spacer width={10} />
         <TouchableOpacity
           style={scrapCreation.photo.buttons}
-          onPress={() => handleCaptureImage()}
+          onPress={() => handlePickOrCaptureImage("capture")}
         >
           <AddIcon name="add" size={25} color={colors.tertiary2} />
           <Text style={fonts.photo.item}>Photo</Text>
@@ -92,7 +48,7 @@ const PhotoCard: FC<PhotoCardProps> = ({
         <TouchableOpacity
           style={scrapCreation.photo.removeButton}
           onPress={() => {
-            deletePhoto(id);
+            deletePhoto(index);
           }}
         >
           <TrashIcon name="trash-outline" size={25} color={colors.error} />

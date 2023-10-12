@@ -38,12 +38,18 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
   counterPressed,
   photoRef,
 }) => {
-  const [photos, setPhotos] = useState<PhotosType[]>([]);
+  // const [photos, setPhotos] = useState<PhotosType[]>([]);
+  const [photos, setPhotos] = useState<Array<ImageInfo | null>>([
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]);
+
   const [photoCount, setPhotoCount] = useState<number>(2); //total of photos
   const [photoNumber, setPhotoNumber] = useState<number>(2); //number of a new photo
-  const pickImage = async (
-    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
-  ) => {
+  const pickImage = async (index: number) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -56,13 +62,13 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
       result.assets[0] &&
       result.assets[0].uri
     ) {
-      setPhoto({ uri: result.assets[0].uri });
+      const updatedPhotos = [...photos];
+      updatedPhotos[index] = { uri: result.assets[0].uri };
+      setPhotos(updatedPhotos);
+      //setPhoto({ uri: result.assets[0].uri });
     }
   };
-
-  const captureImage = async (
-    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
-  ) => {
+  const captureImage = async (index: number) => {
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [4, 3],
@@ -75,33 +81,49 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
       result.assets[0] &&
       result.assets[0].uri
     ) {
-      setPhoto({ uri: result.assets[0].uri });
+      const updatedPhotos = [...photos];
+      updatedPhotos[index] = { uri: result.assets[0].uri };
+      setPhotos(updatedPhotos);
     }
   };
   const addPhoto = () => {
-    const newPhotos = { id: photoCount, title: `Photo ${photoNumber}` };
-    setPhotos([...photos, newPhotos]);
-    setPhotoCount(photoCount + 1);
-    setPhotoNumber(photoCount + 1);
+    if (photos.length < 5) {
+      setPhotos([...photos, null]);
+      setPhotoCount(photoCount + 1);
+      setPhotoNumber(photoCount + 1);
+    }
   };
   const deletePhoto = (id: number) => {
-    setPhotoCount(photoCount - 1);
-    setPhotoNumber(photoCount - 1);
-    const newPhotos = photos.filter((elem) => elem.id !== id);
+    if (id === 0) return; // on ne supprime pas le premier élément
+
+    const newPhotos = photos.filter((_, index) => index !== id);
     setPhotos(newPhotos);
     setPhotoCount(photoCount - 1);
     setPhotoNumber(photoCount - 1);
   };
   console.log("photoNumber : ", photoNumber);
+  console.log(photos.length);
+  console.log("photos[0]", photos[0]);
+  console.log("photos[1]", photos[1]);
+  console.log("photos[2]", photos[2]);
+  console.log("photos[3]", photos[3]);
+  console.log("photos[4]", photos[4]);
   return (
     <View
       ref={photoRef}
       style={[displays.flex, displays.center, { width: "100%" }]}
     >
       <PhotoCard1
-        pickImage={pickImage}
-        captureImage={captureImage}
-        setPhoto1={setPhoto1}
+        pickImage={() => pickImage(0)}
+        captureImage={() => captureImage(0)}
+        photo={photos[0]}
+        setPhoto={(newPhoto) => {
+          setPhotos((prevPhotos) => {
+            const updatedPhotos = [...prevPhotos];
+            updatedPhotos[0] = newPhoto;
+            return updatedPhotos;
+          });
+        }}
         errorPhoto={errorPhoto}
         counterPressed={counterPressed}
       />
@@ -116,35 +138,32 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
           </Text>
         )}
       </View>
-      {photos.map((item, index) => (
+      {photos.slice(1).map((item, index) => (
         <PhotoCard
-          key={index}
-          id={item.id}
-          pickImage={pickImage}
-          captureImage={captureImage}
-          photo2={photo2}
-          setPhoto2={setPhoto2}
-          photo3={photo3}
-          setPhoto3={setPhoto3}
-          photo4={photo4}
-          setPhoto4={setPhoto4}
-          photo5={photo5}
-          setPhoto5={setPhoto5}
+          key={index + 1}
+          index={index + 1}
+          pickImage={() => pickImage(index + 1)}
+          captureImage={() => captureImage(index + 1)}
+          photo={photos[index + 1]}
+          setPhoto={(photo) => {
+            setPhotos((prevPhotos) => {
+              const updatedPhotos = [...prevPhotos];
+              updatedPhotos[index + 1] = photo;
+              return updatedPhotos;
+            });
+          }}
           deletePhoto={deletePhoto}
           photoNumber={photoNumber}
-          photos={photos}
         />
       ))}
-      {photos[3] || !photo1 ? null : (
+      {photos.length < 5 ? (
         <TouchableOpacity
           style={{
             paddingVertical: 10,
             paddingHorizontal: 6,
             alignSelf: "flex-start",
           }}
-          onPress={() => {
-            addPhoto();
-          }}
+          onPress={addPhoto}
         >
           <Text
             style={{
@@ -157,32 +176,7 @@ const PhotoSelected: FC<PhotoSelectedProps> = ({
             Ajouter une photo (5 max.)
           </Text>
         </TouchableOpacity>
-      )}
-
-      {/* 
-      <Button
-        title="Sélectionnez une photo 2"
-        onPress={() => pickImage(setPhoto2)}
-      />
-      {/* {photo2 && (
-        <Image
-          source={{ uri: photo2.uri }}
-          style={{ width: 200, height: 200 }}
-        />
-      )} 
-
-      <Button
-        title="Sélectionnez une photo 3"
-        onPress={() => pickImage(setPhoto3)}
-      />
-       {photo3 && (
-        <Image
-          source={{ uri: photo3.uri }}
-          style={{ width: 200, height: 200 }}
-        />
-      )} 
-...
-      */}
+      ) : null}
     </View>
   );
 };

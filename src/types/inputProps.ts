@@ -47,36 +47,21 @@ export interface PhotoSelectedProps {
   photoRef: React.RefObject<View>;
 }
 export interface PhotoCard1Props {
-  setPhoto1: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  pickImage: (
-    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
-  ) => void;
-  captureImage: (
-    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
-  ) => void;
+  pickImage: () => void;
+  captureImage: () => void;
+  photo: ImageInfo | null;
+  setPhoto: (photo: ImageInfo | null) => void;
   errorPhoto: string;
   counterPressed: number;
 }
 export interface PhotoCardProps {
-  // setPhoto1: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  id: number;
-  pickImage: (
-    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
-  ) => void;
-  captureImage: (
-    setPhoto: React.Dispatch<React.SetStateAction<ImageInfo | null>>
-  ) => void;
-  photo2: ImageInfo | null;
-  setPhoto2: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  photo3: ImageInfo | null;
-  setPhoto3: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  photo4: ImageInfo | null;
-  setPhoto4: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
-  photo5: ImageInfo | null;
-  setPhoto5: React.Dispatch<React.SetStateAction<ImageInfo | null>>;
+  index: number;
+  pickImage: () => void;
+  captureImage: () => void;
+  photo: ImageInfo | null;
+  setPhoto: (photo: ImageInfo | null) => void;
   deletePhoto: (id: number) => void;
   photoNumber: number;
-  photos: PhotosType[];
 }
 export interface NameSelectedProps {
   name: string;

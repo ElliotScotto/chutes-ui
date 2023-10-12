@@ -15,10 +15,16 @@ import { PhotoCard1Props } from "../../../../types/inputProps";
 const PhotoCard1: FC<PhotoCard1Props> = ({
   pickImage,
   captureImage,
-  setPhoto1,
   errorPhoto,
   counterPressed,
 }) => {
+  const handlePickImage = () => {
+    pickImage();
+  };
+
+  const handleCaptureImage = () => {
+    captureImage();
+  };
   return (
     <View style={scrapCreation.photo.main}>
       <Text style={fonts.photo.label}>Photo 1*</Text>
@@ -33,7 +39,7 @@ const PhotoCard1: FC<PhotoCard1Props> = ({
                   : colors.tertiary2,
             },
           ]}
-          onPress={() => pickImage(setPhoto1)}
+          onPress={handlePickImage}
         >
           <AddIcon name="add" size={25} color={colors.tertiary2} />
           <Text style={fonts.photo.item}>Galerie</Text>
@@ -49,7 +55,7 @@ const PhotoCard1: FC<PhotoCard1Props> = ({
                   : colors.tertiary2,
             },
           ]}
-          onPress={() => captureImage(setPhoto1)}
+          onPress={handleCaptureImage}
         >
           <AddIcon name="add" size={25} color={colors.tertiary2} />
           <Text style={fonts.photo.item}>Photo</Text>

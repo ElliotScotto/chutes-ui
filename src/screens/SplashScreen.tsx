@@ -67,7 +67,7 @@ const SplashScreen = () => {
                 letterSpacing: 0.4,
               }}
             >
-              Débarassez-vous de vos surplus de bricolage.
+              Débarassez-vous de vos surplus de bricolage
             </Text>
           </View>
         </View>
