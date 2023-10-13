@@ -40,17 +40,12 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   setErrorMessage,
   setCounterPressed,
 }) => {
-  const [textColor, setTextColor] = useState<string>(`${colors.secondary}`);
-
-  // console.log("counterPressed : ", counterPressed);
   //Style Publish Button
   const handlePressIn = () => {
     setShadowButton(false);
-    setTextColor(colors.white);
   };
   const handlePressOut = () => {
     setShadowButton(true);
-    setTextColor(colors.secondary);
   };
   useEffect(() => {
     setIsButtonEnabled(
@@ -79,7 +74,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
   });
   return (
     <Shadow
-      distance={shadowButton ? 4 : 0}
+      distance={shadowButton ? 3 : 0}
       offset={[0, 0]}
       paintInside={false}
       sides={{ top: true, bottom: true, start: true, end: true }}
@@ -89,7 +84,7 @@ const PostScrapButton: React.FC<PostScrapButtonProps> = ({
         bottomStart: true,
         bottomEnd: true,
       }}
-      startColor={colors.lightAccent2}
+      startColor={colors.gainsboro}
       endColor={colors.white}
       style={{ borderRadius: 50 }}
     >

@@ -10,7 +10,6 @@ import Spacer from "../../../utils/Spacer";
 //types
 import { MATERIALS } from "../../../types/dataTypes";
 import { MaterialSelectedProps } from "../../../types/inputProps";
-import displays from "../../../styles/display";
 //packages
 import { Shadow } from "react-native-shadow-2";
 const MaterialSelected: FC<MaterialSelectedProps> = ({
@@ -46,7 +45,7 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
               disabled={material.length >= 2 && !material.includes(key)}
             >
               <Shadow
-                distance={material.includes(key) ? 2 : 0}
+                distance={material.includes(key) ? 3 : 0}
                 offset={[0, 0]}
                 paintInside={false}
                 sides={{ top: true, bottom: true, start: true, end: true }}
@@ -56,7 +55,7 @@ const MaterialSelected: FC<MaterialSelectedProps> = ({
                   bottomStart: true,
                   bottomEnd: true,
                 }}
-                startColor={colors.lightAccent2}
+                startColor={colors.gainsboro}
                 endColor={colors.white}
                 style={{ borderRadius: 50 }}
               >

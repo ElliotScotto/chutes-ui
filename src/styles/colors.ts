@@ -11,6 +11,7 @@ const ChutesColors = () => {
     error: "#CD5C5C",
     error2: "#d75c50",
     success: "#009688",
+    lightSuccess: "#59bbb2",
     //disabled
     disabledBlue: "#c1d0f0",
     disabledDark: "#5B6463",
@@ -21,6 +22,7 @@ const ChutesColors = () => {
     orange1: "#faa564",
     orange2: "#ac4e06",
     burlyWood: "#DEB887",
+    lightPeru: "#eaccae",
     peru: "#CD853F",
     darkWood: "#281b0b",
     //Shadow
@@ -28,7 +30,9 @@ const ChutesColors = () => {
     lightAccent: "#eaeffa",
     lightAccent2: "#c6ccd9",
     lightAccent3: "#edf1fb",
+    lightSecondary: "#455372",
     lightTertiary: "#f3f4f6",
+    lightTertiary2: "#7b89a7",
     gainsboro: "#DCDCDC",
   };
   return colors;

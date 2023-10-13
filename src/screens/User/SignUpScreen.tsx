@@ -681,7 +681,7 @@ const SignUpScreen: React.FC = () => {
             </View>
             <Spacer height={15} />
             <Shadow
-              distance={shadowButton ? 4 : 0}
+              distance={shadowButton ? 3 : 0}
               offset={[0, 0]}
               paintInside={false}
               sides={{ top: true, bottom: true, start: true, end: true }}
@@ -691,7 +691,7 @@ const SignUpScreen: React.FC = () => {
                 bottomStart: true,
                 bottomEnd: true,
               }}
-              startColor={colors.lightAccent2}
+              startColor={colors.gainsboro}
               endColor={colors.white}
               style={{ borderRadius: 50 }}
             >

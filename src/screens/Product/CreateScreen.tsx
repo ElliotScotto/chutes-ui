@@ -205,33 +205,48 @@ const CreateScreen = () => {
       setIsButtonEnabled(false);
       //if multiple errors focus set on the first area from top to bottom
       if (!photos[0]) {
-        scrollToRef(scrollViewRef, photoRef, -20, "photo1", false);
+        scrollToRef(scrollViewRef, photoRef, -20);
       } else if (!name || (name && name.length > 45)) {
         setIsNameFocused(true);
-        scrollToRef(scrollViewRef, nameFocusRef, -10, "name", true);
+        scrollToRef(
+          scrollViewRef,
+          nameFocusRef,
+          Platform.OS === "android" ? -10 : -30
+        );
         nameRef.current?.focus();
       } else if (!description || (description && description.length > 300)) {
         setIsDescriptionFocused(true);
         scrollToRef(
           scrollViewRef,
           descriptionFocusRef,
-          -10,
-          "description",
-          true
+          Platform.OS === "android" ? -10 : -30
         );
         descriptionRef.current?.focus();
+        1;
       } else if (!price) {
         setIsPriceFocused(true);
-        scrollToRef(scrollViewRef, priceFocusRef, -10, "price", true);
+        scrollToRef(
+          scrollViewRef,
+          priceFocusRef,
+          Platform.OS === "android" ? -10 : -30
+        );
         priceRef.current?.focus();
       } else if (!condition) {
-        scrollToRef(scrollViewRef, conditionRef, -10, "condition", false);
+        scrollToRef(
+          scrollViewRef,
+          conditionRef,
+          Platform.OS === "android" ? -10 : -30
+        );
       } else if (!weight) {
-        scrollToRef(scrollViewRef, weightRef, -40, "weight", false);
+        scrollToRef(
+          scrollViewRef,
+          weightRef,
+          Platform.OS === "android" ? -40 : -60
+        );
       } else if (!material || material.length === 0) {
-        scrollToRef(scrollViewRef, materialRef, -10, "material", false);
+        scrollToRef(scrollViewRef, materialRef, -10);
       } else if (!category || category.length === 0) {
-        scrollToRef(scrollViewRef, categoryRef, -10, "category", false);
+        scrollToRef(scrollViewRef, categoryRef, -10);
       }
     }
   };

@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import { View, FlatList } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 //packages
@@ -7,7 +7,7 @@ import axios from "axios";
 import Constants from "expo-constants";
 const deviceName = Constants.deviceName;
 //navigation
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 //components
 import CardScrap1 from "./components/cards/CardScrap1";
@@ -109,15 +109,17 @@ const HomeScreen: FC = () => {
         console.error("Erreur lors de la récupération des données:", error);
       });
   };
-  useEffect(() => {
-    // let currentHost;
-    // if (deviceName === "LYA-L29") {
-    //   currentHost = "192.168.1.38";
-    // } else {
-    //   currentHost = "localhost";
-    // }
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      // let currentHost;
+      // if (deviceName === "LYA-L29") {
+      //   currentHost = "192.168.1.38";
+      // } else {
+      //   currentHost = "localhost";
+      // }
+      fetchData();
+    }, [])
+  );
   return (
     <SafeAreaProvider>
       <SafeAreaView style={displays.safeContainer}>

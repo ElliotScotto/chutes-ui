@@ -19,6 +19,8 @@ const fonts = {
     textTransform: "uppercase",
   } as TextStyle,
   low: { textTransform: "lowercase" } as TextStyle,
+  cap: { textTransform: "capitalize" } as TextStyle,
+  up: { textTransform: "uppercase" } as TextStyle,
   //card1
   scrapName: {
     color: colors.primary,
@@ -79,6 +81,13 @@ const fonts = {
     fontSize: 14,
     letterSpacing: 0.3,
   } as TextStyle,
+  //ScrapScreen
+  section: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: colors.secondary,
+  } as TextStyle,
   //CreateScreen
   titleScreen: {
     fontSize: 20,
@@ -126,11 +135,11 @@ const fonts = {
     color: colors.tertiary2,
   } as TextStyle,
   detailDelivery: {
-    fontSize: 16,
-    marginVertical: 5,
-    paddingLeft: 5,
-    color: colors.lightAccent,
-    letterSpacing: 0.3,
+    fontSize: 14,
+    fontWeight: "500",
+    color: colors.tertiary2,
+    opacity: 1,
+    textAlign: "center",
   } as TextStyle,
   postButton: {
     textTransform: "uppercase",

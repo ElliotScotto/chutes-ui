@@ -1,5 +1,14 @@
 import React, { FC, useState } from "react";
-import { Text, StyleSheet, View, Pressable, ScrollView } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Pressable,
+  ScrollView,
+  Image,
+} from "react-native";
+//env
+import { HOST } from "@env";
 //packages
 import { Shadow } from "react-native-shadow-2";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
@@ -14,6 +23,7 @@ import {
 import IconSLI from "react-native-vector-icons/SimpleLineIcons";
 import IconMCI from "react-native-vector-icons/MaterialCommunityIcons";
 import IconFe from "react-native-vector-icons/Feather";
+import IconFA5 from "react-native-vector-icons/FontAwesome5";
 //styles
 import displays from "../../styles/display";
 import ChutesColors from "../../styles/colors";
@@ -21,7 +31,7 @@ import buttons from "../../styles/buttons";
 import Spacer from "../../utils/Spacer";
 const colors = ChutesColors();
 //components
-import DeliveryDetails from "./components/DeliveryDetails";
+
 //functions
 import { getIconCondition } from "./functions/getIconCondition";
 import { changeFavIcon } from "./functions/changeFavIcon";
@@ -95,11 +105,81 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
               </Text>
             </View>
             <Spacer height={10} />
+            <View style={[displays.center, displays.row, { height: 150 }]}>
+              <View
+                style={[
+                  {
+                    flex: 2,
+                    borderRightColor: colors.white,
+                    borderRightWidth: 4,
+                  },
+                ]}
+              >
+                <Image
+                  source={{ uri: HOST + item.photo1_url }}
+                  style={{ height: "100%" }}
+                  resizeMode="cover"
+                />
+              </View>
+              <View style={[{ flex: 1 }, displays.col]}>
+                <View
+                  style={{
+                    flex: 1,
+                    borderBottomWidth: 2,
+                    borderBottomColor: colors.white,
+                  }}
+                >
+                  <Image
+                    source={{ uri: HOST + item.photo1_url }}
+                    style={{ height: "100%" }}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    borderTopWidth: 2,
+                    borderTopColor: colors.white,
+                  }}
+                >
+                  <Image
+                    source={{ uri: HOST + item.photo1_url }}
+                    style={{ height: "100%" }}
+                    resizeMode="cover"
+                  />
+                </View>
+              </View>
+              {/* <Image
+                source={{ uri: HOST + item.photo1_url }}
+                style={{ height: "100%", width: 100 }}
+                resizeMode="cover"
+              />
+              <Image
+                source={{ uri: HOST + item.photo1_url }}
+                style={{ height: "100%", width: 100 }}
+                resizeMode="cover"
+              /> */}
+            </View>
+            <Spacer height={10} />
             <ScrollView showsVerticalScrollIndicator={true}>
               <Text style={styles.description}>{item.description}</Text>
             </ScrollView>
-            <Spacer height={10} />
-            <View style={styles.detailCondition}>
+
+            <Spacer height={25} />
+            <Text style={fonts.section}>Caractéristiques</Text>
+            <View style={styles.detailRow}>
+              {item.price === 0 ? (
+                <Text style={styles.detail}>Gratuit</Text>
+              ) : (
+                <>
+                  <IconMCI name="tag" size={20} color={colors.tertiary2} />
+                  <Text style={styles.detail}>
+                    {item.price < 14000 ? item.price : "--"} €
+                  </Text>
+                </>
+              )}
+            </View>
+            <View style={styles.detailRow}>
               {iconContionNames.map((iconName, index) => (
                 <IconMCI
                   key={index}
@@ -111,13 +191,7 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
                   }}
                 />
               ))}
-              <Text style={styles.detail}>({item.condition})</Text>
-            </View>
-            <View style={styles.detailRow}>
-              <IconMCI name="tag" size={20} color={colors.tertiary2} />
-              <Text style={styles.detail}>
-                {item.price < 14000 ? item.price : "--"} €
-              </Text>
+              <Text style={styles.detail}>{item.condition}</Text>
             </View>
             <View style={styles.detailRow}>
               <IconMCI name="weight" size={20} color={colors.tertiary2} />
@@ -139,13 +213,30 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
                   : item.category}
               </Text>
             </View>
-          </View>
-
-          <View style={{ width: "100%", marginVertical: 15 }}>
-            <DeliveryDetails item={item} />
-          </View>
-          <View style={styles.container}>
-            <Text style={styles.ownerTitle}>Propriétaire</Text>
+            <Spacer height={25} />
+            <Text style={fonts.section}>Délivrance</Text>
+            {!item.homePickup ? null : (
+              <View style={styles.detailRow}>
+                <IconMCI
+                  name="home-export-outline"
+                  size={20}
+                  color={colors.tertiary2}
+                />
+                <Text style={styles.detail}>Retrait à domicile</Text>
+              </View>
+            )}
+            {!item.sending ? null : (
+              <View style={styles.detailRow}>
+                <IconFA5
+                  name="shipping-fast"
+                  size={20}
+                  color={colors.tertiary2}
+                />
+                <Text style={styles.detail}>Transport proposé</Text>
+              </View>
+            )}
+            <Spacer height={25} />
+            <Text style={fonts.section}>Propriétaire</Text>
             <View style={styles.detailRow}>
               <IconFe name="user" size={20} color={colors.tertiary2} />
               <Text style={styles.detail}>{item.owner_detail.username}</Text>
@@ -156,10 +247,19 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
                 {item.owner_detail.email}
               </Text>
             </View>
+            {item.homePickup ? (
+              <View style={styles.detailRow}>
+                <IconFe name="map-pin" size={20} color={colors.tertiary2} />
+                <Text style={[styles.detail, fonts.cap]}>
+                  {item.owner_detail.city}
+                </Text>
+              </View>
+            ) : null}
+
             <Spacer height={30} />
             <View style={displays.aliC}>
               <Shadow
-                distance={shadowButton ? 4 : 0}
+                distance={shadowButton ? 3 : 0}
                 offset={[0, 0]}
                 paintInside={false}
                 sides={{ top: true, bottom: true, start: true, end: true }}
@@ -170,6 +270,7 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
                   bottomEnd: true,
                 }}
                 startColor={colors.gainsboro}
+                endColor={colors.white}
                 style={{ borderRadius: 50 }}
               >
                 <Pressable
@@ -178,7 +279,7 @@ const ScrapScreen: FC<ScrapScreenProps> = ({ navigation }) => {
                   }}
                   style={[
                     buttons.primary,
-                    { backgroundColor: colors.secondary },
+                    { backgroundColor: colors.tertiary },
                   ]}
                   onPressIn={handlePressIn}
                   onPressOut={handlePressOut}
@@ -244,12 +345,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginVertical: 5,
     paddingLeft: 5,
-    color: colors.secondary,
-  },
-  ownerTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
     color: colors.secondary,
   },
 });

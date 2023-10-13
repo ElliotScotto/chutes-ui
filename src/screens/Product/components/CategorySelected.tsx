@@ -1,14 +1,17 @@
 import React, { FC } from "react";
 import { View, Text, Pressable } from "react-native";
 import { Checkbox } from "react-native-paper";
+//styles
 import scrapCreation from "../../../styles/scrapCreation";
 import ChutesColors from "../../../styles/colors";
-const color = ChutesColors();
+const colors = ChutesColors();
+//utils
 import Spacer from "../../../utils/Spacer";
 //types
 import { CATEGORIES } from "../../../types/dataTypes";
 import { CategorySelectedProps } from "../../../types/inputProps";
-
+//packages
+import { Shadow } from "react-native-shadow-2";
 const CategorySelected: FC<CategorySelectedProps> = ({
   category,
   setCategory,
@@ -41,50 +44,68 @@ const CategorySelected: FC<CategorySelectedProps> = ({
               onPress={() => toggleCategory(key)}
               disabled={category.length >= 2 && !category.includes(key)}
             >
-              <View
-                style={[
-                  scrapCreation.itemCategory,
-                  {
-                    justifyContent: "space-between",
-                    backgroundColor: category.includes(key)
-                      ? color.orange2
-                      : color.white,
-                    opacity:
-                      category.length >= 2 && !category.includes(key) ? 0.3 : 1,
-                  },
-                ]}
+              <Shadow
+                distance={category.includes(key) ? 3 : 0}
+                offset={[0, 0]}
+                paintInside={false}
+                sides={{ top: true, bottom: true, start: true, end: true }}
+                corners={{
+                  topStart: true,
+                  topEnd: true,
+                  bottomStart: true,
+                  bottomEnd: true,
+                }}
+                startColor={colors.gainsboro}
+                endColor={colors.white}
+                style={{ borderRadius: 5 }}
               >
-                <View>
-                  <Text
-                    style={[
-                      scrapCreation.categoryItemFont,
-                      {
-                        color: !category.includes(key)
-                          ? color.orange2
-                          : color.white,
-                      },
-                    ]}
-                  >
-                    {key}
-                  </Text>
+                <View
+                  style={[
+                    scrapCreation.itemCategory,
+                    {
+                      justifyContent: "space-between",
+                      backgroundColor: category.includes(key)
+                        ? colors.peru
+                        : colors.white,
+                      opacity:
+                        category.length >= 2 && !category.includes(key)
+                          ? 0.3
+                          : 1,
+                    },
+                  ]}
+                >
+                  <View>
+                    <Text
+                      style={[
+                        scrapCreation.categoryItemFont,
+                        {
+                          color: !category.includes(key)
+                            ? colors.peru
+                            : colors.white,
+                        },
+                      ]}
+                    >
+                      {key}
+                    </Text>
+                  </View>
+                  <Spacer width={5} />
+                  <View>
+                    <Checkbox.IOS
+                      color={colors.white}
+                      status={category.includes(key) ? "checked" : "unchecked"}
+                      onPress={() => toggleCategory(key)}
+                      disabled={category.length >= 2 && !category.includes(key)}
+                    />
+                  </View>
                 </View>
-                <Spacer width={5} />
-                <View>
-                  <Checkbox.IOS
-                    color={color.white}
-                    status={category.includes(key) ? "checked" : "unchecked"}
-                    onPress={() => toggleCategory(key)}
-                    disabled={category.length >= 2 && !category.includes(key)}
-                  />
-                </View>
-              </View>
+              </Shadow>
             </Pressable>
           ))}
         </View>
       </View>
       <View style={scrapCreation.errors}>
         {errorCategory && category.length < 1 && counterPressed !== 0 && (
-          <Text style={{ color: color.error }}>{errorCategory}</Text>
+          <Text style={{ color: colors.error }}>{errorCategory}</Text>
         )}
       </View>
     </View>

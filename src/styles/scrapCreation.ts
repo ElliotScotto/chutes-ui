@@ -138,7 +138,6 @@ const scrapCreation = {
     borderColor: colors.tertiary2,
     borderWidth: 1,
     borderRadius: 20,
-
     paddingHorizontal: 8,
   } as ViewStyle,
   //Categories
@@ -162,14 +161,14 @@ const scrapCreation = {
   } as TextStyle,
   categoryCheckButton: {
     flexDirection: "row",
+    margin: 5,
   } as ViewStyle,
   itemCategory: {
     flexDirection: "row",
     alignItems: "center",
-    borderColor: colors.orange2,
+    borderColor: colors.peru,
     borderWidth: 1,
     borderRadius: 5,
-    margin: 5,
     paddingHorizontal: 8,
   } as ViewStyle,
   //Product Location

@@ -14,9 +14,7 @@ export type RefButtonType = React.RefObject<TouchableOpacity>;
 export const scrollToRef = (
   scrollViewRef: RefScrollView,
   ref: RefInputType | RefView | RefButtonType,
-  adjustment: number = 0,
-  value: string,
-  focusOnTextInput: boolean = false
+  adjustment: number = 0
 ) => {
   if (ref.current && scrollViewRef.current) {
     const nodeHandle = findNodeHandle(ref.current);
