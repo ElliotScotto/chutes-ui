@@ -235,9 +235,6 @@ const CreateScreen = () => {
       }
     }
   };
-  console.log("homePickup : ", homePickup);
-  console.log("sending : ", sending);
-
   return (
     <SafeAreaProvider style={[displays.w100]}>
       <StatusBar backgroundColor={colors.white} />
@@ -377,7 +374,7 @@ const CreateScreen = () => {
               sending={sending}
               setSending={setSending}
             />
-            <Spacer height={30} />
+            <Spacer height={50} />
             <PostScrapButton
               publishButtonRef={publishButtonRef}
               shadowButton={shadowButton}

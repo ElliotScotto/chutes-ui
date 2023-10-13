@@ -95,15 +95,25 @@ const fonts = {
     } as TextStyle,
     item: { fontSize: 14, color: colors.tertiary },
   } as PhotoStyles,
-  conditions: {
+  conditionsUnfilled: {
     marginVertical: 10,
-    fontSize: 16,
-    color: colors.secondary,
+    fontSize: 15,
+    color: colors.disabledDark,
   } as TextStyle,
-  weights: {
+  conditionsFilled: {
     marginVertical: 10,
     fontSize: 16,
-    color: colors.secondary,
+    color: colors.tertiary2,
+  } as TextStyle,
+  weightsUnfilled: {
+    marginVertical: 10,
+    fontSize: 15,
+    color: colors.disabledDark,
+  } as TextStyle,
+  weightsFilled: {
+    marginVertical: 10,
+    fontSize: 16,
+    color: colors.tertiary2,
   } as TextStyle,
   categories: {
     marginVertical: 10,

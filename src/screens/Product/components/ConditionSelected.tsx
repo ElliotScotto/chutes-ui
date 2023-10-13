@@ -62,7 +62,11 @@ const ConditionSelected: FC<ConditionSelectedProps> = ({
             setIsModalConditionsVisible(true);
           }}
         >
-          <Text style={fonts.conditions}>
+          <Text
+            style={
+              condition ? fonts.conditionsFilled : fonts.conditionsUnfilled
+            }
+          >
             {condition ? condition : conditionDefaultValue}
           </Text>
           <ChevronDown name="chevron-down" size={25} color={colors.secondary} />

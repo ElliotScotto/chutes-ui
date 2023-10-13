@@ -62,7 +62,7 @@ const WeightSelected: FC<WeightSelectedProps> = ({
             setIsModalWeightsVisible(true);
           }}
         >
-          <Text style={fonts.weights}>
+          <Text style={weight ? fonts.weightsFilled : fonts.weightsUnfilled}>
             {weight ? weight : weightDefaultValue}
           </Text>
           <ChevronDown name="chevron-down" size={25} color={colors.secondary} />

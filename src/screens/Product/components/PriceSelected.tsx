@@ -150,11 +150,19 @@ const PriceSelected: React.FC<PriceSelectedProps> = ({
             disabled={free ? true : false}
           />
         </View>
-        <View style={[displays.flex, displays.center, displays.col]}>
+        <View
+          style={[
+            displays.flex,
+            displays.aliC,
+            displays.col,
+            { justifyContent: "space-between" },
+          ]}
+        >
           <Text
             style={{
               fontSize: 14,
               fontWeight: "500",
+              paddingBottom: 5,
               color: free ? colors.tertiary2 : colors.silver,
             }}
           >

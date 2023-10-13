@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { Switch } from "react-native-paper";
 import ChutesColors from "../../../styles/colors";
 const color = ChutesColors();
@@ -31,15 +31,17 @@ const DeliverySelected: React.FC<DeliverySelectedProps> = ({
 
   return (
     <View
-      style={{ width: "100%", flexDirection: "column", alignItems: "center" }}
+      style={[{ width: "95%", flexDirection: "column", alignItems: "center" }]}
     >
       <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+        style={[
+          {
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          },
+        ]}
       >
         <View>
           <Switch
@@ -48,7 +50,7 @@ const DeliverySelected: React.FC<DeliverySelectedProps> = ({
             onValueChange={handleToggleSwitchSending}
           />
         </View>
-        <Spacer width={5} />
+        <Spacer width={Platform.OS === "ios" ? 10 : 5} />
         <View style={displays.flex}>
           <Text style={fonts.homePickup}>
             {sending
@@ -57,14 +59,16 @@ const DeliverySelected: React.FC<DeliverySelectedProps> = ({
           </Text>
         </View>
       </View>
-      <Spacer height={5} />
+      <Spacer height={Platform.OS === "ios" ? 25 : 5} />
       <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
+        style={[
+          {
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          },
+        ]}
       >
         <View>
           <Switch
@@ -73,7 +77,7 @@ const DeliverySelected: React.FC<DeliverySelectedProps> = ({
             onValueChange={handleToggleSwitchHome}
           />
         </View>
-        <Spacer width={5} />
+        <Spacer width={Platform.OS === "ios" ? 10 : 5} />
         <View style={displays.flex}>
           <Text style={fonts.homePickup}>
             {homePickup
